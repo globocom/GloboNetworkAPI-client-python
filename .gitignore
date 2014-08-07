@@ -12,3 +12,4 @@ test-report.xml
 .settings
 .pydevproject
 _build
+*.egg-info
