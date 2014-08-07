@@ -1,0 +1,327 @@
+# -*- coding:utf-8 -*-
+'''
+Title: Infrastructure NetworkAPI
+Author: globo.com / TQI
+Copyright: ( c )  2009 globo.com todos os direitos reservados.
+'''
+
+from networkapiclient.GenericClient import GenericClient
+from networkapiclient.utils import get_list_map, is_valid_int_param
+from networkapiclient.exception import InvalidParameterError
+import urllib
+from utils import is_valid_0_1
+
+class Interface(GenericClient):
+    def __init__(self, networkapi_url, user, password, user_ldap=None):
+        """Class constructor receives parameters to connect to the networkAPI.
+        :param networkapi_url: URL to access the network API.
+        :param user: User for authentication.
+        :param password: Password for authentication. 
+        """
+        super(Interface, self).__init__(networkapi_url, user, password, user_ldap)
+        
+    def listar_por_equipamento(self, id_equipamento):
+        """List all interfaces of an equipment.
+        
+        :param id_equipamento: Equipment identifier.
+        
+        :return: Dictionary with the following:
+
+        ::
+
+            {'interface': 
+            [{'protegida': < protegida >, 
+            'nome': < nome >, 
+            'id_ligacao_front': < id_ligacao_front >, 
+            'id_equipamento': < id_equipamento >, 
+            'id': < id >, 
+            'descricao': < descricao >, 
+            'id_ligacao_back': < id_ligacao_back >}, ... other interfaces ...]} 
+
+        :raise InvalidParameterError: Equipment identifier is invalid or none.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        if not is_valid_int_param(id_equipamento):
+            raise InvalidParameterError(u'Equipment id is invalid or was not informed.')
+        
+        url = 'interface/equipamento/' + str(id_equipamento) + '/'
+        
+        code, map = self.submit(None, 'GET', url)
+        
+        key = 'interface'
+        return get_list_map(self.response(code, map, [key]), key)
+    
+    def list_all_by_equip(self, id_equipamento):
+        """List all interfaces of an equipment.
+        
+        :param id_equipamento: Equipment identifier.
+        
+        :return: Following dictionary:
+
+        ::
+
+            {'interfaces': [ {'id': < id >,
+            'interface': < interface >, 
+            'descricao': < descricao >,
+            'protegida': < protegida >, 
+            'tipo_equip': < id_tipo_equipamento >,
+            'equipamento': < id_equipamento >,
+            'equipamento_nome': < nome_equipamento >
+            'ligacao_front': < id_ligacao_front >,
+            'nome_ligacao_front': < interface_name >,
+            'nome_equip_l_front': < equipment_name >,
+            'ligacao_back': < id_ligacao_back >,
+            'nome_ligacao_back': < interface_name >,
+            'nome_equip_l_back': < equipment_name > }, ... other interfaces ...]} 
+
+        :raise InvalidParameterError: Equipment identifier is invalid or none.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        if not is_valid_int_param(id_equipamento):
+            raise InvalidParameterError(u'Equipment id is invalid or was not informed.')
+        
+        url = 'interface/equipment/' + str(id_equipamento) + '/'
+        
+        code, map = self.submit(None, 'GET', url)
+        
+        key = 'interfaces'
+        return get_list_map(self.response(code, map, [key]), key)
+    
+    def get_by_id(self, id_interface):
+        """Get an interface by id.
+        
+        :param id_interface: Interface identifier.
+        
+        :return: Following dictionary:
+
+        ::
+
+            {'interface': {'id': < id >,
+            'interface': < interface >, 
+            'descricao': < descricao >,
+            'protegida': < protegida >, 
+            'tipo_equip': < id_tipo_equipamento >,
+            'equipamento': < id_equipamento >,
+            'equipamento_nome': < nome_equipamento >
+            'ligacao_front': < id_ligacao_front >,
+            'nome_ligacao_front': < interface_name >,
+            'nome_equip_l_front': < equipment_name >,
+            'ligacao_back': < id_ligacao_back >,
+            'nome_ligacao_back': < interface_name >,
+            'nome_equip_l_back': < equipment_name > }} 
+                                    
+        :raise InvalidParameterError: Interface identifier is invalid or none.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        if not is_valid_int_param(id_interface):
+            raise InvalidParameterError(u'Interface id is invalid or was not informed.')
+        
+        url = 'interface/' + str(id_interface) + '/get/'
+        
+        code, map = self.submit(None, 'GET', url)
+        
+        return self.response(code, map)
+    
+    def inserir(self, nome, protegida, descricao, id_ligacao_front, id_ligacao_back, id_equipamento):
+        """Insert new interface for an equipment.
+        
+        :param nome: Interface name.
+        :param protegida: Indication of protected ('0' or '1').
+        :param descricao: Interface description.
+        :param id_ligacao_front: Front end link interface identifier.
+        :param id_ligacao_back: Back end link interface identifier.
+        :param id_equipamento: Equipment identifier.
+        
+        :return: Dictionary with the following: {'interface': {'id': < id >}}
+        
+        :raise EquipamentoNaoExisteError: Equipment does not exist.
+        :raise InvalidParameterError: The parameters nome, protegida and/or equipment id are none or invalid.
+        :raise NomeInterfaceDuplicadoParaEquipamentoError: There is already an interface with this name for this equipment.
+        :raise InterfaceNaoExisteError: Front link interface and/or back link interface doesn't exist.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        interface_map = dict()
+        interface_map['nome'] = nome
+        interface_map['protegida'] = protegida
+        interface_map['descricao'] = descricao
+        interface_map['id_ligacao_front'] = id_ligacao_front
+        interface_map['id_ligacao_back'] = id_ligacao_back
+        interface_map['id_equipamento'] = id_equipamento
+        
+        code, xml = self.submit({'interface':interface_map}, 'POST', 'interface/')
+        
+        return self.response(code, xml)  
+   
+    def alterar(self, id_interface, nome, protegida, descricao, id_ligacao_front, id_ligacao_back):
+        """Edit an interface by its identifier.
+        
+        Equipment identifier is not changed.
+        
+        :param nome: Interface name.
+        :param protegida: Indication of protected ('0' or '1').
+        :param descricao: Interface description.
+        :param id_ligacao_front: Front end link interface identifier.
+        :param id_ligacao_back: Back end link interface identifier.
+        :param id_interface: Interface identifier.
+        
+        :return: None
+        
+        :raise InvalidParameterError: The parameters interface id, nome and protegida are none or invalid.
+        :raise NomeInterfaceDuplicadoParaEquipamentoError: There is already an interface with this name for this equipment.
+        :raise InterfaceNaoExisteError: Front link interface and/or back link interface doesn't exist.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        if not is_valid_int_param(id_interface):
+            raise InvalidParameterError(u'Interface id is invalid or was not informed.')
+        
+        url = 'interface/' + str(id_interface) + '/'
+
+        interface_map = dict()
+        interface_map['nome'] = nome
+        interface_map['protegida'] = protegida
+        interface_map['descricao'] = descricao
+        interface_map['id_ligacao_front'] = id_ligacao_front
+        interface_map['id_ligacao_back'] = id_ligacao_back
+        
+        code, xml = self.submit({'interface':interface_map}, 'PUT', url)
+        
+        return self.response(code, xml)
+    
+    def remover(self, id_interface):
+        """Remove an interface by its identifier.
+        
+        :param id_interface: Interface identifier.
+        
+        :return: None
+        
+        :raise InterfaceNaoExisteError: Interface doesn't exist.
+        :raise InterfaceError: Interface is linked to another interface.
+        :raise InvalidParameterError: The interface identifier is invalid or none.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        if not is_valid_int_param(id_interface):
+            raise InvalidParameterError(u'Interface id is invalid or was not informed.')
+        
+        url = 'interface/' + str(id_interface) + '/'
+        
+        code, xml = self.submit(None, 'DELETE', url)
+        
+        return self.response(code, xml)
+    
+    def remove_connection(self, id_interface, back_or_front):
+        """
+        Remove a connection between two interfaces
+        
+        :param id_interface: One side of relation
+        :param back_or_front: This side of relation is back(0) or front(1)
+        
+        :return: None
+        
+        :raise InterfaceInvalidBackFrontError: Front or Back of interfaces not match to remove connection
+        :raise InvalidParameterError: Interface id or back or front indicator is none or invalid.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        
+        msg_err = u'Parameter %s is invalid. Value: %s.'
+        
+        if not is_valid_0_1(back_or_front):
+            raise InvalidParameterError(msg_err % ("back_or_front", back_or_front))
+        
+        if not is_valid_int_param(id_interface):
+            raise InvalidParameterError(msg_err % ("id_interface", id_interface))
+        
+        url = "interface/%s/%s/" % (str(id_interface), str(back_or_front))
+        
+        code, xml = self.submit(None, 'DELETE', url)
+        
+        return self.response(code, xml)
+    
+    def listar_ligacoes(self, nome_interface, id_equipamento):
+        """List interfaces linked to back and front of specified interface.
+        
+        :param nome_interface: Interface name.
+        :param id_equipamento: Equipment identifier.
+        
+        :return: Dictionary with the following:
+
+        ::
+
+            {'interface': [{'protegida': < protegida >, 
+            'nome': < nome >, 
+            'id_ligacao_front': < id_ligacao_front >, 
+            'id_equipamento': < id_equipamento >, 
+            'id': < id >, 
+            'descricao': < descricao >, 
+            'id_ligacao_back': < id_ligacao_back >}, ... other interfaces ...]} 
+                                                        
+        :raise InterfaceNaoExisteError: Interface doesn't exist or is not associated with this equipment. 
+        :raise EquipamentoNaoExisteError: Equipment doesn't exist.
+        :raise InvalidParameterError: Interface name and/or equipment identifier are none or invalid.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        if not is_valid_int_param(id_equipamento):
+            raise InvalidParameterError(u'Equipment identifier is none or was not informed.')
+        
+        if (nome_interface is None) or (nome_interface == ''):
+            raise InvalidParameterError(u'Interface name was not informed.')
+        
+        url = 'interface/' + urllib.quote(nome_interface) + '/equipamento/'  + str(id_equipamento) + '/'
+        
+        code, map = self.submit(None, 'GET', url)
+        
+        key = 'interface'
+        return get_list_map(self.response(code, map, [key]), key)
+    
+    def list_connections(self, nome_interface, id_equipamento):
+        """List interfaces linked to back and front of specified interface.
+        
+        :param nome_interface: Interface name.
+        :param id_equipamento: Equipment identifier.
+        
+        :return: Dictionary with the following:
+
+        ::
+
+            {'interfaces':[ {'id': < id >,
+            'interface': < nome >, 
+            'descricao': < descricao >,
+            'protegida': < protegida >, 
+            'equipamento': < id_equipamento >,
+            'tipo_equip': < id_tipo_equipamento >,
+            'ligacao_front': < id_ligacao_front >,
+            'nome_ligacao_front': < interface_name >,
+            'nome_equip_l_front': < equipment_name >,
+            'ligacao_back': < id_ligacao_back >,
+            'nome_ligacao_back': < interface_name >,
+            'nome_equip_l_back': < equipment_name > }, ... other interfaces ...]} 
+                                        
+        :raise InterfaceNaoExisteError: Interface doesn't exist or is not associated with this equipment. 
+        :raise EquipamentoNaoExisteError: Equipment doesn't exist.
+        :raise InvalidParameterError: Interface name and/or equipment identifier are none or invalid.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        if not is_valid_int_param(id_equipamento):
+            raise InvalidParameterError(u'Equipment identifier is none or was not informed.')
+        
+        if (nome_interface is None) or (nome_interface == ''):
+            raise InvalidParameterError(u'Interface name was not informed.')
+        
+        # Temporário, remover. Fazer de outra forma.
+        nome_interface = nome_interface.replace('/', 's2it_replace')
+        
+        url = 'interface/' + urllib.quote(nome_interface) + '/equipment/'  + str(id_equipamento) + '/'
+        
+        code, map = self.submit(None, 'GET', url)
+        
+        key = 'interfaces'
+        return get_list_map(self.response(code, map, [key]), key)
+
