@@ -5,3 +5,4 @@ Author: globo.com / TQI
 Copyright: ( c )  2009 globo.com todos os direitos reservados.
 '''
 
+VERSION = '0.2'
