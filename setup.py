@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 import os.path
 
-version = __import__('networkapiclient').VERSION
+version = __import__('networkapiclient').VERSION_STRING
 
 base_path = os.path.abspath(os.path.join(__file__, '..'))
 

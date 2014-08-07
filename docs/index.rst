@@ -12,7 +12,6 @@ Contents:
    :maxdepth: 4
 
    networkapiclient
-   setup
 
 
 Indices and tables

@@ -1,13 +1,6 @@
 networkapiclient package
 ========================
 
-Subpackages
------------
-
-.. toctree::
-
-    networkapiclient.mock
-
 Submodules
 ----------
 

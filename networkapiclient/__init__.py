@@ -5,4 +5,7 @@ Author: globo.com / TQI
 Copyright: ( c )  2009 globo.com todos os direitos reservados.
 '''
 
-VERSION = '0.2'
+
+# Change version here!
+VERSION = ('0', '2','0')
+VERSION_STRING = '.'.join(VERSION)
