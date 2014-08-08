@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to NetworkAPI Client's documentation!
+Welcome to Globo NetworkAPI Python Client's documentation!
 ===============================
 
 Contents:

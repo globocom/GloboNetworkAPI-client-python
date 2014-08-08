@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Globo NetworkAPI Client'
+project = u'Globo NetworkAPI Python Client'
 copyright = u'2000-2014 Globo Comunicação e Participações S.A.'
 
 # The version info for the project you're documenting, acts as replacement for
