@@ -9,14 +9,22 @@ from networkapiclient.GenericClient import GenericClient
 from networkapiclient.utils import is_valid_int_param
 from networkapiclient.exception import InvalidParameterError
 
+
 class Network(GenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
         :param password: Password for authentication.
         """
-        super(Network, self).__init__(networkapi_url, user, password, user_ldap);
+        super(
+            Network,
+            self).__init__(
+            networkapi_url,
+            user,
+            password,
+            user_ldap)
 
     def create_networks(self, ids, id_vlan):
         """Set column 'active = 1' in tables redeipv4 and redeipv6]
@@ -30,11 +38,17 @@ class Network(GenericClient):
         network_map['ids'] = ids
         network_map['id_vlan'] = id_vlan
 
-        code, xml = self.submit({'network':network_map}, 'PUT', 'network/create/')
+        code, xml = self.submit(
+            {'network': network_map}, 'PUT', 'network/create/')
 
         return self.response(code, xml)
 
-    def add_network(self, network, id_vlan, id_network_type, id_environment_vip=None):
+    def add_network(
+            self,
+            network,
+            id_vlan,
+            id_network_type,
+            id_environment_vip=None):
         """
         Add new network
 
@@ -54,7 +68,7 @@ class Network(GenericClient):
           'id_vlan': <id_vlan>,
           'id_tipo_rede': <id_network_type>,
           'id_ambiente_vip': <id_ambiente_vip>,
-          'active': <active>} } 
+          'active': <active>} }
 
         :raise TipoRedeNaoExisteError: NetworkType not found.
         :raise InvalidParameterError: Invalid ID for Vlan or NetworkType.
@@ -70,11 +84,17 @@ class Network(GenericClient):
         network_map['id_network_type'] = id_network_type
         network_map['id_environment_vip'] = id_environment_vip
 
-        code, xml = self.submit({'network':network_map}, 'POST', 'network/add/')
+        code, xml = self.submit(
+            {'network': network_map}, 'POST', 'network/add/')
 
         return self.response(code, xml)
 
-    def add_network_ipv4(self, id_vlan, id_tipo_rede, id_ambiente_vip=None, prefix=None):
+    def add_network_ipv4(
+            self,
+            id_vlan,
+            id_tipo_rede,
+            id_ambiente_vip=None,
+            prefix=None):
         """
         Add new networkipv4
 
@@ -105,7 +125,7 @@ class Network(GenericClient):
           'descricao': < descricao >,
           'acl_file_name': < acl_file_name >,
           'acl_valida': < acl_valida >,
-          'ativada': < ativada >}} 
+          'ativada': < ativada >}}
 
         :raise TipoRedeNaoExisteError: NetworkType not found.
         :raise InvalidParameterError: Invalid ID for Vlan or NetworkType.
@@ -120,11 +140,17 @@ class Network(GenericClient):
         vlan_map['id_ambiente_vip'] = id_ambiente_vip
         vlan_map['prefix'] = prefix
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', 'network/ipv4/add/')
+        code, xml = self.submit(
+            {'vlan': vlan_map}, 'POST', 'network/ipv4/add/')
 
         return self.response(code, xml)
 
-    def add_network_ipv4_hosts(self, id_vlan, id_tipo_rede, num_hosts, id_ambiente_vip=None):
+    def add_network_ipv4_hosts(
+            self,
+            id_vlan,
+            id_tipo_rede,
+            num_hosts,
+            id_ambiente_vip=None):
         """
         Add new networkipv4
 
@@ -155,7 +181,7 @@ class Network(GenericClient):
           'descricao': < descricao >,
           'acl_file_name': < acl_file_name >,
           'acl_valida': < acl_valida >,
-          'ativada': < ativada >}} 
+          'ativada': < ativada >}}
 
         :raise TipoRedeNaoExisteError: NetworkType not found.
         :raise InvalidParameterError: Invalid ID for Vlan or NetworkType.
@@ -175,7 +201,7 @@ class Network(GenericClient):
 
         return self.response(code, xml)
 
-    def edit_network(self, id_network, ip_type , id_net_type, id_env_vip=None):
+    def edit_network(self, id_network, ip_type, id_net_type, id_env_vip=None):
         """
         Edit a network 4 or 6
 
@@ -199,7 +225,7 @@ class Network(GenericClient):
         net_map['id_net_type'] = id_net_type
         net_map['id_env_vip'] = id_env_vip
 
-        code, xml = self.submit({'net':net_map}, 'POST', 'network/edit/')
+        code, xml = self.submit({'net': net_map}, 'POST', 'network/edit/')
 
         return self.response(code, xml)
 
@@ -226,7 +252,7 @@ class Network(GenericClient):
           'mask_oct3': < mascara_oct3 >,
           'mask_oct4': < mascara_oct4 >,
           'active': < ativada >,
-          'broadcast':<'broadcast>, }}  
+          'broadcast':<'broadcast>, }}
 
         :raise NetworkIPv4NotFoundError: NetworkIPV4 not found.
         :raise InvalidValueError: Invalid ID for NetworkIpv4
@@ -235,7 +261,8 @@ class Network(GenericClient):
         """
 
         if not is_valid_int_param(id_network):
-            raise InvalidParameterError(u'O id do rede ip4 foi informado incorretamente.')
+            raise InvalidParameterError(
+                u'O id do rede ip4 foi informado incorretamente.')
 
         url = 'network/ipv4/id/' + str(id_network) + '/'
 
@@ -273,7 +300,7 @@ class Network(GenericClient):
           'mask6': < mascara_oct4 >,
           'mask7': < mascara_oct4 >,
           'mask8': < mascara_oct4 >,
-          'active': < ativada >, }} 
+          'active': < ativada >, }}
 
         :raise NetworkIPv6NotFoundError: NetworkIPV6 not found.
         :raise InvalidValueError: Invalid ID for NetworkIpv6
@@ -282,8 +309,8 @@ class Network(GenericClient):
         """
 
         if not is_valid_int_param(id_network):
-            raise InvalidParameterError(u'O id do rede ip6 foi informado incorretamente.')
-
+            raise InvalidParameterError(
+                u'O id do rede ip6 foi informado incorretamente.')
 
         url = 'network/ipv6/id/' + str(id_network) + '/'
 
@@ -306,7 +333,8 @@ class Network(GenericClient):
         """
 
         if not is_valid_int_param(id_network_ipv4):
-            raise InvalidParameterError(u'The identifier of NetworkIPv4 is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of NetworkIPv4 is invalid or was not informed.')
 
         url = 'network/ipv4/' + str(id_network_ipv4) + '/deallocate/'
 
@@ -314,7 +342,12 @@ class Network(GenericClient):
 
         return self.response(code, xml)
 
-    def add_network_ipv6(self, id_vlan, id_tipo_rede, id_ambiente_vip=None, prefix=None):
+    def add_network_ipv6(
+            self,
+            id_vlan,
+            id_tipo_rede,
+            id_ambiente_vip=None,
+            prefix=None):
         """
         Add new networkipv6
 
@@ -353,7 +386,7 @@ class Network(GenericClient):
           'descricao': < descricao >,
           'acl_file_name': < acl_file_name >,
           'acl_valida': < acl_valida >,
-          'ativada': < ativada >}} 
+          'ativada': < ativada >}}
 
         :raise TipoRedeNaoExisteError: NetworkType not found.
         :raise InvalidParameterError: Invalid ID for Vlan or NetworkType.
@@ -369,11 +402,17 @@ class Network(GenericClient):
         vlan_map['id_ambiente_vip'] = id_ambiente_vip
         vlan_map['prefix'] = prefix
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', 'network/ipv6/add/')
+        code, xml = self.submit(
+            {'vlan': vlan_map}, 'POST', 'network/ipv6/add/')
 
         return self.response(code, xml)
 
-    def add_network_ipv6_hosts(self, id_vlan, id_tipo_rede, num_hosts, id_ambiente_vip=None):
+    def add_network_ipv6_hosts(
+            self,
+            id_vlan,
+            id_tipo_rede,
+            num_hosts,
+            id_ambiente_vip=None):
         """
         Add new networkipv6
 
@@ -412,7 +451,7 @@ class Network(GenericClient):
           'descricao': < descricao >,
           'acl_file_name': < acl_file_name >,
           'acl_valida': < acl_valida >,
-          'ativada': < ativada >}} 
+          'ativada': < ativada >}}
 
         :raise TipoRedeNaoExisteError: NetworkType not found.
         :raise InvalidParameterError: Invalid ID for Vlan or NetworkType.
@@ -428,7 +467,7 @@ class Network(GenericClient):
         vlan_map['num_hosts'] = num_hosts
         vlan_map['id_ambiente_vip'] = id_ambiente_vip
 
-        code, xml = self.submit({'vlan':vlan_map}, 'PUT', 'network/ipv6/add/')
+        code, xml = self.submit({'vlan': vlan_map}, 'PUT', 'network/ipv6/add/')
 
         return self.response(code, xml)
 
@@ -447,7 +486,8 @@ class Network(GenericClient):
         """
 
         if not is_valid_int_param(id_network_ipv6):
-            raise InvalidParameterError(u'The identifier of NetworkIPv6 is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of NetworkIPv6 is invalid or was not informed.')
 
         url = 'network/ipv6/' + str(id_network_ipv6) + '/deallocate/'
 
@@ -474,9 +514,7 @@ class Network(GenericClient):
         network_map = dict()
         network_map['ids'] = ids
 
-        code, xml = self.submit({'network':network_map}, 'PUT', 'network/remove/')
+        code, xml = self.submit(
+            {'network': network_map}, 'PUT', 'network/remove/')
 
         return self.response(code, xml)
-
-
-

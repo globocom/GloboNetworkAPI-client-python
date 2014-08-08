@@ -7,14 +7,14 @@ version = __import__('networkapiclient').VERSION_STRING
 base_path = os.path.abspath(os.path.join(__file__, '..'))
 
 setup(
-   name = 'GloboNetworkAPI',
-   version = version,
-   description = 'GloboNetworkAPI Client Python',
-   long_description = open(os.path.join(base_path, 'README.rst')).read(),
-   keywords = 'network GloboNetwork GloboNetworkAPI',
-   author = 'Marcus Vinicius Gonçalves Cesário',
-   author_email = 'marcus.vinicius@corp.globo.com',
-   url = 'https://github.com/globocom/GloboNetworkAPI-client-python',
-   license = 'LICENSE.txt',
-   packages = find_packages(),
+    name='GloboNetworkAPI',
+    version=version,
+    description='GloboNetworkAPI Client Python',
+    long_description=open(os.path.join(base_path, 'README.rst')).read(),
+    keywords='network GloboNetwork GloboNetworkAPI',
+    author='Marcus Vinicius Gonçalves Cesário',
+    author_email='marcus.vinicius@corp.globo.com',
+    url='https://github.com/globocom/GloboNetworkAPI-client-python',
+    license='LICENSE.txt',
+    packages=find_packages(),
 )

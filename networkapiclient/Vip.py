@@ -7,11 +7,13 @@ Copyright: ( c )  2009 globo.com todos os direitos reservados.
 
 from networkapiclient.GenericClient import GenericClient
 from networkapiclient.exception import InvalidParameterError
-from networkapiclient.utils import is_valid_int_param , get_list_map
+from networkapiclient.utils import is_valid_int_param, get_list_map
 from networkapiclient.Config import IP_VERSION
 from networkapiclient.Pagination import Pagination
 
+
 class Vip(GenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -20,10 +22,26 @@ class Vip(GenericClient):
         """
         super(Vip, self).__init__(networkapi_url, user, password, user_ldap)
 
-    def criar_requisicao(self, id_ip, id_healthcheck_expect, finalidade, cliente,
-              ambiente, cache, metodo_bal, persistencia, healthcheck_type,
-              healthcheck, timeout, host, maxcon, dsr, bal_ativo, transbordos,
-              reals, portas):
+    def criar_requisicao(
+            self,
+            id_ip,
+            id_healthcheck_expect,
+            finalidade,
+            cliente,
+            ambiente,
+            cache,
+            metodo_bal,
+            persistencia,
+            healthcheck_type,
+            healthcheck,
+            timeout,
+            host,
+            maxcon,
+            dsr,
+            bal_ativo,
+            transbordos,
+            reals,
+            portas):
         """Insere um nova requisição de VIP e retorna o seu identificador.
 
         :param id_ip: Identificador do IP.
@@ -75,17 +93,38 @@ class Vip(GenericClient):
         vip_map['host'] = host
         vip_map['dsr'] = dsr
         vip_map['bal_ativo'] = bal_ativo
-        vip_map['transbordos'] = {'transbordo':transbordos }
-        vip_map['reals'] = {'real':reals}
-        vip_map['portas_servicos'] = {'porta':portas}
+        vip_map['transbordos'] = {'transbordo': transbordos}
+        vip_map['reals'] = {'real': reals}
+        vip_map['portas_servicos'] = {'porta': portas}
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', 'vip/')
+        code, xml = self.submit({'vip': vip_map}, 'POST', 'vip/')
 
         return self.response(code, xml)
 
-    def add(self, id_ipv4, id_ipv6, id_healthcheck_expect, finality, client, environment,
-            cache, method_bal, persistence, healthcheck_type, healthcheck,
-            timeout, host, maxcon, areanegocio, nome_servico, l7_filter, reals, reals_prioritys, reals_weights, ports, rule_id=''):
+    def add(
+            self,
+            id_ipv4,
+            id_ipv6,
+            id_healthcheck_expect,
+            finality,
+            client,
+            environment,
+            cache,
+            method_bal,
+            persistence,
+            healthcheck_type,
+            healthcheck,
+            timeout,
+            host,
+            maxcon,
+            areanegocio,
+            nome_servico,
+            l7_filter,
+            reals,
+            reals_prioritys,
+            reals_weights,
+            ports,
+            rule_id=''):
         """Inserts a new request VIP and returns its identifier.
 
         :param id_ipv4: Identifier of the IPv4. Integer value and greater than zero.
@@ -114,7 +153,7 @@ class Vip(GenericClient):
         :return: Dictionary with the following structure:
 
         ::
-        
+
             {'requisicao_vip': {'id': < id_da_requisicao_vip >}}
 
         :raise InvalidParameterError: IP identifier is null and invalid.
@@ -145,20 +184,43 @@ class Vip(GenericClient):
         vip_map['areanegocio'] = areanegocio
         vip_map['nome_servico'] = nome_servico
         vip_map['l7_filter'] = l7_filter
-        vip_map['reals'] = {'real':reals}
-        vip_map['reals_prioritys'] = {'reals_priority':reals_prioritys}
-        vip_map['reals_weights'] = {'reals_weight':reals_weights}
-        vip_map['portas_servicos'] = {'porta':ports}
+        vip_map['reals'] = {'real': reals}
+        vip_map['reals_prioritys'] = {'reals_priority': reals_prioritys}
+        vip_map['reals_weights'] = {'reals_weight': reals_weights}
+        vip_map['portas_servicos'] = {'porta': ports}
         vip_map['rule_id'] = rule_id
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', 'requestvip/')
+        code, xml = self.submit({'vip': vip_map}, 'POST', 'requestvip/')
 
         return self.response(code, xml)
 
-
-    def alter(self, id_vip, id_ipv4, id_ipv6, id_healthcheck_expect, validated, vip_created, finality, client, environment,
-            cache, method_bal, persistence, healthcheck_type, healthcheck,
-            timeout, host, maxcon, areanegocio, nome_servico, l7_filter, reals, reals_prioritys, reals_weights, ports, rule_id=''):
+    def alter(
+            self,
+            id_vip,
+            id_ipv4,
+            id_ipv6,
+            id_healthcheck_expect,
+            validated,
+            vip_created,
+            finality,
+            client,
+            environment,
+            cache,
+            method_bal,
+            persistence,
+            healthcheck_type,
+            healthcheck,
+            timeout,
+            host,
+            maxcon,
+            areanegocio,
+            nome_servico,
+            l7_filter,
+            reals,
+            reals_prioritys,
+            reals_weights,
+            ports,
+            rule_id=''):
         """Change VIP from by the identifier.
 
         :param id_vip: Identifier of the VIP. Integer value and greater than zero.
@@ -201,7 +263,8 @@ class Vip(GenericClient):
         """
 
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         vip_map = dict()
         vip_map['id_ipv4'] = id_ipv4
@@ -223,19 +286,26 @@ class Vip(GenericClient):
         vip_map['areanegocio'] = areanegocio
         vip_map['nome_servico'] = nome_servico
         vip_map['l7_filter'] = l7_filter
-        vip_map['reals'] = {'real':reals}
-        vip_map['reals_prioritys'] = {'reals_priority':reals_prioritys}
-        vip_map['reals_weights'] = {'reals_weight':reals_weights}
-        vip_map['portas_servicos'] = {'porta':ports}
+        vip_map['reals'] = {'real': reals}
+        vip_map['reals_prioritys'] = {'reals_priority': reals_prioritys}
+        vip_map['reals_weights'] = {'reals_weight': reals_weights}
+        vip_map['portas_servicos'] = {'porta': ports}
         vip_map['rule_id'] = rule_id
 
         url = 'requestvip/' + str(id_vip) + '/'
 
-        code, xml = self.submit({'vip':vip_map}, 'PUT', url)
+        code, xml = self.submit({'vip': vip_map}, 'PUT', url)
 
         return self.response(code, xml)
 
-    def edit_reals(self, id_vip, method_bal, reals, reals_prioritys, reals_weights, alter_priority=0):
+    def edit_reals(
+            self,
+            id_vip,
+            method_bal,
+            reals,
+            reals_prioritys,
+            reals_weights,
+            alter_priority=0):
         """Execute the script 'gerador_vips' several times with options -real, -add and -del to adjust vip request reals.
 
         :param id_vip: Identifier of the VIP. Integer value and greater than zero.
@@ -268,23 +338,30 @@ class Vip(GenericClient):
         """
 
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         vip_map = dict()
         vip_map['vip_id'] = id_vip
 #        vip_map['metodo_bal'] = method_bal
-        vip_map['reals'] = {'real':reals}
-        vip_map['reals_prioritys'] = {'reals_priority':reals_prioritys}
-        vip_map['reals_weights'] = {'reals_weight':reals_weights}
+        vip_map['reals'] = {'real': reals}
+        vip_map['reals_prioritys'] = {'reals_priority': reals_prioritys}
+        vip_map['reals_weights'] = {'reals_weight': reals_weights}
         vip_map['alter_priority'] = alter_priority
 
         url = 'vip/real/edit/'
 
-        code, xml = self.submit({'vip':vip_map}, 'PUT', url)
+        code, xml = self.submit({'vip': vip_map}, 'PUT', url)
 
         return self.response(code, xml)
 
-    def adicionar_real(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def adicionar_real(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - add.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -297,7 +374,7 @@ class Vip(GenericClient):
 
         ::
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -321,11 +398,17 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def add_real_ipv6(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def add_real_ipv6(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - add.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -339,7 +422,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -363,11 +446,17 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def habilitar_real(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def habilitar_real(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - ena.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -381,7 +470,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -406,11 +495,17 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def enable_real_ipv6(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def enable_real_ipv6(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - ena.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -424,7 +519,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -449,11 +544,17 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def desabilitar_real(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def desabilitar_real(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - dis.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -467,7 +568,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -492,11 +593,17 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def disable_real_ipv6(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def disable_real_ipv6(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - dis.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -510,7 +617,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -535,11 +642,17 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def checar_real(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def checar_real(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - chk.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -553,7 +666,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is none or invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -578,11 +691,17 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def check_real_ipv6(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def check_real_ipv6(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - chk.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -596,7 +715,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -621,7 +740,7 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
@@ -638,7 +757,8 @@ class Vip(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'Vip request identifier is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Vip request identifier is invalid or was not informed.')
 
         url = 'vip/delete/' + str(id_vip) + '/'
 
@@ -659,7 +779,8 @@ class Vip(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'Vip request identifier is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Vip request identifier is invalid or was not informed.')
 
         url = 'vip/validate/' + str(id_vip) + '/'
 
@@ -667,7 +788,13 @@ class Vip(GenericClient):
 
         return self.response(code, xml)
 
-    def remover_real(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def remover_real(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - del.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -681,7 +808,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -705,11 +832,17 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def remove_real_ipv6(self, vip_id, ip_id, equip_id, port_vip=None, port_real=None):
+    def remove_real_ipv6(
+            self,
+            vip_id,
+            ip_id,
+            equip_id,
+            port_vip=None,
+            port_real=None):
         """Execute the script 'gerador_vips' with option - del.
 
         :param vip_id: Identifier of the Request VIP. Integer value and greater than zero.
@@ -723,7 +856,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: The identifier of Request VIP , Equipament, or IP is null and invalid.
         :raise EquipamentoNaoExisteError: Equipament not registered.
@@ -747,14 +880,33 @@ class Vip(GenericClient):
 
         url = 'vip/real/'
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
-    def alterar(self, id_vip, id_ip, id_healthcheck_expect, validado, vip_criado, finalidade, cliente,
-                ambiente, cache, metodo_bal, persistencia, healthcheck_type,
-                healthcheck, timeout, host, maxcon, dsr, bal_ativo,
-                transbordos, reals, portas_servicos):
+    def alterar(
+            self,
+            id_vip,
+            id_ip,
+            id_healthcheck_expect,
+            validado,
+            vip_criado,
+            finalidade,
+            cliente,
+            ambiente,
+            cache,
+            metodo_bal,
+            persistencia,
+            healthcheck_type,
+            healthcheck,
+            timeout,
+            host,
+            maxcon,
+            dsr,
+            bal_ativo,
+            transbordos,
+            reals,
+            portas_servicos):
         """Altera uma requisição de VIP a partir do seu identificador.
 
         :param id_vip: Identificador da requisição de VIP.
@@ -792,7 +944,8 @@ class Vip(GenericClient):
         :raise XMLError: Falha na networkapi ao ler o XML de requisição ou gerar o XML de resposta.
         """
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'O identificador do vip é inválido ou não foi informado.')
+            raise InvalidParameterError(
+                u'O identificador do vip é inválido ou não foi informado.')
 
         vip_map = dict()
         vip_map['id_ip'] = id_ip
@@ -812,13 +965,13 @@ class Vip(GenericClient):
         vip_map['host'] = host
         vip_map['dsr'] = dsr
         vip_map['bal_ativo'] = bal_ativo
-        vip_map['transbordos'] = {'transbordo':transbordos }
-        vip_map['reals'] = {'real':reals}
-        vip_map['portas_servicos'] = {'porta':portas_servicos}
+        vip_map['transbordos'] = {'transbordo': transbordos}
+        vip_map['reals'] = {'real': reals}
+        vip_map['portas_servicos'] = {'porta': portas_servicos}
 
         url = 'vip/' + str(id_vip) + '/'
 
-        code, xml = self.submit({'vip':vip_map}, 'PUT', url)
+        code, xml = self.submit({'vip': vip_map}, 'PUT', url)
 
         return self.response(code, xml)
 
@@ -852,7 +1005,7 @@ class Vip(GenericClient):
             ‘vip_criado’: < vip_criado >,
             ‘id_ip’: < id_ip >,
             ‘id_ipv6’: < id_ipv6 >,
-            ‘id_healthcheck_expect’: < id_healthcheck_expect >}} 
+            ‘id_healthcheck_expect’: < id_healthcheck_expect >}}
 
         :raise VipNaoExisteError: Requisição de VIP não cadastrada.
         :raise InvalidParameterError: O identificador da requisição de VIP é nulo ou inválido.
@@ -860,7 +1013,8 @@ class Vip(GenericClient):
         :raise XMLError: Falha na networkapi ao gerar o XML de resposta.
         """
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'O identificador do vip é inválido ou não foi informado.')
+            raise InvalidParameterError(
+                u'O identificador do vip é inválido ou não foi informado.')
 
         url = 'vip/' + str(id_vip) + '/'
 
@@ -882,7 +1036,7 @@ class Vip(GenericClient):
             'descricao':<descricao>,
             'equipamento':<equipamentos>,
             'criado':<criado>,
-            'is_more':<is_more>, ... too vips ... } } 
+            'is_more':<is_more>, ... too vips ... } }
 
         :raise VipNaoExisteError: No request for registered VIP.
         :raise DataBaseError: Can't connect to networkapi database.
@@ -903,10 +1057,13 @@ class Vip(GenericClient):
         vip_map['ip'] = ip
         vip_map['create'] = create
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         key = "vip"
-        return get_list_map(self.response(code, xml, ["equipments", "environments", "ips"]), key)
+        return get_list_map(
+            self.response(
+                code, xml, [
+                    "equipments", "environments", "ips"]), key)
 
     def get_by_id(self, id_vip):
         """Get VIPs by id.
@@ -926,7 +1083,7 @@ class Vip(GenericClient):
             'ipv6_description':<descricao ipv6>,
             'variaveis':<variaveis>,
             ‘id_healthcheck_expect’: < id_healthcheck_expect >,
-            ‘cache’: < cache >, } } 
+            ‘cache’: < cache >, } }
 
         :raise VipNaoExisteError: No request for registered VIP.
         :raise DataBaseError: Can't connect to networkapi database.
@@ -938,7 +1095,10 @@ class Vip(GenericClient):
         code, xml = self.submit(None, 'GET', url)
 
         key = "vip"
-        return get_list_map(self.response(code, xml, ["equipamento", "ips"]), key)
+        return get_list_map(
+            self.response(
+                code, xml, [
+                    "equipamento", "ips"]), key)
 
     def get_all(self):
         """Get all VIPs.
@@ -968,7 +1128,7 @@ class Vip(GenericClient):
             ‘vip_criado’: < vip_criado >,
             ‘id_ip’: < id_ip >,
             ‘id_ipv6’: < id_ipv6 >,
-            ‘id_healthcheck_expect’: < id_healthcheck_expect >} ... too vips ... } 
+            ‘id_healthcheck_expect’: < id_healthcheck_expect >} ... too vips ... }
 
         :raise VipNaoExisteError: No request for registered VIP.
         :raise DataBaseError: Can't connect to networkapi database.
@@ -993,7 +1153,7 @@ class Vip(GenericClient):
 
             {'ips': [ {'vips': '[< id >, < id >]', 'oct4': < oct4 >, 'oct2': < oct2 >,
             'oct3': < oct3 >, 'oct1': < oct1 >, 'networkipv4': < networkipv4 >,
-            'id': <id >, 'descricao': < descricao >}, ... ] } 
+            'id': <id >, 'descricao': < descricao >}, ... ] }
 
         :raise VipNaoExisteError: No request for registered VIP.
         :raise DataBaseError: Can't connect to networkapi database.
@@ -1006,7 +1166,7 @@ class Vip(GenericClient):
         vip_map['ipv4'] = ipv4
         vip_map['all_prop'] = all_prop
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml, ['vips'])
 
@@ -1023,7 +1183,7 @@ class Vip(GenericClient):
             {'ips': [ {'vips': '[< id >, < id >]', 'block4': < block4 >, 'block2': < block2 >,
             'block3': < block3 >, 'block1': < block1 >, 'block5': < block5 >,
             'block6': < block6 >, 'block7': < block7 >, 'block8': < block8 >,
-            'networkipv6': < networkipv6 >, 'id': <id >, 'descricao': < descricao >}, ... ] } 
+            'networkipv6': < networkipv6 >, 'id': <id >, 'descricao': < descricao >}, ... ] }
 
         :raise VipNaoExisteError: No request for registered VIP.
         :raise DataBaseError: Can't connect to networkapi database.
@@ -1036,7 +1196,7 @@ class Vip(GenericClient):
         vip_map['ipv6'] = ipv6
         vip_map['all_prop'] = all_prop
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
@@ -1055,7 +1215,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VipNaoExisteError: Requisição de VIP não cadastrada.
         :raise VipError: Se o VIP não está validado ou já está criado.
@@ -1070,7 +1230,7 @@ class Vip(GenericClient):
         vip_map = dict()
         vip_map['id_vip'] = id_vip
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
@@ -1089,7 +1249,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VipNaoExisteError: Requisição de VIP não cadastrada.
         :raise VipError: Se o VIP não está validado ou não está criado.
@@ -1104,7 +1264,7 @@ class Vip(GenericClient):
         vip_map = dict()
         vip_map['id_vip'] = id_vip
 
-        code, xml = self.submit({'vip':vip_map}, 'POST', url)
+        code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
         return self.response(code, xml)
 
@@ -1119,7 +1279,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VipNaoExisteError: Request VIP not registered.
         :raise InvalidParameterError: Identifier of the request is invalid or null VIP.
@@ -1141,10 +1301,12 @@ class Vip(GenericClient):
         """
 
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         if not is_valid_int_param(maxcon):
-            raise InvalidParameterError(u'The maxcon is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The maxcon is invalid or was not informed.')
 
         url = 'vip/' + str(id_vip) + '/maxcon/' + str(maxcon) + '/'
 
@@ -1152,7 +1314,12 @@ class Vip(GenericClient):
 
         return self.response(code, xml)
 
-    def alter_healthcheck(self, id_vip, healthcheck_type, healthcheck=None, id_healthcheck_expect=None):
+    def alter_healthcheck(
+            self,
+            id_vip,
+            healthcheck_type,
+            healthcheck=None,
+            id_healthcheck_expect=None):
         """Change VIP's healthcheck config by the identifier.
 
         :param id_vip: Identifier of the request VIP.
@@ -1165,7 +1332,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VipNaoExisteError: Request VIP not registered.
         :raise InvalidParameterError: Identifier of the request is invalid or null VIP.
@@ -1187,7 +1354,8 @@ class Vip(GenericClient):
         """
 
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         url = 'vip/' + str(id_vip) + '/healthcheck/'
 
@@ -1196,7 +1364,7 @@ class Vip(GenericClient):
         vip_map['healthcheck'] = healthcheck
         vip_map['id_healthcheck_expect'] = id_healthcheck_expect
 
-        code, xml = self.submit({'vip':vip_map}, 'PUT', url)
+        code, xml = self.submit({'vip': vip_map}, 'PUT', url)
 
         return self.response(code, xml)
 
@@ -1211,7 +1379,7 @@ class Vip(GenericClient):
         ::
 
             {‘sucesso’: {‘codigo’: < codigo >,
-            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VipNaoExisteError: Request VIP not registered.
         :raise InvalidParameterError: Identifier of the request is invalid or null VIP.
@@ -1220,14 +1388,15 @@ class Vip(GenericClient):
         """
 
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         url = 'vip/' + str(id_vip) + '/priority/'
 
         vip_map = dict()
-        vip_map['reals_prioritys'] = {'reals_priority':reals_prioritys}
+        vip_map['reals_prioritys'] = {'reals_priority': reals_prioritys}
 
-        code, xml = self.submit({'vip':vip_map}, 'PUT', url)
+        code, xml = self.submit({'vip': vip_map}, 'PUT', url)
 
         return self.response(code, xml)
 
@@ -1242,7 +1411,7 @@ class Vip(GenericClient):
 
             ::
 
-                { 'sucesso': 'sucesso' } 
+                { 'sucesso': 'sucesso' }
 
             :raise ScriptError: Failed to execute script.
             :raise UserNotAuthorizedError: User dont have permition.
@@ -1255,11 +1424,16 @@ class Vip(GenericClient):
         vip_map['l7_filter'] = filter_l7
         vip_map['rule_id'] = rule_id
 
-        code, xml = self.submit({'vip':vip_map}, 'PUT', url)
+        code, xml = self.submit({'vip': vip_map}, 'PUT', url)
 
         return self.response(code, xml)
 
-    def valid_real_server(self, ip, name_equipment , id_environment_vip, valid=True):
+    def valid_real_server(
+            self,
+            ip,
+            name_equipment,
+            id_environment_vip,
+            valid=True):
         """Valid Real Server
 
         :param ip: IPv4 or Ipv6. 'xxx.xxx.xxx.xxx or xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx'
@@ -1275,7 +1449,7 @@ class Vip(GenericClient):
             'equipment': {'grupos': < grupos >, 'tipo_equipamento': < equipamento >, 'modelo': < modelo >, 'id': < id >, 'nome': < nome >}}
             or 'ip': {'block0': < block0 >, 'block1': < block1 >, 'block2: < block2 >, 'block3': < block3 >, 'block4': < block4 >, 'block5': < block5 >, 'block6': < block6 >, 'block7': < block7 >,, 'version': < version >, 'networkipv6': < networkipv6 >, 'id': < id >, 'descricao': < descricao >},
             'environmentvip': {'cliente_txt': < cliente_txt >, 'id': < id >, 'finalidade_txt': < finalidade_txt >, 'ambiente_p44_txt': < ambiente_p44_txt >},
-            'equipment': {'grupos': < grupos >, 'tipo_equipamento': < equipamento >, 'modelo': < modelo >, 'id': < id >, 'nome': < nome > }}   
+            'equipment': {'grupos': < grupos >, 'tipo_equipamento': < equipamento >, 'modelo': < modelo >, 'id': < id >, 'nome': < nome > }}
 
         :raise InvalidParameterError: The value of id_environment_vip, ip or equip is invalid.
         :raise EnvironmentVipNotFoundError: Environment VIP not registered.
@@ -1294,7 +1468,7 @@ class Vip(GenericClient):
 
         url = "vip/real/valid/"
 
-        code, xml = self.submit({'real':real_map}, 'POST', url)
+        code, xml = self.submit({'real': real_map}, 'POST', url)
 
         return self.response(code, xml)
 
@@ -1308,14 +1482,15 @@ class Vip(GenericClient):
 
         ::
 
-            {'vip' : {'applied_l7_datetime': < applied_l7_datetime >, 'filter_rollback': < filter_rollback >, 'l7_filter': < l7_filter >, 'filter_applied': < filter_applied >, 'filter_valid': < filter_valid > }} 
+            {'vip' : {'applied_l7_datetime': < applied_l7_datetime >, 'filter_rollback': < filter_rollback >, 'l7_filter': < l7_filter >, 'filter_applied': < filter_applied >, 'filter_valid': < filter_valid > }}
 
         :raise UserNotAuthorizedError: User dont have permition.
         :raise DataBaseError: Networkapi failed to access the database.
         :raise XMLError: Networkapi failed to generate the XML response.
         """
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         url = 'vip/l7/' + str(id_vip) + '/'
 
@@ -1329,10 +1504,10 @@ class Vip(GenericClient):
         :param id_vip: Vip request id
 
         :return: Dictionary with the following structure:
-        
+
         ::
 
-            {'sucesso': 'sucesso'} 
+            {'sucesso': 'sucesso'}
 
         :raise UserNotAuthorizedError: User dont have permition.
         :raise DataBaseError: Networkapi failed to access the database.
@@ -1340,7 +1515,8 @@ class Vip(GenericClient):
         """
 
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         url = 'vip/l7/' + str(id_vip) + '/validate/'
 
@@ -1357,7 +1533,7 @@ class Vip(GenericClient):
 
         ::
 
-            {'sucesso': { 'codigo': < code >, 'descricao': {'stderr': < terminal output >, 'stdout': < code > }}} 
+            {'sucesso': { 'codigo': < code >, 'descricao': {'stderr': < terminal output >, 'stdout': < code > }}}
 
         :raise UserNotAuthorizedError: User dont have permition.
         :raise ScriptError: Failed to execute script.
@@ -1366,7 +1542,8 @@ class Vip(GenericClient):
         """
 
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         url = 'vip/l7/' + str(id_vip) + '/apply/'
 
@@ -1383,7 +1560,7 @@ class Vip(GenericClient):
 
         ::
 
-            {'sucesso': { 'codigo': < code >, 'descricao': {'stderr': < terminal output >, 'stdout': < code > }}} 
+            {'sucesso': { 'codigo': < code >, 'descricao': {'stderr': < terminal output >, 'stdout': < code > }}}
 
         :raise UserNotAuthorizedError: User dont have permition.
         :raise ScriptError: Failed to execute script.
@@ -1392,7 +1569,8 @@ class Vip(GenericClient):
         """
 
         if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(u'The identifier of vip is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
 
         url = 'vip/l7/' + str(id_vip) + '/rollback/'
 
@@ -1411,7 +1589,7 @@ class Vip(GenericClient):
 
         ::
 
-            {'sucesso': {'codigo': < code >, 'descricao': < descricao >}} 
+            {'sucesso': {'codigo': < code >, 'descricao': < descricao >}}
 
         :raise VipRequestBlockAlreadyInRule: Block is already in rule.
         :raise VipRequestNoBlockInRule: Rule don't have any block associated.
@@ -1422,10 +1600,9 @@ class Vip(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
 
-        url = 'vip/add_block/' + str(id_vip) + '/' + str(id_block) + '/' + str(override)
+        url = 'vip/add_block/' + \
+            str(id_vip) + '/' + str(id_block) + '/' + str(override)
 
         code, xml = self.submit(None, 'GET', url)
 
         return self.response(code, xml)
-
-

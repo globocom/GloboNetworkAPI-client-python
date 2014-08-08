@@ -13,6 +13,7 @@ from Config import IP_VERSION
 
 
 class Vlan(GenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -37,7 +38,8 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'The identifier of Vlan is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/%s/invalidate/%s/' % (str(id_vlan), IP_VERSION.IPv4[0])
 
@@ -61,7 +63,8 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'The identifier of Vlan is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/%s/invalidate/%s/' % (str(id_vlan), IP_VERSION.IPv6[0])
 
@@ -69,7 +72,18 @@ class Vlan(GenericClient):
 
         return self.response(code, xml)
 
-    def find_vlans(self, number, name, iexact, environment, net_type, network, ip_version, subnet, acl, pagination):
+    def find_vlans(
+            self,
+            number,
+            name,
+            iexact,
+            environment,
+            net_type,
+            network,
+            ip_version,
+            subnet,
+            acl,
+            pagination):
         """
         Find vlans by all search parameters
 
@@ -101,7 +115,7 @@ class Vlan(GenericClient):
           'ambiente_name': < divisao_dc-ambiente_logico-grupo_l3 >
           'redeipv4': [ { all networkipv4 related } ],
           'redeipv6': [ { all networkipv6 related } ] },
-          'total': {< total_registros >} } 
+          'total': {< total_registros >} }
 
         :raise InvalidParameterError: Some parameter was invalid.
         :raise DataBaseError: Networkapi failed to access the database.
@@ -109,7 +123,8 @@ class Vlan(GenericClient):
         """
 
         if not isinstance(pagination, Pagination):
-            raise InvalidParameterError(u"Invalid parameter: pagination must be a class of type 'Pagination'.")
+            raise InvalidParameterError(
+                u"Invalid parameter: pagination must be a class of type 'Pagination'.")
 
         vlan_map = dict()
 
@@ -134,7 +149,10 @@ class Vlan(GenericClient):
         code, xml = self.submit({"vlan": vlan_map}, "POST", url)
 
         key = "vlan"
-        return get_list_map(self.response(code, xml, [key, "redeipv4", "redeipv6", "equipamentos"]), key)
+        return get_list_map(
+            self.response(
+                code, xml, [
+                    key, "redeipv4", "redeipv6", "equipamentos"]), key)
 
     def list_all(self):
         """
@@ -145,7 +163,7 @@ class Vlan(GenericClient):
         ::
 
           {'vlan': [{'id': < id_vlan >,
-          'name': < nome_vlan >} {... demais vlans ...} ] } 
+          'name': < nome_vlan >} {... demais vlans ...} ] }
 
         :raise DataBaseError: Networkapi failed to access the database.
         :raise XMLError: Networkapi failed to generate the XML response.
@@ -188,7 +206,7 @@ class Vlan(GenericClient):
           'mascara_oct2': < mascara_oct2 >,
           'mascara_oct3': < mascara_oct3 >,
           'mascara_oct4': < mascara_oct4 >,
-          'broadcast': < broadcast >,} , ... other vlans ... ]} 
+          'broadcast': < broadcast >,} , ... other vlans ... ]}
 
         :raise InvalidParameterError: Environment id is none or invalid.
         :raise DataBaseError: Networkapi failed to access the database.
@@ -204,7 +222,13 @@ class Vlan(GenericClient):
         key = 'vlan'
         return get_list_map(self.response(code, xml, [key]), key)
 
-    def alocar(self, nome, id_tipo_rede, id_ambiente, descricao, id_ambiente_vip=None):
+    def alocar(
+            self,
+            nome,
+            id_tipo_rede,
+            id_ambiente,
+            descricao,
+            id_ambiente_vip=None):
         """Inserts a new VLAN.
 
         :param nome: Name of Vlan. String with a maximum of 50 characters.
@@ -235,7 +259,7 @@ class Vlan(GenericClient):
           'descricao': < descricao >,
           'acl_file_name': < acl_file_name >,
           'acl_valida': < acl_valida >,
-          'ativada': < ativada >}} 
+          'ativada': < ativada >}}
 
         :raise VlanError: VLAN name already exists, VLAN name already exists, DC division of the environment invalid or does not exist VLAN number available.
         :raise VlanNaoExisteError: VLAN not found.
@@ -256,11 +280,20 @@ class Vlan(GenericClient):
         vlan_map['descricao'] = descricao
         vlan_map['id_ambiente_vip'] = id_ambiente_vip
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', 'vlan/')
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', 'vlan/')
 
         return self.response(code, xml)
 
-    def insert_vlan(self, environment_id, name, number, description, acl_file, acl_file_v6, network_ipv4, network_ipv6):
+    def insert_vlan(
+            self,
+            environment_id,
+            name,
+            number,
+            description,
+            acl_file,
+            acl_file_v6,
+            network_ipv4,
+            network_ipv6):
         """Create new VLAN
 
         :param environment_id: ID for Environment.
@@ -285,7 +318,7 @@ class Vlan(GenericClient):
           'acl_valida': < acl_valida >,
           'ativada': < ativada >
           'acl_file_name_v6': < acl_file_name_v6 >,
-          'acl_valida_v6': < acl_valida_v6 >, } } 
+          'acl_valida_v6': < acl_valida_v6 >, } }
 
         :raise VlanError: VLAN name already exists, VLAN name already exists, DC division of the environment invalid or does not exist VLAN number available.
         :raise VlanNaoExisteError: VLAN not found.
@@ -311,11 +344,19 @@ class Vlan(GenericClient):
         vlan_map['network_ipv4'] = network_ipv4
         vlan_map['network_ipv6'] = network_ipv6
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', 'vlan/insert/')
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', 'vlan/insert/')
 
         return self.response(code, xml)
 
-    def edit_vlan(self, environment_id, name, number, description, acl_file, acl_file_v6, id_vlan):
+    def edit_vlan(
+            self,
+            environment_id,
+            name,
+            number,
+            description,
+            acl_file,
+            acl_file_v6,
+            id_vlan):
         """Edit a VLAN
 
         :param id_vlan: ID for Vlan
@@ -337,7 +378,8 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'Vlan id is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Vlan id is invalid or was not informed.')
 
         if not is_valid_int_param(environment_id):
             raise InvalidParameterError(u'Environment id is none or invalid.')
@@ -354,7 +396,7 @@ class Vlan(GenericClient):
         vlan_map['acl_file_v6'] = acl_file_v6
         vlan_map['number'] = number
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', 'vlan/edit/')
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', 'vlan/edit/')
 
         return self.response(code, xml)
 
@@ -370,7 +412,7 @@ class Vlan(GenericClient):
 
         vlan_map['vlan_id'] = id_vlan
 
-        code, xml = self.submit({'vlan':vlan_map}, 'PUT', 'vlan/create/')
+        code, xml = self.submit({'vlan': vlan_map}, 'PUT', 'vlan/create/')
 
         return self.response(code, xml)
 
@@ -394,7 +436,7 @@ class Vlan(GenericClient):
           'acl_valida': < acl_valida >,
           'acl_file_name_v6': < acl_file_name_v6 >,
           'acl_valida_v6': < acl_valida_v6 >,
-          'ativada': < ativada > } } 
+          'ativada': < ativada > } }
 
         :raise VlanError: Duplicate name of VLAN, division DC of Environment not found/invalid or VLAN number not available.
         :raise AmbienteNaoExisteError: Environment not found.
@@ -407,7 +449,7 @@ class Vlan(GenericClient):
         vlan_map['name'] = name
         vlan_map['description'] = description
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', 'vlan/no-network/')
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', 'vlan/no-network/')
 
         return self.response(code, xml)
 
@@ -425,7 +467,7 @@ class Vlan(GenericClient):
         ::
 
           {‘sucesso’: {‘codigo’: < codigo >,
-          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VlanNaoExisteError: VLAN does not exist.
         :raise InvalidParameterError: Vlan id is invalid or none.
@@ -440,7 +482,8 @@ class Vlan(GenericClient):
         :raise ScriptError: Failed to run the script.
         """
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'Vlan id is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/add/'
 
@@ -448,7 +491,7 @@ class Vlan(GenericClient):
         vlan_map['nome'] = nome_equipamento
         vlan_map['nome_interface'] = nome_interface
 
-        code, xml = self.submit({'equipamento':vlan_map}, 'PUT', url)
+        code, xml = self.submit({'equipamento': vlan_map}, 'PUT', url)
 
         return self.response(code, xml)
 
@@ -466,7 +509,7 @@ class Vlan(GenericClient):
         ::
 
           {‘sucesso’: {‘codigo’: < codigo >,
-          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VlanNaoExisteError: VLAN does not exist.
         :raise InvalidParameterError: VLAN id is none or invalid.
@@ -481,7 +524,8 @@ class Vlan(GenericClient):
         :raise ScriptError: Failed to run the script.
         """
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'Vlan id is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/del/'
 
@@ -489,7 +533,7 @@ class Vlan(GenericClient):
         vlan_map['nome'] = nome_equipamento
         vlan_map['nome_interface'] = nome_interface
 
-        code, xml = self.submit({'equipamento':vlan_map}, 'PUT', url)
+        code, xml = self.submit({'equipamento': vlan_map}, 'PUT', url)
 
         return self.response(code, xml)
 
@@ -510,7 +554,7 @@ class Vlan(GenericClient):
         ::
 
           {‘sucesso’: {‘codigo’: < codigo >,
-          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VlanNaoExisteError: VLAN does not exist.
         :raise InvalidParameterError: VLAN id is none or invalid.
@@ -524,7 +568,8 @@ class Vlan(GenericClient):
         :raise ScriptError: Failed to run the script.
         """
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'Vlan id is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/check/'
 
@@ -532,7 +577,7 @@ class Vlan(GenericClient):
         vlan_map['nome'] = nome_equipamento
         vlan_map['nome_interface'] = nome_interface
 
-        code, xml = self.submit({'equipamento':vlan_map}, 'PUT', url)
+        code, xml = self.submit({'equipamento': vlan_map}, 'PUT', url)
 
         return self.response(code, xml)
 
@@ -592,7 +637,7 @@ class Vlan(GenericClient):
           'acl_valida': < acl_valida >,
           'acl_file_name_v6': < acl_file_name_v6 >,
           'acl_valida_v6': < acl_valida_v6 >,
-          'ativada': < ativada >}} 
+          'ativada': < ativada >}}
 
         :raise VlanNaoExisteError: VLAN does not exist.
         :raise InvalidParameterError: VLAN id is none or invalid.
@@ -600,7 +645,8 @@ class Vlan(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'Vlan id is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/'
 
@@ -629,7 +675,7 @@ class Vlan(GenericClient):
           'acl_valida_v6': < acl_valida_v6 >,
           'ativada': < ativada >,
           'redeipv4': [ { all networkipv4 related } ],
-          'redeipv6': [ { all networkipv6 related } ] } } 
+          'redeipv6': [ { all networkipv6 related } ] } }
 
         :raise InvalidParameterError: Invalid ID for VLAN.
         :raise VlanNaoExisteError: VLAN not found.
@@ -637,13 +683,18 @@ class Vlan(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'Parameter id_vlan is invalid. Value: ' + id_vlan)
+            raise InvalidParameterError(
+                u'Parameter id_vlan is invalid. Value: ' +
+                id_vlan)
 
         url = 'vlan/' + str(id_vlan) + '/network/'
 
         code, xml = self.submit(None, 'GET', url)
 
-        return get_list_map(self.response(code, xml, ['redeipv4', 'redeipv6']), 'vlan')
+        return get_list_map(
+            self.response(
+                code, xml, [
+                    'redeipv4', 'redeipv6']), 'vlan')
 
     def listar_permissao(self, nome_equipamento, nome_interface):
         """List all VLANS having communication permission to trunk from a port in switch.
@@ -667,7 +718,7 @@ class Vlan(GenericClient):
         ::
 
           {‘sucesso’: {‘codigo’: < codigo >,
-          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: Equipment name and/or interface name is invalid or none.
         :raise EquipamentoNaoExisteError: Equipment does not exist.
@@ -682,7 +733,7 @@ class Vlan(GenericClient):
         vlan_map['nome'] = nome_equipamento
         vlan_map['nome_interface'] = nome_interface
 
-        code, xml = self.submit({'equipamento':vlan_map}, 'PUT', 'vlan/list/')
+        code, xml = self.submit({'equipamento': vlan_map}, 'PUT', 'vlan/list/')
 
         return self.response(code, xml)
 
@@ -696,7 +747,7 @@ class Vlan(GenericClient):
         ::
 
           {‘sucesso’: {‘codigo’: < codigo >,
-          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise VlanNaoExisteError: VLAN does not exist.
         :raise EquipamentoNaoExisteError: Equipment in list does not exist.
@@ -709,11 +760,12 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'Vlan id is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/criar/'
 
-        code, xml = self.submit({'vlan':None}, 'PUT', url)
+        code, xml = self.submit({'vlan': None}, 'PUT', url)
 
         return self.response(code, xml)
 
@@ -727,7 +779,7 @@ class Vlan(GenericClient):
         ::
 
           {‘sucesso’: {‘codigo’: < codigo >,
-          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise NetworkIPv4NaoExisteError: NetworkIPv4 not found.
         :raise EquipamentoNaoExisteError: Equipament in list not found.
@@ -744,7 +796,7 @@ class Vlan(GenericClient):
         vlan_map = dict()
         vlan_map['id_network_ip'] = id_network_ipv4
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', url)
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', url)
 
         return self.response(code, xml)
 
@@ -758,7 +810,7 @@ class Vlan(GenericClient):
         ::
 
           {‘sucesso’: {‘codigo’: < codigo >,
-          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise NetworkIPv6NaoExisteError: NetworkIPv6 not found.
         :raise EquipamentoNaoExisteError: Equipament in list not found.
@@ -775,7 +827,7 @@ class Vlan(GenericClient):
         vlan_map = dict()
         vlan_map['id_network_ip'] = id_network_ipv6
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', url)
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', url)
 
         return self.response(code, xml)
 
@@ -800,7 +852,7 @@ class Vlan(GenericClient):
 
         url = 'vlan/apply/acl/'
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', url)
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', url)
 
         return self.response(code, xml)
 
@@ -819,7 +871,8 @@ class Vlan(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
 
-        url = 'vlan/confirm/' + str(number_net) + '/' + id_environment_vlan + '/' + str(ip_version)
+        url = 'vlan/confirm/' + \
+            str(number_net) + '/' + id_environment_vlan + '/' + str(ip_version)
 
         code, xml = self.submit(None, 'GET', url)
 
@@ -841,7 +894,8 @@ class Vlan(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
 
-        url = 'vlan/check_number_available/' + str(id_environment) + '/' + str(num_vlan) + '/' + str(id_vlan)
+        url = 'vlan/check_number_available/' + \
+            str(id_environment) + '/' + str(num_vlan) + '/' + str(id_vlan)
 
         code, xml = self.submit(None, 'GET', url)
 
@@ -863,7 +917,8 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'The identifier of Vlan is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/validate/' + IP_VERSION.IPv4[0] + "/"
 
@@ -887,7 +942,8 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'The identifier of Vlan is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/validate/' + IP_VERSION.IPv6[0] + "/"
 
@@ -906,7 +962,7 @@ class Vlan(GenericClient):
         ::
 
           {‘sucesso’: {‘codigo’: < codigo >,
-          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}} 
+          ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
 
         :raise InvalidParameterError: Identifier of the VLAN is invalid.
         :raise VlanNaoExisteError: VLAN not found.
@@ -915,7 +971,9 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'Parameter id_vlan is invalid. Value: ' + id_vlan)
+            raise InvalidParameterError(
+                u'Parameter id_vlan is invalid. Value: ' +
+                id_vlan)
 
         url = 'vlan/' + str(id_vlan) + '/remove/'
 
@@ -938,7 +996,8 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(id_vlan):
-            raise InvalidParameterError(u'The identifier of Vlan is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/deallocate/'
 
@@ -946,7 +1005,13 @@ class Vlan(GenericClient):
 
         return self.response(code, xml)
 
-    def allocate_IPv6(self, name, id_network_type, id_environment, description, id_environment_vip=None):
+    def allocate_IPv6(
+            self,
+            name,
+            id_network_type,
+            id_environment,
+            description,
+            id_environment_vip=None):
         """Inserts a new VLAN.
 
         :param name: Name of Vlan. String with a maximum of 50 characters.
@@ -986,7 +1051,7 @@ class Vlan(GenericClient):
           'acl_valida': < acl_valida >,
           'acl_file_name_v6': < acl_file_name_v6 >,
           'acl_valida_v6': < acl_valida_v6 >,
-          'ativada': < ativada >}} 
+          'ativada': < ativada >}}
 
         :raise VlanError: VLAN name already exists, VLAN name already exists, DC division of the environment invalid or does not exist VLAN number available.
         :raise VlanNaoExisteError: VLAN not found.
@@ -1007,7 +1072,7 @@ class Vlan(GenericClient):
         vlan_map['description'] = description
         vlan_map['id_environment_vip'] = id_environment_vip
 
-        code, xml = self.submit({'vlan':vlan_map}, 'POST', 'vlan/ipv6/')
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', 'vlan/ipv6/')
 
         return self.response(code, xml)
 
@@ -1037,7 +1102,7 @@ class Vlan(GenericClient):
           'num_vlan': < num_vlan >,
           'id': < id >,
           'descricao': < descricao >
-          }} 
+          }}
         '''
 
         vlan_map = dict()
@@ -1078,7 +1143,7 @@ class Vlan(GenericClient):
           'acl_valida_v6': < acl_valida_v6 >,
           'redeipv4': < redeipv4 >,
           'ambiente': < ambiente >,
-          }} 
+          }}
         '''
 
         vlan_map = dict()
@@ -1090,4 +1155,3 @@ class Vlan(GenericClient):
         code, xml = self.submit({'vlan': vlan_map}, 'POST', url)
 
         return self.response(code, xml)
-

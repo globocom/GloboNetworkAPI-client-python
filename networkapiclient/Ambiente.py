@@ -13,13 +13,20 @@ import urllib
 
 
 class Ambiente(GenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
         :param password: Password for authentication.
         """
-        super(Ambiente, self).__init__(networkapi_url, user, password, user_ldap)
+        super(
+            Ambiente,
+            self).__init__(
+            networkapi_url,
+            user,
+            password,
+            user_ldap)
 
     def list_all(self):
         """
@@ -28,17 +35,17 @@ class Ambiente(GenericClient):
         :return: Following dictionary:
 
         ::
-        
+
             {'ambiente': [{ 'id': <id_environment>,
             'grupo_l3': <id_group_l3>,
-            'grupo_l3_name': <name_group_l3>, 
-            'ambiente_logico': <id_logical_environment>, 
-            'ambiente_logico_name': <name_ambiente_logico>, 
-            'divisao_dc': <id_dc_division>, 
-            'divisao_dc_name': <name_divisao_dc>, 
-            'filter': <id_filter>, 
-            'filter_name': <filter_name>, 
-            'link': <link> }, ... ]} 
+            'grupo_l3_name': <name_group_l3>,
+            'ambiente_logico': <id_logical_environment>,
+            'ambiente_logico_name': <name_ambiente_logico>,
+            'divisao_dc': <id_dc_division>,
+            'divisao_dc_name': <name_divisao_dc>,
+            'filter': <id_filter>,
+            'filter_name': <filter_name>,
+            'link': <link> }, ... ]}
 
 
         :raise DataBaseError: Falha na networkapi ao acessar o banco de dados.
@@ -86,10 +93,12 @@ class Ambiente(GenericClient):
 
         url = 'ambiente/'
 
-        if is_valid_int_param(id_divisao) and not is_valid_int_param(id_ambiente_logico):
+        if is_valid_int_param(id_divisao) and not is_valid_int_param(
+                id_ambiente_logico):
             url = 'ambiente/divisao_dc/' + str(id_divisao) + '/'
         elif is_valid_int_param(id_divisao) and is_valid_int_param(id_ambiente_logico):
-            url = 'ambiente/divisao_dc/' + str(id_divisao) + '/ambiente_logico/' + str(id_ambiente_logico) + '/'
+            url = 'ambiente/divisao_dc/' + \
+                str(id_divisao) + '/ambiente_logico/' + str(id_ambiente_logico) + '/'
 
         code, xml = self.submit(None, 'GET', url)
 
@@ -116,7 +125,7 @@ class Ambiente(GenericClient):
             'nome_grupo_l3': < nome_grupo_l3 >,
             'id_filter': < id_filter >,
             'filter_name': < filter_name >,
-            'ambiente_rede': < ambiente_rede >}} 
+            'ambiente_rede': < ambiente_rede >}}
 
         :raise IpError: IP não cadastrado para o equipamento.
         :raise InvalidParameterError: O nome e/ou o IP do equipamento são vazios ou nulos, ou o IP é inválido.
@@ -126,12 +135,15 @@ class Ambiente(GenericClient):
         """
 
         if nome_equipamento == '' or nome_equipamento is None:
-            raise InvalidParameterError(u'O nome do equipamento não foi informado.')
+            raise InvalidParameterError(
+                u'O nome do equipamento não foi informado.')
 
         if not is_valid_ip(ip_equipamento):
-            raise InvalidParameterError(u'O IP do equipamento é inválido ou não foi informado.')
+            raise InvalidParameterError(
+                u'O IP do equipamento é inválido ou não foi informado.')
 
-        url = 'ambiente/equipamento/' + urllib.quote(nome_equipamento) + '/ip/' + str(ip_equipamento) + '/'
+        url = 'ambiente/equipamento/' + \
+            urllib.quote(nome_equipamento) + '/ip/' + str(ip_equipamento) + '/'
 
         code, xml = self.submit(None, 'GET', url)
 
@@ -167,7 +179,8 @@ class Ambiente(GenericClient):
         :raise XMLError: Falha na networkapi ao gerar o XML de resposta.
         """
         if not is_valid_int_param(id_ambiente):
-            raise InvalidParameterError(u'O identificador do ambiente é inválido ou não foi informado.')
+            raise InvalidParameterError(
+                u'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'environment/id/' + str(id_ambiente) + '/'
 
@@ -195,7 +208,8 @@ class Ambiente(GenericClient):
         :raise XMLError: Failed to generate the XML response.
         """
         if not is_valid_int_param(id_healthcheck):
-            raise InvalidParameterError(u'O identificador do healthcheck é inválido ou não foi informado.')
+            raise InvalidParameterError(
+                u'O identificador do healthcheck é inválido ou não foi informado.')
 
         url = 'healthcheckexpect/get/' + str(id_healthcheck) + '/'
 
@@ -227,7 +241,8 @@ class Ambiente(GenericClient):
         """
 
         if equip_id is None:
-            raise InvalidParameterError(u'O id do equipamento não foi informado.')
+            raise InvalidParameterError(
+                u'O id do equipamento não foi informado.')
 
         url = 'ambiente/equip/' + str(equip_id) + '/'
 
@@ -256,7 +271,8 @@ class Ambiente(GenericClient):
         """
 
         if not is_valid_int_param(id_ambiente):
-            raise InvalidParameterError(u'O identificador do ambiente é inválido ou não foi informado.')
+            raise InvalidParameterError(
+                u'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'healthcheckexpect/ambiente/' + str(id_ambiente) + '/'
 
@@ -266,7 +282,6 @@ class Ambiente(GenericClient):
         return get_list_map(self.response(code, xml, [key]), key)
 
     def add_healthcheck_expect(self, id_ambiente, expect_string, match_list):
-
         """Insere um novo healthckeck_expect e retorna o seu identificador.
 
         :param expect_string: expect_string.
@@ -292,9 +307,20 @@ class Ambiente(GenericClient):
 
         return self.response(code, xml)
 
-    def inserir(self, id_grupo_l3, id_ambiente_logico, id_divisao, link, id_filter=None,
-                acl_path=None, ipv4_template=None, ipv6_template=None, min_num_vlan_1=None,
-                max_num_vlan_1=None, min_num_vlan_2=None, max_num_vlan_2=None):
+    def inserir(
+            self,
+            id_grupo_l3,
+            id_ambiente_logico,
+            id_divisao,
+            link,
+            id_filter=None,
+            acl_path=None,
+            ipv4_template=None,
+            ipv6_template=None,
+            min_num_vlan_1=None,
+            max_num_vlan_1=None,
+            min_num_vlan_2=None,
+            max_num_vlan_2=None):
         """Insere um novo ambiente e retorna o seu identificador.
 
         :param id_grupo_l3: Identificador do grupo layer 3.
@@ -312,12 +338,12 @@ class Ambiente(GenericClient):
 
         :return: Dicionário com a seguinte estrutura: {'ambiente': {'id': < id >}}
 
-        :raise InvalidParameterError: O identificador do grupo l3, o identificador do ambiente lógico, e/ou 
+        :raise InvalidParameterError: O identificador do grupo l3, o identificador do ambiente lógico, e/ou
             o identificador da divisão de data center são nulos ou inválidos.
         :raise GrupoL3NaoExisteError: Grupo layer 3 não cadastrado.
         :raise AmbienteLogicoNaoExisteError: Ambiente lógico não cadastrado.
         :raise DivisaoDcNaoExisteError: Divisão datacenter não cadastrada.
-        :raise AmbienteDuplicadoError: Ambiente com o mesmo id_grupo_l3, id_ambiente_logico e id_divisao 
+        :raise AmbienteDuplicadoError: Ambiente com o mesmo id_grupo_l3, id_ambiente_logico e id_divisao
             já cadastrado.
         :raise DataBaseError: Falha na networkapi ao acessar o banco de dados.
         :raise XMLError: Falha na networkapi ao ler o XML de requisição ou gerar o XML de resposta.
@@ -337,11 +363,19 @@ class Ambiente(GenericClient):
         ambiente_map['min_num_vlan_2'] = min_num_vlan_2
         ambiente_map['max_num_vlan_2'] = max_num_vlan_2
 
-        code, xml = self.submit({'ambiente': ambiente_map}, 'POST', 'ambiente/')
+        code, xml = self.submit(
+            {'ambiente': ambiente_map}, 'POST', 'ambiente/')
 
         return self.response(code, xml)
 
-    def insert_with_ip_range(self, id_l3_group, id_logical_environment, id_division, id_ip_config, link, id_filter=None):
+    def insert_with_ip_range(
+            self,
+            id_l3_group,
+            id_logical_environment,
+            id_division,
+            id_ip_config,
+            link,
+            id_filter=None):
         """Insert new environment with ip config and returns your id.
 
         :param id_l3_group: Layer 3 Group ID.
@@ -371,7 +405,8 @@ class Ambiente(GenericClient):
         environment_map['id_ip_config'] = id_ip_config
         environment_map['link'] = link
 
-        code, xml = self.submit({'ambiente': environment_map}, 'POST', 'ambiente/ipconfig/')
+        code, xml = self.submit(
+            {'ambiente': environment_map}, 'POST', 'ambiente/ipconfig/')
 
         return self.response(code, xml)
 
@@ -395,13 +430,26 @@ class Ambiente(GenericClient):
         environment_map['id_environment'] = id_environment
         environment_map['id_ip_config'] = id_ip_config
 
-        code, xml = self.submit({'ambiente': environment_map}, 'POST', 'ipconfig/')
+        code, xml = self.submit(
+            {'ambiente': environment_map}, 'POST', 'ipconfig/')
 
         return self.response(code, xml)
 
-    def alterar(self, id_ambiente, id_grupo_l3, id_ambiente_logico, id_divisao, link, id_filter=None,
-                acl_path=None, ipv4_template=None, ipv6_template=None, min_num_vlan_1=None,
-                max_num_vlan_1=None, min_num_vlan_2=None, max_num_vlan_2=None):
+    def alterar(
+            self,
+            id_ambiente,
+            id_grupo_l3,
+            id_ambiente_logico,
+            id_divisao,
+            link,
+            id_filter=None,
+            acl_path=None,
+            ipv4_template=None,
+            ipv6_template=None,
+            min_num_vlan_1=None,
+            max_num_vlan_1=None,
+            min_num_vlan_2=None,
+            max_num_vlan_2=None):
         """Altera os dados de um ambiente a partir do seu identificador.
 
         :param id_ambiente: Identificador do ambiente.
@@ -431,7 +479,8 @@ class Ambiente(GenericClient):
         """
 
         if not is_valid_int_param(id_ambiente):
-            raise InvalidParameterError(u'O identificador do ambiente é inválido ou não foi informado.')
+            raise InvalidParameterError(
+                u'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'ambiente/' + str(id_ambiente) + '/'
 
@@ -468,7 +517,8 @@ class Ambiente(GenericClient):
         """
 
         if not is_valid_int_param(id_ambiente):
-            raise InvalidParameterError(u'O identificador do ambiente é inválido ou não foi informado.')
+            raise InvalidParameterError(
+                u'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'ambiente/' + str(id_ambiente) + '/'
 
@@ -629,7 +679,6 @@ class Ambiente(GenericClient):
         return self.response(code, xml)
 
     def update_blocks(self, id_env, blocks):
-
         """
         Update blocks from environment
 
@@ -798,7 +847,7 @@ class Ambiente(GenericClient):
 
         try:
             code, xml = self.submit({'map': map_dict}, 'PUT', url)
-        except Exception, e:
+        except Exception as e:
             raise e
 
         return self.response(code, xml)
@@ -849,7 +898,13 @@ class Ambiente(GenericClient):
         code, xml = self.submit(None, 'GET', url)
         return self.response(code, xml, ['rules'])
 
-    def configuration_save(self, id_environment, network, prefix, ip_version, network_type):
+    def configuration_save(
+            self,
+            id_environment,
+            network,
+            prefix,
+            ip_version,
+            network_type):
         """
         Add new prefix configuration
 
@@ -882,7 +937,8 @@ class Ambiente(GenericClient):
         network_map['ip_version'] = ip_version
         network_map['network_type'] = network_type
 
-        code, xml = self.submit({'ambiente': network_map}, 'POST', 'environment/configuration/save/')
+        code, xml = self.submit(
+            {'ambiente': network_map}, 'POST', 'environment/configuration/save/')
 
         return self.response(code, xml)
 
@@ -936,9 +992,10 @@ class Ambiente(GenericClient):
         data["configuration_id"] = configuration_id
         data["environment_id"] = environment_id
 
-        url = ("environment/configuration/remove/%(environment_id)s/%(configuration_id)s/" % data)
+        url = (
+            "environment/configuration/remove/%(environment_id)s/%(configuration_id)s/" %
+            data)
 
         code, xml = self.submit(None, 'DELETE', url)
 
         return self.response(code, xml)
-
