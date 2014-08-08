@@ -3,6 +3,7 @@
 help:
 	@echo
 	@echo "Please use 'make <target>' where <target> is one of"
+	@echo "  docs       to create documentation files"
 	@echo "  clean      to clean garbage left by builds and installation"
 	@echo "  compile    to compile .py files (just to check for syntax errors)"
 	@echo "  test       to execute all tests"
@@ -15,7 +16,11 @@ help:
 clean:
 	@echo "Cleaning..."
 	@rm -rf build dist *.egg-info
+	@rm -rf docs/_build
 	@find . \( -name '*.pyc' -o -name '**/*.pyc' -o -name '*~' \) -delete
+
+docs: clean
+	@(cd docs && make html)
 
 compile: clean
 	@echo "Compiling source code..."
