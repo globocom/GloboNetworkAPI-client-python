@@ -26,7 +26,7 @@ test: compile
 	@make clean
 	@echo "Nothing yet"
 #	@echo "Starting tests..."
-# 	@nosetests -s --verbose --with-coverage --cover-erase --cover-package=orquestra_client tests
+# 	@nosetests -s --verbose --with-coverage --cover-erase --cover-package=networkapiclient tests
 
 install:
 	@python setup.py install
