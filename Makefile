@@ -43,5 +43,9 @@ dist: clean
 	@python setup.py sdist
 
 publish: clean
+    VERSION=`python -c 'import networkapiclient; print networkapiclient.VERSION'`
+    @echo "Ready to release version ${VERSION}? (ctrl+c to abort)"
 	@python setup.py sdist upload
+    @git tag ${VERSION}
+    @git push --tags
 

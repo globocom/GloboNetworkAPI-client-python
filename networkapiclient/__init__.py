@@ -5,7 +5,8 @@ Author: globo.com / TQI
 Copyright: ( c )  2009 globo.com todos os direitos reservados.
 '''
 
+MAJOR_VERSION = '0'
+MINOR_VERSION = '2'
+PATCH_VERSION = '1'
+VERSION = '.'.join((MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION,))
 
-# Change version here!
-VERSION = ('0', '2', '0')
-VERSION_STRING = '.'.join(VERSION)
