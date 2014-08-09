@@ -1,4 +1,5 @@
 # Makefile for globonetworkapi-client-python
+VERSION=$(shell python -c 'import networkapiclient; print networkapiclient.VERSION')
 
 help:
 	@echo
@@ -43,8 +44,7 @@ dist: clean
 	@python setup.py sdist
 
 publish: clean
-	@export VERSION=`python -c 'import networkapiclient; print networkapiclient.VERSION'`
-	@echo "Ready to release version ${VERSION}? (ctrl+c to abort)" && read
+	@echo 'Ready to release version ${VERSION}? (ctrl+c to abort)' && read
 	@python setup.py sdist upload
 	@git tag ${VERSION}
 	@git push --tags
