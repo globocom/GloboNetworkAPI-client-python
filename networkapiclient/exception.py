@@ -547,6 +547,12 @@ class DireitoGrupoEquipamentoDuplicadoError(NetworkAPIClientError):
         NetworkAPIClientError.__init__(self, error)
 
 
+class PoolError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+
 class EnvironmentVipError(NetworkAPIClientError):
 
     """returns exception to environment vip."""

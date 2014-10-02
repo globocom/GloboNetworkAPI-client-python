@@ -47,6 +47,7 @@ from networkapiclient.Filter import Filter
 from networkapiclient.Permission import Permission
 from networkapiclient.EventLog import EventLog
 from networkapiclient.BlockRule import BlockRule
+from networkapiclient.Pool import Pool
 
 
 class ClientFactory(object):
@@ -323,6 +324,14 @@ class ClientFactory(object):
     def create_rule(self):
         """Get an instance of block rule services facade."""
         return BlockRule(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_pool(self):
+        """Get an instance of block rule services facade."""
+        return Pool(
             self.networkapi_url,
             self.user,
             self.password,
