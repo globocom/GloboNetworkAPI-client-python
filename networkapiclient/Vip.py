@@ -753,7 +753,7 @@ class Vip(GenericClient):
 
         return self.response(code, xml)
 
-    def remover(self, id_vip):
+    def remover(self, id_vip, keep_ip=False):
         """Removes a vip request by its identifier.
 
         :param id_vip: Vip request identifier.
@@ -770,6 +770,10 @@ class Vip(GenericClient):
                 u'Vip request identifier is invalid or was not informed.')
 
         url = 'vip/delete/' + str(id_vip) + '/'
+        if keep_ip:
+            # since there is no standard way to pass parameters to DELETE
+            # I prefer to use querystring because all library support use it
+            url = "%s?keep_ip=1" % url
 
         code, xml = self.submit(None, 'DELETE', url)
 
