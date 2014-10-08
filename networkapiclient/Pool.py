@@ -32,9 +32,9 @@ class Pool(ApiGenericClient):
             user_ldap
         )
 
-    def snippets(self):
+    def list_all(self, pagination):
         """
-        List all environments in DB
+        List all pools
 
         :return: Following dictionary:
 
@@ -55,7 +55,14 @@ class Pool(ApiGenericClient):
         :raise DataBaseError: Falha na networkapi ao acessar o banco de dados.
         """
 
-        uri = "api/snippets/"
+        uri = "api/pools/"
 
-        return self.get(uri)
+        data = dict()
 
+        data["start_record"] = pagination.start_record
+        data["end_record"] = pagination.end_record
+        data["asorting_cols"] = pagination.asorting_cols
+        data["searchable_columns"] = pagination.searchable_columns
+        data["custom_search"] = pagination.custom_search or None
+
+        return self.post(uri, data=data)
