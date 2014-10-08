@@ -14,12 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from networkapiclient.GenericClient import GenericClient
-from networkapiclient.utils import get_list_map, is_valid_int_param
-from networkapiclient.exception import InvalidParameterError
+from networkapiclient.ApiGenericClient import ApiGenericClient
 
 
-class Pool(GenericClient):
+class Pool(ApiGenericClient):
 
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
@@ -27,174 +25,45 @@ class Pool(GenericClient):
         :param user: User for authentication.
         :param password: Password for authentication.
         """
-        super(
-            Pool,
-            self).__init__(
+
+        super(Pool, self).__init__(
             networkapi_url,
             user,
             password,
-            user_ldap)
+            user_ldap
+        )
 
-    def listar(self):
-        """List all Script.
+    def list_all(self, pagination):
+        """
+        List all pools
 
-        :return: Dictionary with the following structure:
+        :return: Following dictionary:
 
         ::
 
-            {‘script’: [{‘id’: < id >,
-            ‘tipo_roteiro’: < tipo_roteiro >,
-            ‘nome’: < nome >,
-            ‘descricao’: < descricao >}, ...more Script...]}
+            {'ambiente': [{ 'id': <id_environment>,
+            'grupo_l3': <id_group_l3>,
+            'grupo_l3_name': <name_group_l3>,
+            'ambiente_logico': <id_logical_environment>,
+            'ambiente_logico_name': <name_ambiente_logico>,
+            'divisao_dc': <id_dc_division>,
+            'divisao_dc_name': <name_divisao_dc>,
+            'filter': <id_filter>,
+            'filter_name': <filter_name>,
+            'link': <link> }, ... ]}
 
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
+
+        :raise DataBaseError: Falha na networkapi ao acessar o banco de dados.
         """
-        code, map = self.submit(None, 'GET', 'pool/all/')
 
-        key = 'pool'
-        return get_list_map(self.response(code, map, [key]), key)
+        uri = "api/pools/"
 
-    def inserir(self, id_script_type, script, description):
-        """Inserts a new Script and returns its identifier.
+        data = dict()
 
-        :param id_script_type: Identifier of the Script Type. Integer value and greater than zero.
-        :param script: Script name. String with a minimum 3 and maximum of 40 characters
-        :param description: Script description. String with a minimum 3 and maximum of 100 characters
+        data["start_record"] = pagination.start_record
+        data["end_record"] = pagination.end_record
+        data["asorting_cols"] = pagination.asorting_cols
+        data["searchable_columns"] = pagination.searchable_columns
+        data["custom_search"] = pagination.custom_search or None
 
-        :return: Dictionary with the following structure:
-
-        ::
-
-            {'script': {'id': < id_script >}}
-
-        :raise InvalidParameterError: The identifier of Script Type, script or description is null and invalid.
-        :raise TipoRoteiroNaoExisteError: Script Type not registered.
-        :raise NomeRoteiroDuplicadoError: Script already registered with informed.
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
-        """
-        pool_map = dict()
-        pool_map['id_script_type'] = id_script_type
-        pool_map['script'] = script
-        pool_map['description'] = description
-
-        code, xml = self.submit({'pool': pool_map}, 'POST', 'pool/')
-
-        return self.response(code, xml)
-
-    def alterar(self, id_script, id_script_type, script, description):
-        """Change Script from by the identifier.
-
-        :param id_script: Identifier of the Script. Integer value and greater than zero.
-        :param id_script_type: Identifier of the Script Type. Integer value and greater than zero.
-        :param script: Script name. String with a minimum 3 and maximum of 40 characters
-        :param description: Script description. String with a minimum 3 and maximum of 100 characters
-
-        :return: None
-
-        :raise InvalidParameterError: The identifier of Script, script Type, script or description is null and invalid.
-        :raise RoteiroNaoExisteError: Script not registered.
-        :raise TipoRoteiroNaoExisteError: Script Type not registered.
-        :raise NomeRoteiroDuplicadoError: Script already registered with informed.
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
-        """
-        if not is_valid_int_param(id_script):
-            raise InvalidParameterError(
-                u'The identifier of Script is invalid or was not informed.')
-
-        pool_map = dict()
-        pool_map['id_script_type'] = id_script_type
-        pool_map['script'] = script
-        pool_map['description'] = description
-
-        url = 'pool/' + str(id_script) + '/'
-
-        code, xml = self.submit({'pool': pool_map}, 'PUT', url)
-
-        return self.response(code, xml)
-
-    def remover(self, id_script):
-        """Remove Script from by the identifier.
-
-        :param id_script: Identifier of the Script. Integer value and greater than zero.
-
-        :return: None
-
-        :raise InvalidParameterError: The identifier of Script is null and invalid.
-        :raise RoteiroNaoExisteError: Script not registered.
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
-        """
-        if not is_valid_int_param(id_script):
-            raise InvalidParameterError(
-                u'The identifier of Script is invalid or was not informed.')
-
-        url = 'pool/' + str(id_script) + '/'
-
-        code, xml = self.submit(None, 'DELETE', url)
-
-        return self.response(code, xml)
-
-    def listar_por_tipo(self, id_script_type):
-        """List all Script by Script Type.
-
-        :param id_script_type: Identifier of the Script Type. Integer value and greater than zero.
-
-        :return: Dictionary with the following structure:
-
-        ::
-
-            {‘script’: [{‘id’: < id >,
-            ‘tipo_roteiro': < id_tipo_roteiro >,
-            ‘nome': < nome >,
-            ‘descricao’: < descricao >}, ...more Script...]}
-
-        :raise InvalidParameterError: The identifier of Script Type is null and invalid.
-        :raise TipoRoteiroNaoExisteError: Script Type not registered.
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
-        """
-        if not is_valid_int_param(id_script_type):
-            raise InvalidParameterError(
-                u'The identifier of Script Type is invalid or was not informed.')
-
-        url = 'script/scripttype/' + str(id_script_type) + '/'
-
-        code, map = self.submit(None, 'GET', url)
-
-        key = 'script'
-        return get_list_map(self.response(code, map, [key]), key)
-
-    def listar_por_equipamento(self, id_equipment):
-        """List all Script related Equipment.
-
-        :param id_equipment: Identifier of the Equipment. Integer value and greater than zero.
-
-        :return: Dictionary with the following structure:
-
-        ::
-
-            {script': [{‘id’: < id >,
-            ‘nome’: < nome >,
-            ‘descricao’: < descricao >,
-            ‘id_tipo_roteiro’: < id_tipo_roteiro >,
-            ‘nome_tipo_roteiro’: < nome_tipo_roteiro >,
-            ‘descricao_tipo_roteiro’: < descricao_tipo_roteiro >}, ...more Script...]}
-
-        :raise InvalidParameterError: The identifier of Equipment is null and invalid.
-        :raise EquipamentoNaoExisteError: Equipment not registered.
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
-        """
-        if not is_valid_int_param(id_equipment):
-            raise InvalidParameterError(
-                u'The identifier of Equipment is invalid or was not informed.')
-
-        url = 'script/equipment/' + str(id_equipment) + '/'
-
-        code, map = self.submit(None, 'GET', url)
-
-        key = 'script'
-        return get_list_map(self.response(code, map, [key]), key)
+        return self.post(uri, data=data)
