@@ -67,3 +67,51 @@ class Pool(ApiGenericClient):
         data["custom_search"] = pagination.custom_search or None
 
         return self.post(uri, data=data)
+
+    def inserir(self, identifier, default_port, environment, balancing,
+                healthcheck, maxcom, ip_list_full, id_equips, priorities, ports_reals):
+
+        uri = "api/pools/insert/"
+        import json
+        data = dict()
+        data['identifier'] = identifier
+        data['default_port'] = default_port
+        data['environment'] = environment
+        data['balancing'] = balancing
+        data['healthcheck'] = healthcheck
+        data['maxcom'] = maxcom
+        data['ip_list_full'] = json.dumps(ip_list_full)
+        data['id_equips'] = id_equips
+        data['priorities'] = priorities
+        data['ports_reals'] = ports_reals
+
+        return self.post(uri, data=data)
+
+
+    def list_healthchecks(self):
+        """
+        List all pools
+
+        :return: Following dictionary:
+
+        ::
+
+            {'ambiente': [{ 'id': <id_environment>,
+            'grupo_l3': <id_group_l3>,
+            'grupo_l3_name': <name_group_l3>,
+            'ambiente_logico': <id_logical_environment>,
+            'ambiente_logico_name': <name_ambiente_logico>,
+            'divisao_dc': <id_dc_division>,
+            'divisao_dc_name': <name_divisao_dc>,
+            'filter': <id_filter>,
+            'filter_name': <filter_name>,
+            'link': <link> }, ... ]}
+
+
+        :raise DataBaseError: Falha na networkapi ao acessar o banco de dados.
+        """
+
+        uri = "api/pools/list_healthchecks/"
+
+        return self.get(uri)
+
