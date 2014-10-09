@@ -115,3 +115,12 @@ class Pool(ApiGenericClient):
 
         return self.get(uri)
 
+    def delete(self, ids):
+
+        data = dict()
+        data["ids"] = ids
+
+        uri = "api/pools/delete/"
+
+        return self.post(uri, data)
+

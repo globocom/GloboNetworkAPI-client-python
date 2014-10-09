@@ -15,15 +15,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import requests
 from requests.auth import HTTPBasicAuth
 from rest_framework.compat import BytesIO
 from rest_framework.parsers import JSONParser
+from networkapiclient.exception import NetworkAPIClientError
 
 
 class ApiGenericClient(object):
 
-    """Class inherited by all NetworkAPI-Client classes who implements access methods to networkAPI."""
+    """
+        Class inherited by all NetworkAPI-Client classes
+        who implements access methods to new pattern rest networkAPI.
+    """
 
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
@@ -36,30 +41,31 @@ class ApiGenericClient(object):
         self.password = password
         self.user_ldap = user_ldap
 
-    def get(self, uri, data=None):
+    def get(self, uri):
         """
             Sends a GET request.
 
             @param uri: Uri of Service API.
             @param data: Requesting Data. Default: None
 
-            @raise HTTPError: Client failed to access the API.
+            @raise NetworkAPIClientError: Client failed to access the API.
         """
         try:
 
             request = requests.get(
                 self._url(uri),
-                data=data,
                 auth=self._auth_basic(),
                 headers=self._header()
             )
 
+            content_parsed = self._parse(request.text)
+
             request.raise_for_status()
 
-            return self._parse(request.text)
+            return content_parsed
 
-        except Exception, e:
-            raise e
+        except Exception:
+            raise NetworkAPIClientError(content_parsed.get('detail', ''))
 
     def post(self, uri, data=None, files=None):
         """
@@ -68,24 +74,26 @@ class ApiGenericClient(object):
             @param uri: Uri of Service API.
             @param data: Requesting Data. Default: None
 
-            @raise HTTPError: Client failed to access the API.
+            @raise NetworkAPIClientError: Client failed to access the API.
         """
         try:
 
             request = requests.post(
                 self._url(uri),
-                data=data,
+                data=json.dumps(data),
                 files=files,
                 auth=self._auth_basic(),
                 headers=self._header()
             )
 
+            content_parsed = self._parse(request.text)
+
             request.raise_for_status()
 
-            return self._parse(request.text)
+            return content_parsed
 
-        except Exception, e:
-            raise e
+        except Exception:
+            raise NetworkAPIClientError(content_parsed.get('detail', ''))
 
     def put(self, uri, data=None):
         """
@@ -94,23 +102,25 @@ class ApiGenericClient(object):
             @param uri: Uri of Service API.
             @param data: Requesting Data. Default: None
 
-            @raise HTTPError: Client failed to access the API.
+            @raise NetworkAPIClientError: Client failed to access the API.
         """
         try:
 
             request = requests.put(
                 self._url(uri),
-                data=data,
+                data=json.dumps(data),
                 auth=self._auth_basic(),
                 headers=self._header()
             )
 
+            content_parsed = self._parse(request.text)
+
             request.raise_for_status()
 
-            return self._parse(request.text)
+            return content_parsed
 
-        except Exception, e:
-            raise e
+        except Exception:
+            raise NetworkAPIClientError(content_parsed.get('detail', ''))
 
     def delete(self, uri):
         """
@@ -118,7 +128,7 @@ class ApiGenericClient(object):
 
             @param uri: Uri of Service API.
 
-            @raise HTTPError: Client failed to access the API.
+            @raise NetworkAPIClientError: Client failed to access the API.
         """
         try:
 
@@ -128,12 +138,14 @@ class ApiGenericClient(object):
                 headers=self._header()
             )
 
+            content_parsed = self._parse(request.text)
+
             request.raise_for_status()
 
-            return self._parse(request.text)
+            return content_parsed
 
-        except Exception, e:
-            raise e
+        except Exception:
+            raise NetworkAPIClientError(content_parsed.get('detail', ''))
 
     def _parse(self, content):
         """
@@ -151,6 +163,9 @@ class ApiGenericClient(object):
             return data
 
     def _url(self, uri):
+        """Create Full URI To Send API.
+        """
+
         return "%s%s" % (self.networkapi_url, uri)
 
     def _auth_basic(self):
@@ -162,8 +177,9 @@ class ApiGenericClient(object):
     def _header(self):
         """Content Type For Header
         """
+
         headers = {
-            "content-type": "application/x-www-form-urlencoded",
+            'content-type': 'application/json',
         }
 
         return headers
