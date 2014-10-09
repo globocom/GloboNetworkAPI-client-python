@@ -67,3 +67,12 @@ class Pool(ApiGenericClient):
         data["custom_search"] = pagination.custom_search or None
 
         return self.post(uri, data=data)
+
+    def delete(self, ids):
+
+        data = dict()
+        data["ids"] = ids
+
+        uri = "api/pools/delete/"
+
+        return self.post(uri, data)
