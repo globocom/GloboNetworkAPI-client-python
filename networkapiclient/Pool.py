@@ -35,25 +35,20 @@ class Pool(ApiGenericClient):
 
     def list_all(self, pagination):
         """
-        List all pools
+            List All Pools To Populate Datatable
 
-        :return: Following dictionary:
+            :param pagination: Object Pagination
 
-        ::
+            :return: Following dictionary:{
+                                            "total" : < total >,
+                                            "pools" :[{
+                                                "id": < id >
+                                                "default_port": < default_port >,
+                                                "identifier": < identifier >,
+                                                "healthcheck": < healthcheck >,
+                                            }, ... too ... ]}
 
-            {'ambiente': [{ 'id': <id_environment>,
-            'grupo_l3': <id_group_l3>,
-            'grupo_l3_name': <name_group_l3>,
-            'ambiente_logico': <id_logical_environment>,
-            'ambiente_logico_name': <name_ambiente_logico>,
-            'divisao_dc': <id_dc_division>,
-            'divisao_dc_name': <name_divisao_dc>,
-            'filter': <id_filter>,
-            'filter_name': <filter_name>,
-            'link': <link> }, ... ]}
-
-
-        :raise DataBaseError: Falha na networkapi ao acessar o banco de dados.
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
         """
 
         uri = "api/pools/"
@@ -116,6 +111,16 @@ class Pool(ApiGenericClient):
         return self.get(uri)
 
     def delete(self, ids):
+        """
+            Delete Pools
+
+            :param ids: List of ids
+
+            :return: None on success
+
+            :raise ValidationException: Id(s) inválido(s)
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
 
         data = dict()
         data["ids"] = ids
@@ -123,6 +128,7 @@ class Pool(ApiGenericClient):
         uri = "api/pools/delete/"
 
         return self.post(uri, data)
+
 
     def get_by_pk(self, pk):
 
@@ -132,4 +138,24 @@ class Pool(ApiGenericClient):
         uri = "api/pools/getbypk/%s/" % pk
 
         return self.get(uri)
+
+
+    def remove(self, ids):
+        """
+            Remove Pools Running Script And Update to Not Created
+
+            :param ids: List of ids
+
+            :return: None on success
+
+            :raise ValidationException: Id(s) inválido(s)
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        data = dict()
+        data["ids"] = ids
+
+        uri = "api/pools/remove/"
+
+        return self.post(uri, data)
 
