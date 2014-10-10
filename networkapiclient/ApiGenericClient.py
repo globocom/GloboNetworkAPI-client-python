@@ -21,6 +21,7 @@ from requests.auth import HTTPBasicAuth
 from rest_framework.compat import BytesIO
 from rest_framework.parsers import JSONParser
 from networkapiclient.exception import NetworkAPIClientError
+from requests.exceptions import HTTPError
 
 
 class ApiGenericClient(object):
@@ -58,14 +59,13 @@ class ApiGenericClient(object):
                 headers=self._header()
             )
 
-            content_parsed = self._parse(request.text)
-
             request.raise_for_status()
 
-            return content_parsed
+            return self._parse(request.text)
 
-        except Exception:
-            raise NetworkAPIClientError(content_parsed.get('detail', ''))
+        except HTTPError:
+            error = self._parse(request.text)
+            raise NetworkAPIClientError(error.get('detail', ''))
 
     def post(self, uri, data=None, files=None):
         """
@@ -86,14 +86,13 @@ class ApiGenericClient(object):
                 headers=self._header()
             )
 
-            content_parsed = self._parse(request.text)
-
             request.raise_for_status()
 
-            return content_parsed
+            return self._parse(request.text)
 
-        except Exception:
-            raise NetworkAPIClientError(content_parsed.get('detail', ''))
+        except HTTPError:
+            error = self._parse(request.text)
+            raise NetworkAPIClientError(error.get('detail', ''))
 
     def put(self, uri, data=None):
         """
@@ -113,14 +112,13 @@ class ApiGenericClient(object):
                 headers=self._header()
             )
 
-            content_parsed = self._parse(request.text)
-
             request.raise_for_status()
 
-            return content_parsed
+            return self._parse(request.text)
 
-        except Exception:
-            raise NetworkAPIClientError(content_parsed.get('detail', ''))
+        except HTTPError:
+            error = self._parse(request.text)
+            raise NetworkAPIClientError(error.get('detail', ''))
 
     def delete(self, uri):
         """
@@ -138,14 +136,13 @@ class ApiGenericClient(object):
                 headers=self._header()
             )
 
-            content_parsed = self._parse(request.text)
-
             request.raise_for_status()
 
-            return content_parsed
+            return self._parse(request.text)
 
-        except Exception:
-            raise NetworkAPIClientError(content_parsed.get('detail', ''))
+        except HTTPError:
+            error = self._parse(request.text)
+            raise NetworkAPIClientError(error.get('detail', ''))
 
     def _parse(self, content):
         """
