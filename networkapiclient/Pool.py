@@ -83,9 +83,67 @@ class Pool(ApiGenericClient):
         return self.post(uri, data=data)
 
 
+    def update(self, id_server_pool, identifier, default_port, environment, balancing,
+                healthcheck, maxcom, ip_list_full, id_equips, priorities, ports_reals):
+
+        uri = "api/pools/edit/"
+
+        data = dict()
+        data['identifier'] = identifier
+        data['default_port'] = default_port
+        data['environment'] = environment
+        data['balancing'] = balancing
+        data['healthcheck'] = healthcheck
+        data['maxcom'] = maxcom
+        data['ip_list_full'] = ip_list_full
+        data['id_equips'] = id_equips
+        data['priorities'] = priorities
+        data['ports_reals'] = ports_reals
+        data['id_server_pool'] = id_server_pool
+
+        return self.post(uri, data=data)
+
+
+    def list_all_members_by_pool(self, id_server_pool, pagination):
+
+        data = dict()
+
+        data["start_record"] = pagination.start_record
+        data["end_record"] = pagination.end_record
+        data["asorting_cols"] = pagination.asorting_cols
+        data["searchable_columns"] = pagination.searchable_columns
+        data["custom_search"] = pagination.custom_search or None
+
+        uri = "api/pools/get_all_members/%s/" % id_server_pool
+
+        return self.post(uri, data=data)
+
+    def get_equip_by_ip(self, id_ip):
+
+        """
+            Get equipment by IP id
+
+            :param id_ip: IP id
+
+            :return: Following dictionary:{
+                                            "equipamento" :[{
+                                                "id": < id >
+                                                "tipo_equipamento": < tipo_equipamento >,
+                                                "modelo": < modelo >,
+                                                "nome": < nome >,
+                                                "grupos": < grupos >
+                                            }]
+
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        uri = "api/pools/get_equip_by_ip/%s/" % id_ip
+        return self.get(uri)
+
+
     def list_healthchecks(self):
         """
-        List all pools
+        List all healthchecks
 
         :return: Following dictionary:
 
@@ -131,10 +189,6 @@ class Pool(ApiGenericClient):
 
 
     def get_by_pk(self, pk):
-
-        data = dict()
-        data["id_server_pool"] = pk
-
         uri = "api/pools/getbypk/%s/" % pk
 
         return self.get(uri)
