@@ -33,7 +33,7 @@ class Pool(ApiGenericClient):
             user_ldap
         )
 
-    def list_all(self, pagination):
+    def list_all(self, environment_id, pagination):
         """
             List All Pools To Populate Datatable
 
@@ -60,6 +60,7 @@ class Pool(ApiGenericClient):
         data["asorting_cols"] = pagination.asorting_cols
         data["searchable_columns"] = pagination.searchable_columns
         data["custom_search"] = pagination.custom_search or None
+        data["environment_id"] = environment_id or None
 
         return self.post(uri, data=data)
 
@@ -145,5 +146,24 @@ class Pool(ApiGenericClient):
         data["ids"] = ids
 
         uri = "api/pools/remove/"
+
+        return self.post(uri, data)
+
+    def create(self, ids):
+        """
+            Create Pools Running Script And Update to Created
+
+            :param ids: List of ids
+
+            :return: None on success
+
+            :raise ValidationException: Id(s) inválido(s)
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        data = dict()
+        data["ids"] = ids
+
+        uri = "api/pools/create/"
 
         return self.post(uri, data)
