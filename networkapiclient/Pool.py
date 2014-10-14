@@ -68,7 +68,7 @@ class Pool(ApiGenericClient):
                 healthcheck, maxcom, ip_list_full, id_equips, priorities, ports_reals):
 
         uri = "api/pools/insert/"
-        import json
+
         data = dict()
         data['identifier'] = identifier
         data['default_port'] = default_port
@@ -76,13 +76,12 @@ class Pool(ApiGenericClient):
         data['balancing'] = balancing
         data['healthcheck'] = healthcheck
         data['maxcom'] = maxcom
-        data['ip_list_full'] = json.dumps(ip_list_full)
+        data['ip_list_full'] = ip_list_full
         data['id_equips'] = id_equips
         data['priorities'] = priorities
         data['ports_reals'] = ports_reals
 
         return self.post(uri, data=data)
-
 
     def list_healthchecks(self):
         """
@@ -129,6 +128,15 @@ class Pool(ApiGenericClient):
         uri = "api/pools/delete/"
 
         return self.post(uri, data)
+
+    def get_by_pk(self, pk):
+
+        data = dict()
+        data["id_server_pool"] = pk
+
+        uri = "api/pools/getbypk/%s/" % pk
+
+        return self.get(uri)
 
     def remove(self, ids):
         """
