@@ -33,7 +33,7 @@ class Pool(ApiGenericClient):
             user_ldap
         )
 
-    def list_all(self, pagination):
+    def list_all(self, environment_id, pagination):
         """
             List All Pools To Populate Datatable
 
@@ -60,6 +60,7 @@ class Pool(ApiGenericClient):
         data["asorting_cols"] = pagination.asorting_cols
         data["searchable_columns"] = pagination.searchable_columns
         data["custom_search"] = pagination.custom_search or None
+        data["environment_id"] = environment_id or None
 
         return self.post(uri, data=data)
 
@@ -81,7 +82,6 @@ class Pool(ApiGenericClient):
         data['ports_reals'] = ports_reals
 
         return self.post(uri, data=data)
-
 
     def update(self, id_server_pool, identifier, default_port, environment, balancing,
                 healthcheck, maxcom, ip_list_full, id_equips, priorities, ports_reals):
@@ -140,7 +140,6 @@ class Pool(ApiGenericClient):
         uri = "api/pools/get_equip_by_ip/%s/" % id_ip
         return self.get(uri)
 
-
     def list_healthchecks(self):
         """
         List all healthchecks
@@ -187,12 +186,10 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data)
 
-
     def get_by_pk(self, pk):
         uri = "api/pools/getbypk/%s/" % pk
 
         return self.get(uri)
-
 
     def remove(self, ids):
         """
@@ -213,3 +210,21 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data)
 
+    def create(self, ids):
+        """
+            Create Pools Running Script And Update to Created
+
+            :param ids: List of ids
+
+            :return: None on success
+
+            :raise ValidationException: Id(s) inválido(s)
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        data = dict()
+        data["ids"] = ids
+
+        uri = "api/pools/create/"
+
+        return self.post(uri, data)
