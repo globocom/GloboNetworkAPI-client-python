@@ -228,3 +228,41 @@ class Pool(ApiGenericClient):
         uri = "api/pools/create/"
 
         return self.post(uri, data)
+
+    def enable(self, ids):
+        """
+            Enable Pool Members Running Script
+
+            :param ids: List of ids
+
+            :return: None on success
+
+            :raise ValidationException: Id(s) inválido(s)
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        data = dict()
+        data["ids"] = ids
+
+        uri = "api/pools/enable/"
+
+        return self.post(uri, data)
+
+    def disable(self, ids):
+        """
+            Disable Pool Members Running Script
+
+            :param ids: List of ids
+
+            :return: None on success
+
+            :raise ValidationException: Id(s) inválido(s)
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        data = dict()
+        data["ids"] = ids
+
+        uri = "api/pools/disable/"
+
+        return self.post(uri, data)
