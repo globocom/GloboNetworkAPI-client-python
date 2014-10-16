@@ -175,8 +175,10 @@ class Pool(ApiGenericClient):
 
             :return: None on success
 
-            :raise ValidationException: Id(s) inválido(s)
-            :raise NetworkAPIException: Falha ao acessar fonte de dados
+            :raise PoolConstraintVipException
+            :raise ScriptDeletePoolException
+            :raise InvalidIdPoolException
+            :raise NetworkAPIException
         """
 
         data = dict()
@@ -199,8 +201,9 @@ class Pool(ApiGenericClient):
 
             :return: None on success
 
-            :raise ValidationException: Id(s) inválido(s)
-            :raise NetworkAPIException: Falha ao acessar fonte de dados
+            :raise ScriptRemovePoolException
+            :raise InvalidIdPoolException
+            :raise NetworkAPIException
         """
 
         data = dict()
@@ -218,8 +221,10 @@ class Pool(ApiGenericClient):
 
             :return: None on success
 
-            :raise ValidationException: Id(s) inválido(s)
-            :raise NetworkAPIException: Falha ao acessar fonte de dados
+            :raise PoolDoesNotExistException
+            :raise ScriptCreatePoolException
+            :raise InvalidIdPoolException
+            :raise NetworkAPIException
         """
 
         data = dict()
@@ -237,8 +242,10 @@ class Pool(ApiGenericClient):
 
             :return: None on success
 
-            :raise ValidationException: Id(s) inválido(s)
-            :raise NetworkAPIException: Falha ao acessar fonte de dados
+            :raise PoolMemberDoesNotExistException
+            :raise InvalidIdPoolMemberException
+            :raise ScriptEnablePoolException
+            :raise NetworkAPIException
         """
 
         data = dict()
@@ -256,8 +263,10 @@ class Pool(ApiGenericClient):
 
             :return: None on success
 
-            :raise ValidationException: Id(s) inválido(s)
-            :raise NetworkAPIException: Falha ao acessar fonte de dados
+            :raise PoolMemberDoesNotExistException
+            :raise InvalidIdPoolMemberException
+            :raise ScriptDisablePoolException
+            :raise NetworkAPIException
         """
 
         data = dict()
