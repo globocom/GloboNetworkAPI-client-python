@@ -65,7 +65,7 @@ class Pool(ApiGenericClient):
         return self.post(uri, data=data)
 
     def inserir(self, identifier, default_port, environment, balancing,
-                healthcheck, maxcom, ip_list_full, id_equips, priorities, ports_reals):
+                healthcheck_type, healthcheck_expect, healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, id_equips, priorities, ports_reals):
 
         uri = "api/pools/insert/"
 
@@ -74,7 +74,14 @@ class Pool(ApiGenericClient):
         data['default_port'] = default_port
         data['environment'] = environment
         data['balancing'] = balancing
-        data['healthcheck'] = healthcheck
+        data['healthcheck_type'] = healthcheck_type
+        data['healthcheck_expect'] = healthcheck_expect
+        data['healthcheck_request'] = healthcheck_request
+
+        if old_healthcheck_id == '':
+            old_healthcheck_id = None
+
+        data['old_healthcheck_id'] = old_healthcheck_id
         data['maxcom'] = maxcom
         data['ip_list_full'] = ip_list_full
         data['id_equips'] = id_equips
@@ -83,17 +90,24 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
-    def update(self, id_server_pool, identifier, default_port, environment, balancing,
-                healthcheck, maxcom, ip_list_full, id_equips, priorities, ports_reals):
+    def update(self, id_server_pool, default_port, balancing,
+                healthcheck_type, healthcheck_expect, healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, id_equips, priorities, ports_reals):
 
         uri = "api/pools/edit/"
 
         data = dict()
-        data['identifier'] = identifier
+        #data['identifier'] = identifier
         data['default_port'] = default_port
-        data['environment'] = environment
+        #data['environment'] = environment
         data['balancing'] = balancing
-        data['healthcheck'] = healthcheck
+        data['healthcheck_type'] = healthcheck_type
+        data['healthcheck_expect'] = healthcheck_expect
+        data['healthcheck_request'] = healthcheck_request
+
+        if old_healthcheck_id == '':
+            old_healthcheck_id = None
+
+        data['old_healthcheck_id'] = old_healthcheck_id
         data['maxcom'] = maxcom
         data['ip_list_full'] = ip_list_full
         data['id_equips'] = id_equips
@@ -275,3 +289,27 @@ class Pool(ApiGenericClient):
         uri = "api/pools/disable/"
 
         return self.post(uri, data)
+
+
+    def get_opcoes_pool_by_ambiente(self, id_ambiente):
+
+        data = dict()
+        data["id_environment"] = id_ambiente
+
+        uri = "api/pools/get_opcoes_pool_by_ambiente/"
+
+        return self.post(uri, data=data)
+
+    def get_requisicoes_vip_by_pool(self, id_server_pool, pagination):
+
+        data = dict()
+
+        data["start_record"] = pagination.start_record
+        data["end_record"] = pagination.end_record
+        data["asorting_cols"] = pagination.asorting_cols
+        data["searchable_columns"] = pagination.searchable_columns
+        data["custom_search"] = pagination.custom_search or None
+
+        uri = "api/pools/get_requisicoes_vip_by_pool/%s/" % id_server_pool
+
+        return self.post(uri, data=data)

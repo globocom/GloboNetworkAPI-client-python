@@ -48,6 +48,7 @@ from networkapiclient.Permission import Permission
 from networkapiclient.EventLog import EventLog
 from networkapiclient.BlockRule import BlockRule
 from networkapiclient.Pool import Pool
+from networkapiclient.Healthcheck import Healthcheck
 
 
 class ClientFactory(object):
@@ -339,3 +340,15 @@ class ClientFactory(object):
             self.password,
             self.user_ldap
         )
+
+    def create_healthcheck(self):
+
+        """Get an instance of Poll services facade."""
+
+        return Healthcheck(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
+
