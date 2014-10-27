@@ -96,9 +96,9 @@ class Pool(ApiGenericClient):
         uri = "api/pools/edit/"
 
         data = dict()
-        #data['identifier'] = identifier
+        # data['identifier'] = identifier
         data['default_port'] = default_port
-        #data['environment'] = environment
+        # data['environment'] = environment
         data['balancing'] = balancing
         data['healthcheck_type'] = healthcheck_type
         data['healthcheck_expect'] = healthcheck_expect
@@ -290,7 +290,6 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data)
 
-
     def get_opcoes_pool_by_ambiente(self, id_ambiente):
 
         data = dict()
@@ -313,3 +312,51 @@ class Pool(ApiGenericClient):
         uri = "api/pools/get_requisicoes_vip_by_pool/%s/" % id_server_pool
 
         return self.post(uri, data=data)
+
+    def list_by_environment(self, environment_id):
+        """
+            Disable Pool Members Running Script
+
+            :param ids: List of ids
+
+            :return: Following dictionary:{
+                                            "pools" :[{
+                                                "id": < id >
+                                                "default_port": < default_port >,
+                                                "identifier": < identifier >,
+                                                "healthcheck": < healthcheck >,
+                                            }, ... too ... ]}
+
+            :raise ObjectDoesNotExistException
+            :raise ValidationException
+            :raise NetworkAPIException
+        """
+
+        uri = "api/pools/list/by/environment/%s/" % (environment_id)
+
+        return self.get(uri)
+
+    def list_pool_members(self, pool_id):
+        """
+            Disable Pool Members Running Script
+
+            :param ids: List of ids
+
+            :return:
+
+            :raise ObjectDoesNotExistException
+            :raise ValidationException
+            :raise NetworkAPIException
+        """
+
+        uri = "api/pools/list/members/%s/" % (pool_id)
+
+        return self.get(uri)
+
+    def list_by_environmet_vip(self, environment_vip_id):
+        """
+        """
+
+        uri = "api/pools/list/by/environment/vip/%s/" % (environment_vip_id)
+
+        return self.get(uri)
