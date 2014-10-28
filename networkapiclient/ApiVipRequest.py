@@ -57,3 +57,11 @@ class ApiVipRequest(ApiGenericClient):
         data["ids"] = ids
 
         return self.post(uri, data=data)
+
+    def list_environment_by_environmet_vip(self, environment_vip_id):
+        """
+        """
+
+        uri = "api/vip/list/environment/by/environment/vip/%s/" % (environment_vip_id)
+
+        return self.get(uri)
