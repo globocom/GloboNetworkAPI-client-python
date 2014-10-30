@@ -85,7 +85,7 @@ class EnvironmentVIP(GenericClient):
 
         return get_list_map(self.response(code, xml, [key]), key)
 
-    def add(self, finalidade_txt, cliente_txt, ambiente_p44_txt):
+    def add(self, finalidade_txt, cliente_txt, ambiente_p44_txt, description):
         """Inserts a new Environment VIP and returns its identifier.
 
         :param finalidade_txt: Finality. String with a maximum of 50 characters and respect [a-zA-Z\_-]
@@ -106,6 +106,7 @@ class EnvironmentVIP(GenericClient):
         environmentvip_map['finalidade_txt'] = finalidade_txt
         environmentvip_map['cliente_txt'] = cliente_txt
         environmentvip_map['ambiente_p44_txt'] = ambiente_p44_txt
+        environmentvip_map['description'] = description
 
         code, xml = self.submit(
             {'environment_vip': environmentvip_map}, 'POST', 'environmentvip/')
@@ -117,7 +118,8 @@ class EnvironmentVIP(GenericClient):
             id_environment_vip,
             finalidade_txt,
             cliente_txt,
-            ambiente_p44_txt):
+            ambiente_p44_txt,
+            description):
         """Change Environment VIP from by the identifier.
 
         :param id_environment_vip: Identifier of the Environment VIP. Integer value and greater than zero.
@@ -142,6 +144,7 @@ class EnvironmentVIP(GenericClient):
         environmentvip_map['finalidade_txt'] = finalidade_txt
         environmentvip_map['cliente_txt'] = cliente_txt
         environmentvip_map['ambiente_p44_txt'] = ambiente_p44_txt
+        environmentvip_map['description'] = description
 
         url = 'environmentvip/' + str(id_environment_vip) + '/'
 

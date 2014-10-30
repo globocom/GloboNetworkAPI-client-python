@@ -200,7 +200,7 @@ class Rest:
 
                 connection.request(
                     "DELETE",
-                    parsed_url.path,
+                    self.get_full_url(parsed_url),
                     request_data,
                     headers_map)
 
@@ -354,6 +354,13 @@ class Rest:
         except Exception as e:
             raise RestError(e, u'Erro ao gerar o mapa de resposta!\n'
                             u'Conteúdo recebido:\n%s' % content)
+
+    def get_full_url(self, parsed_url):
+        """ Returns url path with querystring """
+        full_path = parsed_url.path
+        if parsed_url.query:
+            full_path = "%s?%s" % (full_path, parsed_url.query)
+        return full_path
 
 
 class RestRequest:

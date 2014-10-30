@@ -49,6 +49,7 @@ from networkapiclient.EventLog import EventLog
 from networkapiclient.BlockRule import BlockRule
 from networkapiclient.Pool import Pool
 from networkapiclient.Healthcheck import Healthcheck
+from networkapiclient.ApiVipRequest import ApiVipRequest
 
 
 class ClientFactory(object):
@@ -352,3 +353,13 @@ class ClientFactory(object):
             self.user_ldap
         )
 
+    def create_api_vip_request(self):
+
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiVipRequest(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
