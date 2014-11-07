@@ -96,8 +96,9 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
-    def inserir(self, identifier, default_port, environment, balancing,
-                healthcheck_type, healthcheck_expect, healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals):
+    def inserir(self, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
+                healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities,
+                weight, ports_reals):
 
         uri = "api/pools/insert/"
 
@@ -124,8 +125,35 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
-    def update(self, id_server_pool, default_port, balancing,
-                healthcheck_type, healthcheck_expect, healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals):
+    def save(self, id, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
+                healthcheck_request, maxcom, ip_list_full, nome_equips, id_equips, priorities,
+                weight, ports_reals, id_pool_member):
+
+        uri = "api/pools/save/"
+
+        data = dict()
+        data['id'] = id
+        data['identifier'] = identifier
+        data['default_port'] = default_port
+        data['environment'] = environment
+        data['balancing'] = balancing
+        data['healthcheck_type'] = healthcheck_type
+        data['healthcheck_expect'] = healthcheck_expect
+        data['healthcheck_request'] = healthcheck_request
+        data['maxcom'] = maxcom
+
+        data['id_pool_member'] = id_pool_member
+        data['ip_list_full'] = ip_list_full
+        data['id_equips'] = id_equips
+        data['priorities'] = priorities
+        data['ports_reals'] = ports_reals
+        data['nome_equips'] = nome_equips
+        data['weight'] = weight
+
+        return self.post(uri, data=data)
+
+    def update(self, id_server_pool, default_port, balancing, healthcheck_type, healthcheck_expect, healthcheck_request,
+               old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals):
 
         uri = "api/pools/edit/"
 
