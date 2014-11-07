@@ -64,8 +64,40 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
+
+    def list_all_by_reqvip(self, id_vip, pagination):
+        """
+            List All Pools To Populate Datatable
+
+            :param pagination: Object Pagination
+
+            :return: Following dictionary:{
+                                            "total" : < total >,
+                                            "pools" :[{
+                                                "id": < id >
+                                                "default_port": < default_port >,
+                                                "identifier": < identifier >,
+                                                "healthcheck": < healthcheck >,
+                                            }, ... too ... ]}
+
+            :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        uri = "api/pools/pool_list_by_reqvip/"
+
+        data = dict()
+
+        data["start_record"] = pagination.start_record
+        data["end_record"] = pagination.end_record
+        data["asorting_cols"] = pagination.asorting_cols
+        data["searchable_columns"] = pagination.searchable_columns
+        data["custom_search"] = pagination.custom_search or None
+        data["id_vip"] = id_vip or None
+
+        return self.post(uri, data=data)
+
     def inserir(self, identifier, default_port, environment, balancing,
-                healthcheck_type, healthcheck_expect, healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, id_equips, priorities, ports_reals):
+                healthcheck_type, healthcheck_expect, healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals):
 
         uri = "api/pools/insert/"
 
@@ -87,11 +119,13 @@ class Pool(ApiGenericClient):
         data['id_equips'] = id_equips
         data['priorities'] = priorities
         data['ports_reals'] = ports_reals
+        data['nome_equips'] = nome_equips
+        data['weight'] = weight
 
         return self.post(uri, data=data)
 
     def update(self, id_server_pool, default_port, balancing,
-                healthcheck_type, healthcheck_expect, healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, id_equips, priorities, ports_reals):
+                healthcheck_type, healthcheck_expect, healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals):
 
         uri = "api/pools/edit/"
 
@@ -114,6 +148,8 @@ class Pool(ApiGenericClient):
         data['priorities'] = priorities
         data['ports_reals'] = ports_reals
         data['id_server_pool'] = id_server_pool
+        data['nome_equips'] = nome_equips
+        data['weight'] = weight
 
         return self.post(uri, data=data)
 
