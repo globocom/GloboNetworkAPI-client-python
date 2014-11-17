@@ -152,6 +152,23 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
+    def save_reals(self, id_server_pool, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals, id_pool_member):
+
+        uri = "api/pools/save_reals/"
+
+        data = dict()
+        data['id_server_pool'] = id_server_pool
+
+        data['id_pool_member'] = id_pool_member
+        data['ip_list_full'] = ip_list_full
+        data['id_equips'] = id_equips
+        data['priorities'] = priorities
+        data['ports_reals'] = ports_reals
+        data['nome_equips'] = nome_equips
+        data['weight'] = weight
+
+        return self.post(uri, data=data)
+
     def update(self, id_server_pool, default_port, balancing, healthcheck_type, healthcheck_expect, healthcheck_request,
                old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals):
 
