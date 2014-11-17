@@ -114,17 +114,25 @@ class Vip(GenericClient):
             self,
             id_ipv4,
             id_ipv6,
+            id_healthcheck_expect,
             finality,
             client,
             environment,
             cache,
+            method_bal,
             persistence,
+            healthcheck_type,
+            healthcheck,
             timeout,
             host,
+            maxcon,
             areanegocio,
             nome_servico,
             l7_filter,
-            pool_ids=[],
+            reals,
+            reals_prioritys,
+            reals_weights,
+            ports,
             rule_id=''):
         """Inserts a new request VIP and returns its identifier.
 
@@ -170,19 +178,26 @@ class Vip(GenericClient):
         vip_map = dict()
         vip_map['id_ipv4'] = id_ipv4
         vip_map['id_ipv6'] = id_ipv6
+        vip_map['id_healthcheck_expect'] = id_healthcheck_expect
         vip_map['finalidade'] = finality
         vip_map['cliente'] = client
         vip_map['ambiente'] = environment
         vip_map['cache'] = cache
-        vip_map['timeout'] = timeout
+        vip_map['maxcon'] = maxcon
+        vip_map['metodo_bal'] = method_bal
         vip_map['persistencia'] = persistence
+        vip_map['healthcheck_type'] = healthcheck_type
+        vip_map['healthcheck'] = healthcheck
+        vip_map['timeout'] = timeout
         vip_map['host'] = host
         vip_map['areanegocio'] = areanegocio
         vip_map['nome_servico'] = nome_servico
         vip_map['l7_filter'] = l7_filter
+        vip_map['reals'] = {'real': reals}
+        vip_map['reals_prioritys'] = {'reals_priority': reals_prioritys}
+        vip_map['reals_weights'] = {'reals_weight': reals_weights}
+        vip_map['portas_servicos'] = {'porta': ports}
         vip_map['rule_id'] = rule_id
-
-        vip_map['pool_ids'] = pool_ids
 
         code, xml = self.submit({'vip': vip_map}, 'POST', 'requestvip/')
 
@@ -193,19 +208,27 @@ class Vip(GenericClient):
             id_vip,
             id_ipv4,
             id_ipv6,
+            id_healthcheck_expect,
             validated,
             vip_created,
             finality,
             client,
             environment,
             cache,
+            method_bal,
             persistence,
+            healthcheck_type,
+            healthcheck,
             timeout,
             host,
+            maxcon,
             areanegocio,
             nome_servico,
             l7_filter,
-            pool_ids=[],
+            reals,
+            reals_prioritys,
+            reals_weights,
+            ports,
             rule_id=''):
         """Change VIP from by the identifier.
 
@@ -255,21 +278,28 @@ class Vip(GenericClient):
         vip_map = dict()
         vip_map['id_ipv4'] = id_ipv4
         vip_map['id_ipv6'] = id_ipv6
+        vip_map['id_healthcheck_expect'] = id_healthcheck_expect
         vip_map['validado'] = validated
         vip_map['vip_criado'] = vip_created
         vip_map['finalidade'] = finality
         vip_map['cliente'] = client
         vip_map['ambiente'] = environment
         vip_map['cache'] = cache
-        vip_map['timeout'] = timeout
+        vip_map['maxcon'] = maxcon
+        vip_map['metodo_bal'] = method_bal
         vip_map['persistencia'] = persistence
+        vip_map['healthcheck_type'] = healthcheck_type
+        vip_map['healthcheck'] = healthcheck
+        vip_map['timeout'] = timeout
         vip_map['host'] = host
         vip_map['areanegocio'] = areanegocio
         vip_map['nome_servico'] = nome_servico
         vip_map['l7_filter'] = l7_filter
+        vip_map['reals'] = {'real': reals}
+        vip_map['reals_prioritys'] = {'reals_priority': reals_prioritys}
+        vip_map['reals_weights'] = {'reals_weight': reals_weights}
+        vip_map['portas_servicos'] = {'porta': ports}
         vip_map['rule_id'] = rule_id
-
-        vip_map['pool_ids'] = pool_ids
 
         url = 'requestvip/' + str(id_vip) + '/'
 

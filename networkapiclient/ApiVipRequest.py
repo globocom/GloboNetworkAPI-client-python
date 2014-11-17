@@ -65,3 +65,50 @@ class ApiVipRequest(ApiGenericClient):
         uri = "api/vip/list/environment/by/environment/vip/%s/" % (environment_vip_id)
 
         return self.get(uri)
+
+    def save(
+        self,
+        id_ipv4,
+        id_ipv6,
+        finality,
+        client,
+        environment,
+        cache,
+        persistence,
+        timeout,
+        host,
+        areanegocio,
+        nome_servico,
+        l7_filter,
+        vip_ports_to_pools=None,
+        rule_id=None,
+        pk=None
+    ):
+        """
+        """
+
+        data = dict()
+
+        data['ip'] = id_ipv4
+        data['ipv6'] = id_ipv6
+        data['finalidade'] = finality
+        data['cliente'] = client
+        data['ambiente'] = environment
+        data['cache'] = cache
+        data['timeout'] = timeout
+        data['persistencia'] = persistence
+        data['timeout'] = timeout
+        data['host'] = host
+        data['areanegocio'] = areanegocio
+        data['nome_servico'] = nome_servico
+        data['l7_filter'] = l7_filter
+        data['rule'] = rule_id
+        data['vip_ports_to_pools'] = vip_ports_to_pools
+
+        uri = "api/vip/request/save/"
+
+        if pk:
+            uri += "%s/" % pk
+            return self.put(uri, data=data)
+
+        return self.post(uri, data=data)
