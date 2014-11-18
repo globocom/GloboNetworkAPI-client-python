@@ -441,3 +441,12 @@ class Pool(ApiGenericClient):
         uri = "api/pools/list/by/environment/vip/%s/" % (environment_vip_id)
 
         return self.get(uri)
+
+
+    def list_environments_with_pools(self):
+        """
+        """
+
+        uri = "api/pools/list/environment/with/pools/"
+
+        return self.get(uri)
