@@ -16,5 +16,9 @@ setup(
     author_email='marcus.vinicius@corp.globo.com',
     url='https://github.com/globocom/GloboNetworkAPI-client-python',
     license='LICENSE.txt',
+    install_requires=[
+        'djangorestframework==2.4.3',
+        'requests==2.4.3',
+    ],
     packages=find_packages(),
 )
