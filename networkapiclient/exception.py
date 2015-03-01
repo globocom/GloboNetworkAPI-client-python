@@ -810,7 +810,10 @@ class RacksError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+class RackAllreadyConfigError(NetworkAPIClientError):
 
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
 
 
 class ErrorHandler(object):
@@ -1077,6 +1080,7 @@ class ErrorHandler(object):
               376: NumeroRackDuplicadoError,
               378: RacksError,
               379: RackNaoExisteError,
+              379: RackAllreadyConfigError,
               }
 
     @classmethod
