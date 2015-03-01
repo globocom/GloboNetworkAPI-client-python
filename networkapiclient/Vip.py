@@ -942,7 +942,10 @@ class Vip(GenericClient):
         :param bal_ativo: Balanceador ativo.
         :param transbordos: Lista com os IPs dos servidores de transbordo. Ex: ['10.10.100.1','192.168.1.1'].
         :param reals: Lista de reals. Ex: [{'real_name':'Teste1', 'real_ip':'10.10.10.1'},{'real_name':'Teste2', 'real_ip':'10.10.10.2'}]
-        :param portas_servicos: Lista das portas. Ex: ['80','8080','445'].
+        :param portas_servicos: Lista das portas.
+               Para Update de Portas Adicionar Id do ServerPool,
+               Para Novos Omitir a Chave que Representa o Id do Server Poll.
+               Ex: s[{'port':'80', 'server_pool_id': 3358}, {'port':'8080'},{'port':'445'}].
 
         :return: None
 
@@ -1033,7 +1036,7 @@ class Vip(GenericClient):
 
         code, xml = self.submit(None, 'GET', url)
 
-        return self.response(code, xml, ['pools', 'server_pool_members'])
+        return self.response(code, xml, ['pools', 'server_pool_members', 'portas_servicos'])
 
     def find_vip_requests(self, id_vip, ip, pagination, create=None):
         """Get VIPs by id or ipv4 or ipv6.
