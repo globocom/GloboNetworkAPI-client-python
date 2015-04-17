@@ -50,6 +50,8 @@ from networkapiclient.BlockRule import BlockRule
 from networkapiclient.Pool import Pool
 from networkapiclient.Healthcheck import Healthcheck
 from networkapiclient.ApiVipRequest import ApiVipRequest
+from networkapiclient.Rack import Rack
+
 
 
 class ClientFactory(object):
@@ -363,3 +365,12 @@ class ClientFactory(object):
             self.password,
             self.user_ldap
         )
+
+    def create_rack(self):
+        """Get an instance of rack services facade."""
+        return Rack(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+

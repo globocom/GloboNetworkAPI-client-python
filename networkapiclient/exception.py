@@ -793,6 +793,29 @@ class VipRequestBlockAlreadyInRule(NetworkAPIClientError):
         NetworkAPIClientError.__init__(self, error)
 
 
+class NumeroRackDuplicadoError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+
+class RackNaoExisteError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+
+class RacksError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+class RackAllreadyConfigError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+
 class ErrorHandler(object):
 
     '''Classe que trata os códigos de erros retornados pela networkAPI e lança a exceção
@@ -1054,6 +1077,10 @@ class ErrorHandler(object):
               356: VipIpError,
               357: EnvironmentVipError,
               358: InvalidParameterError,
+              376: NumeroRackDuplicadoError,
+              378: RacksError,
+              379: RackNaoExisteError,
+              379: RackAllreadyConfigError,
               }
 
     @classmethod
