@@ -15,7 +15,7 @@
 # limitations under the License.
 
 MAJOR_VERSION = '0'
-MINOR_VERSION = '3'
-PATCH_VERSION = '1'
+MINOR_VERSION = '4'
+PATCH_VERSION = '0rc1'
 VERSION = '.'.join((MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION,))
 
