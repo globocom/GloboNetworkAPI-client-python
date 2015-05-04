@@ -1036,7 +1036,7 @@ class Vip(GenericClient):
 
         code, xml = self.submit(None, 'GET', url)
 
-        return self.response(code, xml, ['pools', 'server_pool_members', 'portas_servicos'])
+        return self.response(code, xml, ['pools', 'server_pool_members'])
 
     def find_vip_requests(self, id_vip, ip, pagination, create=None):
         """Get VIPs by id or ipv4 or ipv6.
@@ -1622,3 +1622,8 @@ class Vip(GenericClient):
         code, xml = self.submit(None, 'GET', url)
 
         return self.response(code, xml)
+
+
+if __name__ == '__main__':
+    vip_cli = Vip('http://127.0.0.1:8080/', 'henrique', '12345678')
+    print vip_cli.buscar(6628)
