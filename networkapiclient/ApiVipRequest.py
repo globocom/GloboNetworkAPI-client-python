@@ -84,6 +84,56 @@ class ApiVipRequest(ApiGenericClient):
             pk=None
     ):
         """
+        Save/Update Request Vip.
+        :param id_ipv4: int
+        :param id_ipv6: int
+        :param finality: str
+        :param client: str
+        :param environment: str
+        :param cache: str
+        :param persistence: str
+        :param timeout: str
+        :param host: str
+        :param areanegocio: str
+        :param nome_servico: str
+        :param l7_filter: str
+        :param vip_ports_to_pools: list of dict
+        :param rule_id: int
+        :param pk: int identifier Id Vip Request.
+
+        :return Following dictionary:
+
+        {
+            'id': <id>,
+            'ip': <id_ip>,
+            'ipv6': <id_ipv6>,
+            'l7_filter': <l7_filter>,
+            'filter_applied': <filter_applied>,
+            'filter_rollback': <filter_rollback>,
+            'filter_valid': <filter_valid>,
+            'applied_l7_datetime': <applied_l7_datetime>,
+            'healthcheck_expect': <healthcheck_expect>,
+            'rule': <rule>,
+            'rule_applied': <rule_applied>,
+            'rule_rollback': <rule_rollback>,
+            'areanegocio': '<areanegocio>',
+            'nome_servico': '<nome_servico>',
+            'host': <host>,
+            'vip_ports_to_pools': [{
+                'id': <id>,
+                'requisicao_vip': <requisicao_vip>,
+                'server_pool': <server_pool>,
+                'port_vip': <port_vip>
+            },...],
+            'finalidade': <finalidade>,
+            'cliente': <cliente>,
+            'ambiente': <ambiente>
+        }
+
+        :raise EnvironmentVipDoesNotExistException: Environment Vip Does Not Exists
+        :raise InvalidIdVipRequestException: Invalid Id For Vip Request.
+        :raise VipRequestDoesNotExistException: Vip Request Does Not Exists.
+        :raise NetworkAPIException: Fail to Access Data Base.
         """
 
         data = dict()
@@ -116,29 +166,19 @@ class ApiVipRequest(ApiGenericClient):
         """
         Get Request Vip by Identifier.
 
-        :param pk: Identifier Vip Request.
+        :param pk: int identifier Vip Request.
 
         :return: Following dictionary:
 
         {'vip': {
             'persistencia': <persistencia>,
             'id': <id>,
-            'portas_servicos': [{ 'vip_port_id': <vip_port_id>, 'porta': <porta>}, ...],
             'cache': <cache>,
             'ambiente':<ambiente>,
             'cliente': <cliente>,
             'areanegocio': '<areanegocio>'
             'vip_criado': <vip_criado>,
             'id_ip': <id_ip>,
-            'reals': {
-                'real': [{
-                    'id_ip': <id_ip>,
-                    'port_real': <port_real>,
-                    'real_ip': <real_ip>,
-                    'port_vip': <port_vip>,
-                    'real_name': <real_name>
-                },...]
-            },
             'id_healthcheck_expect': <id_healthcheck_expect>,
             'reals_weights':{'reals_weight': [<reals_weight>,...]},
             'host': <host>,
@@ -152,6 +192,15 @@ class ApiVipRequest(ApiGenericClient):
             'timeout': <timeout>,
             'pools':[{
                 'lb_method': <lb_method>,
+                'healthcheck': <healthcheck>,
+                'pool_created': <pool_created>,
+                'id': <id>,
+                'environment': <environment>,
+                'port_vip_id': <port_vip_id>,
+                'port_vip': <port_vip>,
+                'default_port': <default_port>,
+                'default_limit': <default_limit>,
+                'identifier': <identifier>,
                 'server_pool_members':[{
                     'status': <status>,
                     'port_real': <port_real>,
@@ -168,15 +217,6 @@ class ApiVipRequest(ApiGenericClient):
                     'identifier': '<identifier>',
                     'server_pool': <server_pool>
                 },...],
-                'healthcheck': <healthcheck>,
-                'pool_created': <pool_created>,
-                'id': <id>,
-                'environment': <environment>,
-                'port_vip_id': <port_vip_id>,
-                'default_port': <default_port>,
-                'default_limit': <default_limit>,
-                'identifier': <identifier>,
-                'port_vip': <port_vip>
             },...],
         }}
 
