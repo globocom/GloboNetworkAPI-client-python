@@ -170,7 +170,7 @@ class ApiVipRequest(ApiGenericClient):
 
         :return: Following dictionary:
 
-        {'vip': {
+        {
             'persistencia': <persistencia>,
             'id': <id>,
             'cache': <cache>,
@@ -218,7 +218,7 @@ class ApiVipRequest(ApiGenericClient):
                     'server_pool': <server_pool>
                 },...],
             },...],
-        }}
+        }
 
         :raise InvalidIdVipRequestException: Invalid Id For Vip Request.
         :raise VipRequestDoesNotExistException: Vip Request Does Not Exists.
