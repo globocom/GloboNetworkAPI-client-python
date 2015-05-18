@@ -198,20 +198,21 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
-
-    def list_all_members_by_pool(self, id_server_pool, pagination):
+    def list_all_members_by_pool(self, id_server_pool, pagination=None, checkstatus=False):
 
         data = dict()
+        
+        uri = "api/pools/get_all_members/%s/?checkstatus=%s" % (id_server_pool, checkstatus)
 
-        data["start_record"] = pagination.start_record
-        data["end_record"] = pagination.end_record
-        data["asorting_cols"] = pagination.asorting_cols
-        data["searchable_columns"] = pagination.searchable_columns
-        data["custom_search"] = pagination.custom_search or None
-
-        uri = "api/pools/get_all_members/%s/" % id_server_pool
-
-        return self.post(uri, data=data)
+        if pagination:
+            data["start_record"] = pagination.start_record
+            data["end_record"] = pagination.end_record
+            data["asorting_cols"] = pagination.asorting_cols
+            data["searchable_columns"] = pagination.searchable_columns
+            data["custom_search"] = pagination.custom_search or None
+            return self.post(uri, data=data)
+        else:
+            return self.get(uri)
 
     def get_equip_by_ip(self, id_ip):
 
