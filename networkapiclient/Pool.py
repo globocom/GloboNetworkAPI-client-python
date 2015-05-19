@@ -198,7 +198,7 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
-    def list_all_members_by_pool(self, id_server_pool, pagination=None, checkstatus=False):
+    def list_all_members_by_pool(self, id_server_pool, checkstatus=False, pagination=None):
 
         data = dict()
         
