@@ -1384,6 +1384,45 @@ class Vip(GenericClient):
 
         return self.response(code, xml)
 
+    def alter_persistence(
+            self,
+            id_vip,
+            persistence):
+        """Change VIP's persistence config by the identifier.
+
+        :param id_vip: Identifier of the request VIP.
+        :param persistence: persistence.
+
+        :return: Dictionary with the following structure:
+
+        ::
+
+            {‘sucesso’: {‘codigo’: < codigo >,
+            ‘descricao’: {'stdout':< stdout >, 'stderr':< stderr >}}}
+
+        :raise VipNaoExisteError: Request VIP not registered.
+        :raise InvalidParameterError: Identifier of the request is invalid or null VIP.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        :raise EnvironmentVipError: The combination of finality, client and environment is invalid.
+        :raise InvalidPersistenceValueError: The value of persistence is invalid.
+        :raise IpEquipmentError: Association between equipment and ip of this Vip Request doesn't exist.
+        :raise IpError: IP not registered.
+        """
+
+        if not is_valid_int_param(id_vip):
+            raise InvalidParameterError(
+                u'The identifier of vip is invalid or was not informed.')
+
+        url = 'vip/' + str(id_vip) + '/persistence/'
+
+        vip_map = dict()
+        vip_map['persistencia'] = persistence
+
+        code, xml = self.submit({'vip': vip_map}, 'PUT', url)
+
+        return self.response(code, xml)
+
     def alter_priority(self, id_vip, reals_prioritys):
         """Change list the reals_priority to VIP from by the identifier.
 
