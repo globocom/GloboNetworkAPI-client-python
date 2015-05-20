@@ -252,6 +252,25 @@ class NomeTipoRoteiroDuplicadoError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+class NumeroRackDuplicadoError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+class NomeRackDuplicadoError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+class RackConfiguracaoError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+class RackAplicarError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
 
 class TipoRoteiroNaoExisteError(NetworkAPIClientError):
 
@@ -288,12 +307,25 @@ class MarcaNaoExisteError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+class RackNaoExisteError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
 
 class MarcarError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+class RacksError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+class RackAllreadyConfigError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
 
 class ModeloEquipamentoError(NetworkAPIClientError):
 
@@ -498,7 +530,6 @@ class NomeMarcaDuplicadoError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
-
 class NomeMarcaModeloDuplicadoError(NetworkAPIClientError):
 
     def __init__(self, error):
@@ -542,12 +573,6 @@ class ValorIndicacaoDireitoInvalidoError(NetworkAPIClientError):
 
 
 class DireitoGrupoEquipamentoDuplicadoError(NetworkAPIClientError):
-
-    def __init__(self, error):
-        NetworkAPIClientError.__init__(self, error)
-
-
-class PoolError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
@@ -788,29 +813,6 @@ class VipRequestNoBlockInRule(NetworkAPIClientError):
 class VipRequestBlockAlreadyInRule(NetworkAPIClientError):
 
     """Returns exception when trying to add a block that already exists in rule vip"""
-
-    def __init__(self, error):
-        NetworkAPIClientError.__init__(self, error)
-
-
-class NumeroRackDuplicadoError(NetworkAPIClientError):
-
-    def __init__(self, error):
-        NetworkAPIClientError.__init__(self, error)
-
-
-class RackNaoExisteError(NetworkAPIClientError):
-
-    def __init__(self, error):
-        NetworkAPIClientError.__init__(self, error)
-
-
-class RacksError(NetworkAPIClientError):
-
-    def __init__(self, error):
-        NetworkAPIClientError.__init__(self, error)
-
-class RackAllreadyConfigError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
@@ -1080,7 +1082,10 @@ class ErrorHandler(object):
               376: NumeroRackDuplicadoError,
               378: RacksError,
               379: RackNaoExisteError,
-              379: RackAllreadyConfigError,
+              380: RackAllreadyConfigError,
+              381: NomeRackDuplicadoError,
+              382: RackConfiguracaoError,
+              383: RackAplicarError
               }
 
     @classmethod

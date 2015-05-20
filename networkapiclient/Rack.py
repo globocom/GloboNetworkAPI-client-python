@@ -38,6 +38,7 @@ class Rack(GenericClient):
     def insert_rack(
             self,
             number,
+            name,
             mac_address_sw1,
             mac_address_sw2,
             mac_address_ilo,
@@ -45,10 +46,12 @@ class Rack(GenericClient):
             id_sw2,
             id_ilo):
         """Create new Rack
+        :param number: Number of Rack
         :return: Following dictionary:
         ::
           {'rack': {'id': < id_rack >,
           'num_rack': < num_rack >,
+          'name_rack': < name_rack >,
           'mac_sw1': < mac_sw1 >, 
           'mac_sw2': < mac_sw2 >, 
           'mac_ilo': < mac_ilo >, 
@@ -66,6 +69,7 @@ class Rack(GenericClient):
 
         rack_map = dict()
         rack_map['number'] = number
+        rack_map['name'] = name
         rack_map['mac_address_sw1'] = mac_address_sw1
         rack_map['mac_address_sw2'] = mac_address_sw2
         rack_map['mac_address_ilo'] = mac_address_ilo
@@ -88,7 +92,7 @@ class Rack(GenericClient):
             'sw1':< sw1 >,
             'mac1':< mac1 >,
             'sw2':< sw2 >,
-	    'mac2':< mac2 >,
+        'mac2':< mac2 >,
             'ilo':< ilo >,
             'mac_ilo':< mac_ilo > } }
 
@@ -106,6 +110,7 @@ class Rack(GenericClient):
     def edit_rack(self,
             id_rack, 
             number, 
+            name, 
             mac_sw1, 
             mac_sw2, 
             mac_ilo, 
@@ -116,6 +121,7 @@ class Rack(GenericClient):
         rack_map = dict()
         rack_map['id_rack'] = id_rack
         rack_map['number'] = number
+        rack_map['name'] = name
         rack_map['mac_address_sw1'] = mac_sw1
         rack_map['mac_address_sw2'] = mac_sw2
         rack_map['mac_address_ilo'] = mac_ilo
@@ -151,11 +157,11 @@ class Rack(GenericClient):
 
         return self.response(code, xml)
 
-
-
+   
     def gerar_arq_config (self, id_rack):
-        """Create the configuration file of each equipment on the Rack.
-
+        """Create the configuration file of each equipment on the Rack and create 
+        all racks vlan and environments.
+ 
         :param id_rack: Identifier of the Rack. Integer value and greater than zero.
 
         :return: None
@@ -165,14 +171,26 @@ class Rack(GenericClient):
         :raise RackError: Rack is associated with a script.
         :raise DataBaseError: Networkapi failed to access the database.
         :raise XMLError: Networkapi failed to generate the XML response.
-        """
+        """  
 
         if not is_valid_int_param(id_rack):
             raise InvalidParameterError(
                 u'The identifier of Rack is invalid or was not informed.')
 
-        url = 'rack/gerar-arq-config/' + str(id_rack) + '/'
+        url = 'rack/gerar-configuracao/' + str(id_rack) + '/'
+        code, xml = self.submit(None, 'POST', url)
 
+        return self.response(code, xml)
+
+
+    def aplicar_configuracao(self, id_rack):
+        
+
+        if not is_valid_int_param(id_rack):
+            raise InvalidParameterError(
+                u'The identifier of Rack is invalid or was not informed.')
+
+        url = 'rack/aplicar-config/' + str(id_rack) + '/'
         code, xml = self.submit(None, 'POST', url)
 
         return self.response(code, xml)
