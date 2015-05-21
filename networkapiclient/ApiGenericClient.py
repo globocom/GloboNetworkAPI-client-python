@@ -18,8 +18,8 @@
 import json
 import requests
 from requests.auth import HTTPBasicAuth
-from rest_framework.compat import BytesIO
-from rest_framework.parsers import JSONParser
+from io import BytesIO
+import json
 from networkapiclient.exception import NetworkAPIClientError
 from requests.exceptions import HTTPError
 
@@ -155,7 +155,7 @@ class ApiGenericClient(object):
         if content:
 
             stream = BytesIO(content)
-            data = JSONParser().parse(stream)
+            data = json.loads(stream.getvalue())
 
             return data
 
