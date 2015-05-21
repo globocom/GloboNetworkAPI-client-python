@@ -154,7 +154,7 @@ class ApiGenericClient(object):
         """
         if content:
 
-            stream = BytesIO(content)
+            stream = BytesIO(str(content))
             data = json.loads(stream.getvalue())
 
             return data
