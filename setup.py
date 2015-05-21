@@ -19,6 +19,7 @@ setup(
     install_requires=[
         'djangorestframework==2.4.3',
         'requests==2.4.3',
+	'Django==1.4.15',
     ],
     packages=find_packages(),
 )
