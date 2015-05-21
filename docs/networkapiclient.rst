@@ -20,6 +20,22 @@ networkapiclient.AmbienteLogico module
     :undoc-members:
     :show-inheritance:
 
+networkapiclient.ApiGenericClient module
+--------------------------------
+
+.. automodule:: networkapiclient.ApiGenericClient
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+networkapiclient.ApiVipRequest module
+--------------------------------
+
+.. automodule:: networkapiclient.ApiVipRequest
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 networkapiclient.BlockRule module
 ---------------------------------
 
@@ -235,6 +251,15 @@ networkapiclient.Permission module
     :members:
     :undoc-members:
     :show-inheritance:
+
+networkapiclient.Pool module
+----------------------------------
+
+.. automodule:: networkapiclient.Pool
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 networkapiclient.Roteiro module
 -------------------------------
