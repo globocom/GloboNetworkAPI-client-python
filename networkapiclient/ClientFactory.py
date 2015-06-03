@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from ApiVlan import ApiVlan
 
 from networkapiclient.Ambiente import Ambiente
 from networkapiclient.Equipamento import Equipamento
@@ -374,3 +375,13 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
+    def create_api_vlan(self):
+
+        """Get an instance of Api Vlan services facade."""
+
+        return ApiVlan(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
