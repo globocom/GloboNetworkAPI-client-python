@@ -51,6 +51,7 @@ from networkapiclient.Pool import Pool
 from networkapiclient.Healthcheck import Healthcheck
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.Rack import Rack
+from networkapiclient.RackServers import RackServers
 
 
 
@@ -374,3 +375,10 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
+    def create_rackservers(self):
+        """Get an instance of rackservers services facade."""
+        return RackServers(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)

@@ -21,6 +21,7 @@ from networkapiclient.Pagination import Pagination
 from Config import IP_VERSION
 
 class Rack(GenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -82,8 +83,7 @@ class Rack(GenericClient):
         return self.response(code, xml)
 
     def find_racks(self):
-        """Get Racks by racks number.
-
+        """
         :return: Dictionary with the following structure:
 
         ::
@@ -102,6 +102,15 @@ class Rack(GenericClient):
         """
 
         url = 'rack/find/'
+        code, xml = self.submit(None, 'GET', url)
+
+        key = "rack"
+        return get_list_map(self.response(code, xml, [key]), key)
+
+    def get_rack(self, name):
+
+
+        url = 'rack/find/' + str(name) + '/'
         code, xml = self.submit(None, 'GET', url)
 
         key = "rack"
@@ -194,3 +203,11 @@ class Rack(GenericClient):
         code, xml = self.submit(None, 'POST', url)
 
         return self.response(code, xml)
+
+    def list_all_rack_environments(self, nome_rack):
+
+        url = 'rack/list-rack-environment/' + str(nome_rack) + '/'
+        code, xml = self.submit(None, 'GET', url)
+
+        key = 'ambiente'
+        return get_list_map(self.response(code, xml, [key]), key)

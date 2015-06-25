@@ -369,3 +369,12 @@ class Interface(GenericClient):
 
         key = 'interfaces'
         return get_list_map(self.response(code, map, [key]), key)
+
+    def listar_switch_router(self, id_equipamento):
+
+        url = 'int/getbyidequip/' + str(id_equipamento) + '/'
+        code, xml = self.submit(None, 'GET', url)
+
+        key = 'interfaces'
+        return get_list_map(self.response(code, xml, [key]), key)
+
