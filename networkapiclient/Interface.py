@@ -150,9 +150,11 @@ class Interface(GenericClient):
             nome,
             protegida,
             descricao,
+            tipo_interface,
             id_ligacao_front,
             id_ligacao_back,
-            id_equipamento):
+            id_equipamento,
+            id_int_type):
         """Insert new interface for an equipment.
 
         :param nome: Interface name.
@@ -178,6 +180,7 @@ class Interface(GenericClient):
         interface_map['id_ligacao_front'] = id_ligacao_front
         interface_map['id_ligacao_back'] = id_ligacao_back
         interface_map['id_equipamento'] = id_equipamento
+        interface_map['id_int_type'] = id_int_type
 
         code, xml = self.submit(
             {'interface': interface_map}, 'POST', 'interface/')
@@ -378,3 +381,10 @@ class Interface(GenericClient):
         key = 'interfaces'
         return get_list_map(self.response(code, xml, [key]), key)
 
+    def list_all_interface_types(self):
+
+        url = 'interfacetype/get-type/'
+        code, xml = self.submit(None, 'GET', url)
+
+        key = 'tipo_interface'
+        return get_list_map(self.response(code, xml, [key]), key)

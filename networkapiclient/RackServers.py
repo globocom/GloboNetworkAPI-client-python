@@ -41,3 +41,22 @@ class RackServers(GenericClient):
 
         key = 'tipo_servidor'
         return get_list_map(self.response(code, map, [key]), key)
+
+    def insert_rack(
+            self,
+            rack,
+            servidor,
+            tipo_servidor,
+            ambiente):
+
+        server_map = dict()
+        server_map['id_rack'] = rack
+        server_map['id_equip'] = servidor
+        server_map['id_tiposervidor'] = tipo_servidor
+        server_map['id_ambiente'] = ambiente
+
+        code, xml = self.submit({'server': server_map}, 'POST', 'rackservers/insert/')
+
+        return self.response(code, xml)
+
+
