@@ -98,7 +98,7 @@ class Pool(ApiGenericClient):
 
     def inserir(self, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
                 healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities,
-                weight, ports_reals):
+                weight, ports_reals, servicedownaction='none'):
 
         uri = "api/pools/insert/"
 
@@ -107,6 +107,7 @@ class Pool(ApiGenericClient):
         data['default_port'] = default_port
         data['environment'] = environment
         data['balancing'] = balancing
+        data['servicedownaction'] = servicedownaction
         data['healthcheck_type'] = healthcheck_type
         data['healthcheck_expect'] = healthcheck_expect
         data['healthcheck_request'] = healthcheck_request
@@ -127,7 +128,7 @@ class Pool(ApiGenericClient):
 
     def save(self, id, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
                 healthcheck_request, maxcom, ip_list_full, nome_equips, id_equips, priorities,
-                weight, ports_reals, id_pool_member):
+                weight, ports_reals, id_pool_member, servicedownaction='none'):
 
         uri = "api/pools/save/"
 
@@ -137,6 +138,7 @@ class Pool(ApiGenericClient):
         data['default_port'] = default_port
         data['environment'] = environment
         data['balancing'] = balancing
+        data['servicedownaction'] = servicedownaction
         data['healthcheck_type'] = healthcheck_type
         data['healthcheck_expect'] = healthcheck_expect
         data['healthcheck_request'] = healthcheck_request
@@ -170,7 +172,7 @@ class Pool(ApiGenericClient):
         return self.post(uri, data=data)
 
     def update(self, id_server_pool, default_port, balancing, healthcheck_type, healthcheck_expect, healthcheck_request,
-               old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals):
+               old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals, servicedownaction='none'):
 
         uri = "api/pools/edit/"
 
@@ -179,6 +181,7 @@ class Pool(ApiGenericClient):
         data['default_port'] = default_port
         # data['environment'] = environment
         data['balancing'] = balancing
+        data['servicedownaction'] = servicedownaction
         data['healthcheck_type'] = healthcheck_type
         data['healthcheck_expect'] = healthcheck_expect
         data['healthcheck_request'] = healthcheck_request
