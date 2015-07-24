@@ -48,6 +48,7 @@ from networkapiclient.Permission import Permission
 from networkapiclient.EventLog import EventLog
 from networkapiclient.BlockRule import BlockRule
 from networkapiclient.Pool import Pool
+from networkapiclient.OptionPool import OptionPool
 from networkapiclient.Healthcheck import Healthcheck
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.Rack import Rack
@@ -296,6 +297,14 @@ class ClientFactory(object):
     def create_option_vip(self):
         """Get an instance of option_vip services facade."""
         return OptionVIP(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_option_pool(self):
+        """Get an instance of option_pool services facade."""
+        return OptionPool(
             self.networkapi_url,
             self.user,
             self.password,
