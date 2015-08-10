@@ -115,9 +115,7 @@ class Interface(GenericClient):
 
         :return: Following dictionary:
 
-        ::
-
-            {'interface': {'id': < id >,
+        :  {'interface': {'id': < id >,
             'interface': < interface >,
             'descricao': < descricao >,
             'protegida': < protegida >,
@@ -129,7 +127,9 @@ class Interface(GenericClient):
             'nome_equip_l_front': < equipment_name >,
             'ligacao_back': < id_ligacao_back >,
             'nome_ligacao_back': < interface_name >,
-            'nome_equip_l_back': < equipment_name > }}
+            'nome_equip_l_back': < equipment_name >,
+            'tipo_interface': <id_tipo_interface>,
+            'vlan': <num_vlan>}
 
         :raise InvalidParameterError: Interface identifier is invalid or none.
         :raise DataBaseError: Networkapi failed to access the database.
@@ -150,11 +150,11 @@ class Interface(GenericClient):
             nome,
             protegida,
             descricao,
-            tipo_interface,
             id_ligacao_front,
             id_ligacao_back,
             id_equipamento,
-            id_int_type):
+            tipo,
+            vlan):
         """Insert new interface for an equipment.
 
         :param nome: Interface name.
@@ -180,11 +180,10 @@ class Interface(GenericClient):
         interface_map['id_ligacao_front'] = id_ligacao_front
         interface_map['id_ligacao_back'] = id_ligacao_back
         interface_map['id_equipamento'] = id_equipamento
-        interface_map['id_int_type'] = id_int_type
+        interface_map['tipo'] = tipo
+        interface_map['vlan'] = vlan
 
-        code, xml = self.submit(
-            {'interface': interface_map}, 'POST', 'interface/')
-
+        code, xml = self.submit({'interface': interface_map}, 'POST', 'interface/')
         return self.response(code, xml)
 
     def alterar(
@@ -388,3 +387,14 @@ class Interface(GenericClient):
 
         key = 'tipo_interface'
         return get_list_map(self.response(code, xml, [key]), key)
+
+    def associar_ambiente(self, ambientes, interface):
+
+        interface_map = dict()
+        interface_map['ambientes'] = ambientes
+        interface_map['interface'] = interface
+
+        code, xml = self.submit(
+            {'interface': interface_map}, 'POST', 'interface/associar-ambiente/')
+
+        return self.response(code, xml)

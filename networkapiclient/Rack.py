@@ -107,6 +107,31 @@ class Rack(GenericClient):
         key = "rack"
         return get_list_map(self.response(code, xml, [key]), key)
 
+    def list(self):
+        """
+        :return: Dictionary with the following structure:
+
+        ::
+
+            {Rack: {rack_number: < rack_number >,
+            'sw1':< sw1 >,
+            'mac1':< mac1 >,
+            'sw2':< sw2 >,
+        'mac2':< mac2 >,
+            'ilo':< ilo >,
+            'mac_ilo':< mac_ilo > } }
+
+        :raise VipNaoExisteError: No request for registered VIP.
+        :raise DataBaseError: Can't connect to networkapi database.
+        :raise XMLError: Failed to generate the XML response.
+        """
+
+        url = 'rack/list/'
+        code, xml = self.submit(None, 'GET', url)
+
+        key = "rack"
+        return get_list_map(self.response(code, xml, [key]), key)
+
     def get_rack(self, name):
 
 
@@ -204,9 +229,9 @@ class Rack(GenericClient):
 
         return self.response(code, xml)
 
-    def list_all_rack_environments(self, nome_rack):
+    def list_all_rack_environments(self, id_rack):
 
-        url = 'rack/list-rack-environment/' + str(nome_rack) + '/'
+        url = 'rack/list-rack-environment/' + str(id_rack) + '/'
         code, xml = self.submit(None, 'GET', url)
 
         key = 'ambiente'
