@@ -388,13 +388,11 @@ class Interface(GenericClient):
         key = 'tipo_interface'
         return get_list_map(self.response(code, xml, [key]), key)
 
-    def associar_ambiente(self, ambientes, interface):
+    def associar_ambiente(self, ambiente, interface):
 
         interface_map = dict()
-        interface_map['ambientes'] = ambientes
+        interface_map['ambiente'] = ambiente
         interface_map['interface'] = interface
 
-        code, xml = self.submit(
-            {'interface': interface_map}, 'POST', 'interface/associar-ambiente/')
-
+        code, xml = self.submit({'interface': interface_map}, 'POST', 'interface/associar-ambiente/')
         return self.response(code, xml)
