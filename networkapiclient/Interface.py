@@ -193,7 +193,9 @@ class Interface(GenericClient):
             protegida,
             descricao,
             id_ligacao_front,
-            id_ligacao_back):
+            id_ligacao_back,
+            tipo,
+            vlan):
         """Edit an interface by its identifier.
 
         Equipment identifier is not changed.
@@ -225,6 +227,8 @@ class Interface(GenericClient):
         interface_map['descricao'] = descricao
         interface_map['id_ligacao_front'] = id_ligacao_front
         interface_map['id_ligacao_back'] = id_ligacao_back
+        interface_map['tipo'] = tipo
+        interface_map['vlan'] = vlan
 
         code, xml = self.submit({'interface': interface_map}, 'PUT', url)
 
@@ -395,4 +399,13 @@ class Interface(GenericClient):
         interface_map['interface'] = interface
 
         code, xml = self.submit({'interface': interface_map}, 'POST', 'interface/associar-ambiente/')
+        return self.response(code, xml)
+
+    def dissociar(self, interface):
+
+        interface_map = dict()
+        interface_map['interface'] = interface
+
+        code, xml = self.submit({'interface': interface_map}, 'DELETE', 'int/associar-ambiente/')
+
         return self.response(code, xml)
