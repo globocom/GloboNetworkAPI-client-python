@@ -409,3 +409,14 @@ class Interface(GenericClient):
         code, xml = self.submit({'interface': interface_map}, 'DELETE', 'int/associar-ambiente/')
 
         return self.response(code, xml)
+
+    def inserir_channel (self, interfaces, nome, lacp):
+
+        channel_map = dict ()
+        channel_map['interfaces'] = interfaces
+        channel_map['nome'] = nome
+        channel_map['lacp'] = lacp
+
+        code, xml = self.submit({'channel': channel_map}, 'POST', 'channel/inserir/')
+
+        return self.response(code, xml)
