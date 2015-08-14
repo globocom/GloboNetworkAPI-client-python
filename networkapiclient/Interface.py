@@ -410,13 +410,28 @@ class Interface(GenericClient):
 
         return self.response(code, xml)
 
-    def inserir_channel (self, interfaces, nome, lacp):
+    def inserir_channel (self, interfaces, nome, lacp, int_type, vlan, envs):
 
         channel_map = dict ()
         channel_map['interfaces'] = interfaces
         channel_map['nome'] = nome
         channel_map['lacp'] = lacp
+        channel_map['int_type'] = int_type
+        channel_map['vlan'] = vlan
+        channel_map['envs'] = envs
 
         code, xml = self.submit({'channel': channel_map}, 'POST', 'channel/inserir/')
 
         return self.response(code, xml)
+
+    def get_env_by_id(self, id_interface):
+
+        if not is_valid_int_param(id_interface):
+            raise InvalidParameterError(u'Interface id is invalid or was not informed.')
+
+        url = 'int/get-env-by-interface/' + str(id_interface)
+
+        code, map = self.submit(None, 'GET', url)
+
+        return self.response(code, map)
+
