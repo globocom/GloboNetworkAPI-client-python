@@ -236,3 +236,12 @@ class Rack(GenericClient):
 
         key = 'ambiente'
         return get_list_map(self.response(code, xml, [key]), key)
+
+
+    def get_rack_by_equip_id(self, equip_id):
+
+        url = 'rack/get-by-equip/' + str(equip_id) + '/'
+        code, xml = self.submit(None, 'GET', url)
+
+        key = 'rack'
+        return get_list_map(self.response(code, xml, [key]), key)
