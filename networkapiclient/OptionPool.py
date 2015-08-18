@@ -168,7 +168,7 @@ class OptionPool(GenericClient):
         return self.response(code, xml)
 
 
-    def get_all_environment_option_pool(self, id_environment, option_id, option_type):
+    def get_all_environment_option_pool(self, id_environment=None, option_id=None, option_type=None):
         """Get all Option VIP by Environment .
 
         :return: Dictionary with the following structure:
