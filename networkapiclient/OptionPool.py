@@ -14,12 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from networkapiclient.GenericClient import GenericClient
 from networkapiclient.exception import InvalidParameterError
 from networkapiclient.utils import is_valid_int_param
+from networkapiclient.ApiGenericClient import ApiGenericClient
 
 
-class OptionPool(GenericClient):
+class OptionPool(ApiGenericClient):
 
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
@@ -34,6 +34,8 @@ class OptionPool(GenericClient):
             user,
             password,
             user_ldap)
+
+
 
     def add(self, tipo_opcao, nome_opcao):
         """Inserts a new Option Pool and returns its identifier.
@@ -55,10 +57,10 @@ class OptionPool(GenericClient):
         #optionpool_map['type'] = tipo_opcao
         #optionpool_map['name'] = nome_opcao
 
-        code, xml = self.submit(
-            {'type': tipo_opcao, "name":nome_opcao }, 'POST', 'pools/options/save/')
+        url='api/pools/options/save/'
 
-        return self.response(code, xml)
+        return self.post(url, {'type': tipo_opcao, "name":nome_opcao })
+
 
     def modify(self, id_option_pool, tipo_opcao, nome_opcao):
         """Change Option Pool from by id.
@@ -84,11 +86,9 @@ class OptionPool(GenericClient):
         #optionpool_map['type'] = tipo_opcao
         #optionpool_map['name'] = nome_opcao_txt
 
-        url = 'pools/options/' + str(id_option_pool) + '/'
+        url = 'api/pools/options/' + str(id_option_pool) + '/'
 
-        code, xml = self.submit( {'type': tipo_opcao, "name":nome_opcao }, 'PUT', url)
-
-        return self.response(code, xml)
+        return self.put(url,{'type': tipo_opcao, "name":nome_opcao } )
 
     def remove(self, id_option_pool):
         """Remove Option pool  by  identifier and all Environment related .
@@ -108,11 +108,9 @@ class OptionPool(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Option Pool is invalid or was not informed.')
 
-        url = 'pools/options/' + str(id_option_pool) + '/'
+        url = 'api/pools/options/' + str(id_option_pool) + '/'
 
-        code, xml = self.submit(None, 'DELETE', url)
-
-        return self.response(code, xml)
+        return self.delete(url)
 
     def get_option_pool(self, id_option_pool):
         """Search Option Pool by id.
@@ -137,11 +135,9 @@ class OptionPool(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Option Pool is invalid or was not informed.')
 
-        url = 'pools/options/' + str(id_option_pool) + '/'
+        url = 'api/pools/options/' + str(id_option_pool) + '/'
 
-        code, xml = self.submit(None, 'GET', url)
-
-        return self.response(code, xml)
+        return self.get(url)
 
     def get_all_option_pool(self, option_type=None):
         """Get all Option Pool.
@@ -159,14 +155,12 @@ class OptionPool(GenericClient):
         :raise XMLError: Failed to generate the XML response.
         """
         if option_type:
-            url = 'pools/options/?type='+option_type
+            url = 'api/pools/options/?type='+option_type
         else:
-            url = 'pools/options/'
+            url = 'api/pools/options/'
 
-        code, xml = self.submit(None, 'GET', url)
 
-        return self.response(code, xml)
-
+        return self.get(url)
 
     def get_all_environment_option_pool(self, id_environment=None, option_id=None, option_type=None):
         """Get all Option VIP by Environment .
@@ -189,7 +183,7 @@ class OptionPool(GenericClient):
         :raise DataBaseError: Can't connect to networkapi database.
         :raise XMLError: Failed to generate the XML response.
         """
-        url='pools/environment_options/'
+        url='api/pools/environment_options/'
 
         if id_environment:
             if  option_id:
@@ -207,13 +201,11 @@ class OptionPool(GenericClient):
                 url = url + "?option_id=" + str(option_id)  + "&option_type=" + option_type
             else:
                 url = url + "?option_id=" + str(option_id)
-        else:
+        elif option_type:
             url = url + "?option_type=" + option_type
 
 
-        code, xml = self.submit(None, 'GET', url)
-
-        return self.response(code, xml)
+        return self.get(url)
 
 
     def associate_environment_option_pool(self, id_option_pool, id_environment):
@@ -251,14 +243,12 @@ class OptionPool(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Environment Pool is invalid or was not informed.')
 
-        #optionpool_map = dict()
-        #optionpool_map['option_id'] = id_option_pool
-        #optionpool_map['environment_id'] = id_environment
 
-        code, xml = self.submit(
-            {'option_id': id_option_pool,"environment_id":id_environment }, 'POST', 'pools/environment_options/save')
 
-        return self.response(code, xml)
+        url= 'api/pools/environment_options/save/'
+
+        return self.post(url,  {'option_id': id_option_pool,"environment_id":id_environment })
+
 
     def get_environment_option_pool(self, environment_option_id ):
         """Get Environment Option Pool by id .
@@ -282,11 +272,9 @@ class OptionPool(GenericClient):
         :raise XMLError: Failed to generate the XML response.
         """
 
-        url = 'pools/environment_options/' + str(environment_option_id) + '/'
+        url = 'api/pools/environment_options/' + str(environment_option_id) + '/'
 
-        code, xml = self.submit(None, 'GET', url)
-
-        return self.response(code, xml)
+        return self.get(url)
 
     def disassociate_environment_option_pool(self, environment_option_id):
         """Remove a relationship of optionpool with Environment.
@@ -313,11 +301,9 @@ class OptionPool(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Environment Pool is invalid or was not informed.')
 
-        url = 'pools/environment_options/' + str(environment_option_id) +  '/'
+        url = 'api/pools/environment_options/' + str(environment_option_id) +  '/'
 
-        code, xml = self.submit(None, 'DELETE', url)
-
-        return self.response(code, xml)
+        return self.delete(url)
 
 
     def modify_environment_option_pool(self, environment_option_id, id_option_pool,id_environment ):
@@ -358,9 +344,6 @@ class OptionPool(GenericClient):
         #optionpool_map['environment'] = environment_id
 
 
-        url = 'pools/environment_options/' + str(environment_option_id) +  '/'
+        url = 'api/pools/environment_options/' + str(environment_option_id) +  '/'
 
-        code, xml = self.submit({'option_id': id_option_pool,"environment_id":id_environment }, 'PUT', url)
-
-
-        return self.response(code, xml)
+        return self.put(url, {'option_id': id_option_pool,"environment_id":id_environment })
