@@ -35,7 +35,7 @@ class OptionPool(GenericClient):
             password,
             user_ldap)
 
-    def add(self, tipo_opcao, nome_opcao_txt):
+    def add(self, tipo_opcao, nome_opcao):
         """Inserts a new Option Pool and returns its identifier.
 
         :param tipo_opcao: Type. String with a maximum of 50 characters and respect [a-zA-Z\_-]
@@ -45,33 +45,33 @@ class OptionPool(GenericClient):
 
         ::
 
-            {'option_pool': {'id': < id >}}
+            {'id': < id > , 'type':<type>, 'name':<name>}
 
         :raise InvalidParameterError: The value of tipo_opcao or nome_opcao_txt is invalid.
         :raise DataBaseError: Networkapi failed to access the database.
         :raise XMLError: Networkapi failed to generate the XML response.
         """
-        optionpool_map = dict()
-        optionpool_map['type'] = tipo_opcao
-        optionpool_map['name'] = nome_opcao_txt
+        #optionpool_map = dict()
+        #optionpool_map['type'] = tipo_opcao
+        #optionpool_map['name'] = nome_opcao
 
         code, xml = self.submit(
-            {'option_pool': optionpool_map}, 'POST', 'optionpool/')
+            {'type': tipo_opcao, "name":nome_opcao }, 'POST', 'pools/options/save/')
 
         return self.response(code, xml)
 
-    def alter(self, id_option_pool, tipo_opcao, nome_opcao_txt):
-        """Change Option Pool from by the identifier.
+    def modify(self, id_option_pool, tipo_opcao, nome_opcao):
+        """Change Option Pool from by id.
 
-        :param id_option_pool: Identifier of the Option VIP. Integer value and greater than zero.
+        :param id_option_pool: Identifier of the Option Pool. Integer value and greater than zero.
         :param tipo_opcao: Type. String with a maximum of 50 characters and respect [a-zA-Z\_-]
         :param nome_opcao_txt: Name Option. String with a maximum of 50 characters and respect [a-zA-Z\_-]
 
         :return: None
 
-        :raise InvalidParameterError: Option VIP identifier is null and invalid.
+        :raise InvalidParameterError: Option Pool identifier is null or invalid.
         :raise InvalidParameterError: The value of tipo_opcao or nome_opcao_txt is invalid.
-        :raise optionpoolNotFoundError: Option VIP not registered.
+        :raise optionpoolNotFoundError: Option pool not registered.
         :raise DataBaseError: Networkapi failed to access the database.
         :raise XMLError: Networkapi failed to generate the XML response.
         """
@@ -80,26 +80,26 @@ class OptionPool(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Option Pool is invalid or was not informed.')
 
-        optionpool_map = dict()
-        optionpool_map['type'] = tipo_opcao
-        optionpool_map['name'] = nome_opcao_txt
+        #optionpool_map = dict()
+        #optionpool_map['type'] = tipo_opcao
+        #optionpool_map['name'] = nome_opcao_txt
 
-        url = 'optionpool/' + str(id_option_pool) + '/'
+        url = 'pools/options/' + str(id_option_pool) + '/'
 
-        code, xml = self.submit({'option_pool': optionpool_map}, 'PUT', url)
+        code, xml = self.submit( {'type': tipo_opcao, "name":nome_opcao }, 'PUT', url)
 
         return self.response(code, xml)
 
     def remove(self, id_option_pool):
-        """Remove Option VIP from by the identifier.
+        """Remove Option pool  by  identifier and all Environment related .
 
-        :param id_option_pool: Identifier of the Option VIP. Integer value and greater than zero.
+        :param id_option_pool: Identifier of the Option Pool. Integer value and greater than zero.
 
         :return: None
 
-        :raise InvalidParameterError: Option VIP identifier is null and invalid.
-        :raise optionpoolNotFoundError: Option VIP not registered.
-        :raise optionpoolError: Option VIP  associated with environment vip.
+        :raise InvalidParameterError: Option Pool identifier is null and invalid.
+        :raise optionpoolNotFoundError: Option Pool not registered.
+        :raise optionpoolError: Option Pool associated with Pool.
         :raise DataBaseError: Networkapi failed to access the database.
         :raise XMLError: Networkapi failed to generate the XML response.
         """
@@ -108,14 +108,14 @@ class OptionPool(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Option Pool is invalid or was not informed.')
 
-        url = 'optionpool/' + str(id_option_pool) + '/'
+        url = 'pools/options/' + str(id_option_pool) + '/'
 
         code, xml = self.submit(None, 'DELETE', url)
 
         return self.response(code, xml)
 
-    def search(self, id_option_pool):
-        """Search Option Pool from by the identifier.
+    def get_option_pool(self, id_option_pool):
+        """Search Option Pool by id.
 
         :param id_option_pool: Identifier of the Option Pool. Integer value and greater than zero.
 
@@ -123,9 +123,9 @@ class OptionPool(GenericClient):
 
         ::
 
-            {‘option_pool’: {‘id’: < id_option_pool >,
+            {‘id’: < id_option_pool >,
             ‘type’: < tipo_opcao >,
-            ‘name’: < nome_opcao_txt >} }
+            ‘name’: < nome_opcao_txt >}
 
         :raise InvalidParameterError: Option Pool identifier is null and invalid.
         :raise optionpoolNotFoundError: Option Pool not registered.
@@ -137,20 +137,20 @@ class OptionPool(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Option Pool is invalid or was not informed.')
 
-        url = 'optionpool/' + str(id_option_pool) + '/'
+        url = 'pools/options/' + str(id_option_pool) + '/'
 
         code, xml = self.submit(None, 'GET', url)
 
         return self.response(code, xml)
 
-    def get_all(self):
+    def get_all_option_pool(self, option_type=None):
         """Get all Option Pool.
 
         :return: Dictionary with the following structure:
 
         ::
 
-            {‘option_pool’: [{‘id’: < id >,
+            {[{‘id’: < id >,
             ‘type’: < tipo_opcao >,
             ‘name’: < nome_opcao_txt >}, ... other option pool ...] }
 
@@ -158,46 +158,81 @@ class OptionPool(GenericClient):
         :raise DataBaseError: Can't connect to networkapi database.
         :raise XMLError: Failed to generate the XML response.
         """
-
-        url = 'optionpool/all/'
+        if option_type:
+            url = 'pools/options/?type='+option_type
+        else:
+            url = 'pools/options/'
 
         code, xml = self.submit(None, 'GET', url)
 
         return self.response(code, xml)
 
-    def get_option_pool(self, id_environment):
+
+    def get_all_environment_option_pool(self, id_environment, option_id, option_type):
         """Get all Option VIP by Environment .
 
         :return: Dictionary with the following structure:
 
         ::
 
-            {‘option_pool’: [{‘id’: < id >,
-            ‘type’: < tipo_opcao >,
-            ‘name’: < nome_opcao_txt >}, ... too option vips ...] }
+            {[{‘id’: < id >,
+                option: {
+                    'id': <id>
+                    'type':<type>
+                    'name':<name> }
+                environment: {
+                    'id':<id>
+                    .... all environment info }
+                    etc to option pools ...] }
 
         :raise EnvironmentVipNotFoundError: Environment Pool not registered.
         :raise DataBaseError: Can't connect to networkapi database.
         :raise XMLError: Failed to generate the XML response.
         """
+        url='pools/environment_options/'
 
-        url = 'optionpool/environmentvip/' + str(id_environment) + '/'
+        if id_environment:
+            if  option_id:
+                if option_type:
+                    url = url + "?environment_id=" + str(id_environment)+ "&option_id=" + str(option_id)  + "&option_type=" + option_type
+                else:
+                    url = url + "?environment_id=" + str(id_environment)+ "&option_id=" + str(option_id)
+            else:
+                if option_type:
+                    url = url + "?environment_id=" + str(id_environment) + "&option_type=" + option_type
+                else:
+                    url = url + "?environment_id=" + str(id_environment)
+        elif option_id:
+            if option_type:
+                url = url + "?option_id=" + str(option_id)  + "&option_type=" + option_type
+            else:
+                url = url + "?option_id=" + str(option_id)
+        else:
+            url = url + "?option_type=" + option_type
+
 
         code, xml = self.submit(None, 'GET', url)
 
-        return self.response(code, xml, ['option_pool'])
+        return self.response(code, xml)
 
-    def associate(self, id_option_pool, id_environment):
+
+    def associate_environment_option_pool(self, id_option_pool, id_environment):
         """Create a relationship of optionpool with Environment.
 
         :param id_option_pool: Identifier of the Option Pool. Integer value and greater than zero.
-        :param id_environment: Identifier of the Environment Pool. Integer value and greater than zero.
+        :param id_environment: Identifier of the Environment . Integer value and greater than zero.
+        :return: Dictionary with the following structure:
 
-        :return: Following dictionary
 
-        ::
-
-            {'opcoespool_ambiente_xref': {'id': < id_opcoespool_ambiente_xref >} }
+            {‘id’: < id >,
+                option: {
+                    'id': <id>
+                    'type':<type>
+                    'name':<name> }
+                environment: {
+                    'id':<id>
+                    .... all environment info }
+                }
 
         :raise InvalidParameterError: Option Pool/Environment Pool identifier is null and/or invalid.
         :raise optionpoolNotFoundError: Option Pool not registered.
@@ -216,20 +251,50 @@ class OptionPool(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Environment Pool is invalid or was not informed.')
 
-        url = 'optionpool/' + \
-            str(id_option_pool) + '/environmentpool/' + str(id_environment) + '/'
+        #optionpool_map = dict()
+        #optionpool_map['option_id'] = id_option_pool
+        #optionpool_map['environment_id'] = id_environment
 
-        code, xml = self.submit(None, 'PUT', url)
+        code, xml = self.submit(
+            {'option_id': id_option_pool,"environment_id":id_environment }, 'POST', 'pools/environment_options/save')
 
         return self.response(code, xml)
 
-    def disassociate(self, id_option_pool, id_environment):
+    def get_environment_option_pool(self, environment_option_id ):
+        """Get Environment Option Pool by id .
+
+        :return: Dictionary with the following structure:
+
+        ::
+
+            {‘id’: < id >,
+                option: {
+                    'id': <id>
+                    'type':<type>
+                    'name':<name> }
+                environment: {
+                    'id':<id>
+                    .... all environment info }
+                }
+
+        :raise EnvironmentVipNotFoundError: Environment Pool not registered.
+        :raise DataBaseError: Can't connect to networkapi database.
+        :raise XMLError: Failed to generate the XML response.
+        """
+
+        url = 'pools/environment_options/' + str(environment_option_id) + '/'
+
+        code, xml = self.submit(None, 'GET', url)
+
+        return self.response(code, xml)
+
+    def disassociate_environment_option_pool(self, environment_option_id):
         """Remove a relationship of optionpool with Environment.
 
         :param id_option_pool: Identifier of the Option Pool. Integer value and greater than zero.
         :param id_environment: Identifier of the Environment Pool. Integer value and greater than zero.
 
-        :return: Nothing
+        :return: { 'id': < environment_option_id> }
 
         :raise InvalidParameterError: Option Pool/Environment Pool identifier is null and/or invalid.
         :raise optionpoolNotFoundError: Option Pool not registered.
@@ -240,67 +305,62 @@ class OptionPool(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
 
-        if not is_valid_int_param(id_option_pool):
+        if not is_valid_int_param(environment_option_id):
             raise InvalidParameterError(
                 u'The identifier of Option Pool is invalid or was not informed.')
 
-        if not is_valid_int_param(id_environment):
+        if not is_valid_int_param(environment_option_id):
             raise InvalidParameterError(
                 u'The identifier of Environment Pool is invalid or was not informed.')
 
-        url = 'optionpool/' + \
-            str(id_option_pool) + '/environmentpool/' + str(id_environment) + '/'
+        url = 'pools/environment_options/' + str(environment_option_id) +  '/'
 
         code, xml = self.submit(None, 'DELETE', url)
 
         return self.response(code, xml)
 
 
-    def buscar_servicedownaction_opcpool(self, id_ambiente):
-        """Search name of Option Pool when type = 'ServiceDownAction' ​​by environmentvip_id
+    def modify_environment_option_pool(self, environment_option_id, id_option_pool,id_environment ):
+        """Remove a relationship of optionpool with Environment.
 
-        :return: Dictionary with the following structure:
+        :param id_option_pool: Identifier of the Option Pool. Integer value and greater than zero.
+        :param id_environment: Identifier of the Environment Pool. Integer value and greater than zero.
+
+                :return: Dictionary with the following structure:
 
         ::
 
-            {‘servicedownaction_opt’: ‘servicedownaction_opt’: <'nome_opcao_txt'>}
+            {‘id’: < id >,
+                option: {
+                    'id': <id>
+                    'type':<type>
+                    'name':<name> }
+                environment: {
+                    'id':<id>
+                    .... all environment info }
+                }
 
-        :raise InvalidParameterError: Environment VIP identifier is null and invalid.
+        :raise InvalidParameterError: Option Pool/Environment Pool identifier is null and/or invalid.
+        :raise optionpoolNotFoundError: Option Pool not registered.
         :raise EnvironmentVipNotFoundError: Environment VIP not registered.
-        :raise InvalidParameterError: finalidade_txt and cliente_txt is null and invalid.
+        :raise optionpoolError: Option pool is not associated with the environment pool
+        :raise UserNotAuthorizedError: User does not have authorization to make this association.
         :raise DataBaseError: Networkapi failed to access the database.
         :raise XMLError: Networkapi failed to generate the XML response.
         """
 
-        if not is_valid_int_param(id_ambiente):
+        if not is_valid_int_param(environment_option_id):
             raise InvalidParameterError(
-                u'The identifier of environment-pool is invalid or was not informed.')
+                u'The identifier of Environment Option Pool is invalid or was not informed.')
 
-        url = 'environment-pool/get/servicedownaction/' + str(id_ambiente) + '/'
+        #optionpool_map = dict()
+        #optionpool_map['option'] = option_id
+        #optionpool_map['environment'] = environment_id
 
-        code, xml = self.submit(None, 'GET', url)
+
+        url = 'pools/environment_options/' + str(environment_option_id) +  '/'
+
+        code, xml = self.submit({'option_id': id_option_pool,"environment_id":id_environment }, 'PUT', url)
+
 
         return self.response(code, xml)
-
-
-    def buscar_healthchecks(self, id_ambiente):
-        """Search healthcheck ​by environmentvip_id
-
-        :return: Dictionary with the following structure:
-
-        ::
-
-            {'healthcheck_opt': [{'name': <name>, 'id': <id>},...]}
-
-        :raise InvalidParameterError: Environment VIP identifier is null and invalid.
-        :raise EnvironmentVipNotFoundError: Environment VIP not registered.
-        :raise InvalidParameterError: id_ambiente_vip is null and invalid.
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
-        """
-
-        url = 'environment-pool/get/healthcheck/' + str(id_ambiente)
-
-        code, xml = self.submit(None, 'GET', url)
-
-        return self.response(code, xml, ['healthcheck_opt'])
