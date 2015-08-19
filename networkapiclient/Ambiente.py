@@ -1007,3 +1007,103 @@ class Ambiente(GenericClient):
         code, xml = self.submit(None, 'DELETE', url)
 
         return self.response(code, xml)
+
+    def associate(self, environment_id, environment_vip_id):
+
+        """Associate a news Environment on Environment VIP and returns its identifier.
+
+        :param environment_id: Identifier of the Environment. Integer value and greater than zero.
+        :param environment_vip_id: Identifier of the Environment VIP. Integer value and greater than zero.
+
+        :return: Following dictionary:
+
+        ::
+
+            {'environment_environment_vip': {'id': < id >}}
+
+        :raise InvalidParameterError: The value of environment_id or environment_vip_id is invalid.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+        if not is_valid_int_param(environment_id):
+            raise InvalidParameterError(
+                u'The identifier of Environment VIP is invalid or was not informed.')
+
+        if not is_valid_int_param(environment_vip_id):
+            raise InvalidParameterError(
+                u'The identifier of Environment is invalid or was not informed.')
+
+        environment_environment_vip_map = dict()
+        environment_environment_vip_map['environment_id'] = environment_id
+        environment_environment_vip_map['environment_vip_id'] = environment_vip_id
+
+        url = 'environment/{}/environmentvip/{}/'.format(environment_id, environment_vip_id)
+
+        code, xml = self.submit(None, 'PUT', url)
+
+        return self.response(code, xml)
+
+    def disassociate(self, environment_id, environment_vip_id):
+        """Remove a relationship of Environment with EnvironmentVip.
+
+        :param environment_id: Identifier of the Environment. Integer value and greater than zero.
+        :param environment_vip_id: Identifier of the Environment VIP. Integer value and greater than zero.
+
+        :return: Nothing
+
+        :raise InvalidParameterError: Environment/Environment VIP identifier is null and/or invalid.
+        :raise EnvironmentNotFoundError: Environment not registered.
+        :raise EnvironmentVipNotFoundError: Environment VIP not registered.
+        :raise EnvironmentError: Option vip is not associated with the environment vip
+        :raise UserNotAuthorizedError: User does not have authorization to make this association.
+        :raise DataBaseError: Networkapi failed to access the database.
+        :raise XMLError: Networkapi failed to generate the XML response.
+        """
+
+        if not is_valid_int_param(environment_id):
+            raise InvalidParameterError(
+                u'The identifier of Environment VIP is invalid or was not informed.')
+
+        if not is_valid_int_param(environment_vip_id):
+            raise InvalidParameterError(
+                u'The identifier of Environment is invalid or was not informed.')
+
+        environment_environment_vip_map = dict()
+        environment_environment_vip_map['environment_id'] = environment_id
+        environment_environment_vip_map['environment_vip_id'] = environment_vip_id
+
+        url = 'environment/{}/environmentvip/{}/'.format(environment_id, environment_vip_id)
+
+        code, xml = self.submit(None, 'DELETE', url)
+
+        return self.response(code, xml)
+
+    def get_related_environment_list(self, environment_vip_id):
+        """Get all Environment by Environment Vip.
+
+        :return: Following dictionary:
+
+        ::
+
+            {'ambiente': [{ 'id': <id_environment>,
+            'grupo_l3': <id_group_l3>,
+            'grupo_l3_name': <name_group_l3>,
+            'ambiente_logico': <id_logical_environment>,
+            'ambiente_logico_name': <name_ambiente_logico>,
+            'divisao_dc': <id_dc_division>,
+            'divisao_dc_name': <name_divisao_dc>,
+            'filter': <id_filter>,
+            'filter_name': <filter_name>,
+            'link': <link> }, ... ]}
+
+
+        :raise EnvironmentVipNotFoundError: Environment VIP not registered.
+        :raise DataBaseError: Can't connect to networkapi database.
+        :raise XMLError: Failed to generate the XML response.
+        """
+
+        url = 'environment/environmentvip/{}/'.format(environment_vip_id)
+
+        code, xml = self.submit(None, 'GET', url)
+
+        return self.response(code, xml, ['environment_related_list'])

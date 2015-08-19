@@ -454,3 +454,19 @@ class Pool(ApiGenericClient):
         uri = "api/pools/list/environment/with/pools/"
 
         return self.get(uri)
+
+
+    def list_all_environment_related_environment_vip(self):
+        """
+        """
+        uri = "api/pools/list/environments/environmentvip/"
+
+        return self.get(uri)
+
+    def get_available_ips_to_add_server_pool(self, equip_name, id_ambiente):
+
+        """
+        """
+        uri = "api/pools/getipsbyambiente/{}/{}/".format(equip_name, id_ambiente)
+
+        return self.get(uri)
