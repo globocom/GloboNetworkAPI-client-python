@@ -446,3 +446,25 @@ class Interface(GenericClient):
         code, xml = self.submit(None, 'DELETE', url)
 
         return self.response(code, xml)
+
+    def get_interface_by_channel(self, channel_name):
+
+        url = 'interface/get-by-channel/' + str(channel_name) + '/'
+
+        code, map = self.submit(None, 'GET', url)
+
+        return self.response(code, map)
+
+    def editar_channel (self, id_channel, nome, lacp, int_type, vlan, envs):
+
+        channel_map = dict ()
+        channel_map['id_channel'] = id_channel
+        channel_map['nome'] = nome
+        channel_map['lacp'] = lacp
+        channel_map['int_type'] = int_type
+        channel_map['vlan'] = vlan
+        channel_map['envs'] = envs
+
+        code, xml = self.submit({'channel': channel_map}, 'PUT', 'channel/editar/')
+
+        return self.response(code, xml)
