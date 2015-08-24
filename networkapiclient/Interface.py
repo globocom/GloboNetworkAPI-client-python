@@ -455,7 +455,7 @@ class Interface(GenericClient):
 
         return self.response(code, map)
 
-    def editar_channel (self, id_channel, nome, lacp, int_type, vlan, envs):
+    def editar_channel (self, id_channel, nome, lacp, int_type, vlan, envs, ids_interface):
 
         channel_map = dict ()
         channel_map['id_channel'] = id_channel
@@ -464,6 +464,7 @@ class Interface(GenericClient):
         channel_map['int_type'] = int_type
         channel_map['vlan'] = vlan
         channel_map['envs'] = envs
+        channel_map['ids_interface'] = ids_interface
 
         code, xml = self.submit({'channel': channel_map}, 'PUT', 'channel/editar/')
 
