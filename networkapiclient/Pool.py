@@ -98,7 +98,7 @@ class Pool(ApiGenericClient):
 
     def inserir(self, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
                 healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities,
-                weight, ports_reals, servicedownaction='none'):
+                weight, ports_reals, servicedownaction=None):
 
         uri = "api/pools/insert/"
 
@@ -128,7 +128,7 @@ class Pool(ApiGenericClient):
 
     def save(self, id, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
                 healthcheck_request, maxcom, ip_list_full, nome_equips, id_equips, priorities,
-                weight, ports_reals, id_pool_member, servicedownaction='none'):
+                weight, ports_reals, id_pool_member, servicedownaction=None):
 
         uri = "api/pools/save/"
 
@@ -172,7 +172,7 @@ class Pool(ApiGenericClient):
         return self.post(uri, data=data)
 
     def update(self, id_server_pool, default_port, balancing, healthcheck_type, healthcheck_expect, healthcheck_request,
-               old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals, servicedownaction='none'):
+               old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals, servicedownaction=None):
 
         uri = "api/pools/edit/"
 
