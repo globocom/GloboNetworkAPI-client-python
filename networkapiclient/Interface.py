@@ -115,7 +115,9 @@ class Interface(GenericClient):
 
         :return: Following dictionary:
 
-        :  {'interface': {'id': < id >,
+        ::
+
+            {'interface': {'id': < id >,
             'interface': < interface >,
             'descricao': < descricao >,
             'protegida': < protegida >,
@@ -127,9 +129,7 @@ class Interface(GenericClient):
             'nome_equip_l_front': < equipment_name >,
             'ligacao_back': < id_ligacao_back >,
             'nome_ligacao_back': < interface_name >,
-            'nome_equip_l_back': < equipment_name >,
-            'tipo_interface': <id_tipo_interface>,
-            'vlan': <num_vlan>}
+            'nome_equip_l_back': < equipment_name > }}
 
         :raise InvalidParameterError: Interface identifier is invalid or none.
         :raise DataBaseError: Networkapi failed to access the database.
@@ -194,8 +194,8 @@ class Interface(GenericClient):
             descricao,
             id_ligacao_front,
             id_ligacao_back,
-            tipo,
-            vlan):
+            tipo=None,
+            vlan=None):
         """Edit an interface by its identifier.
 
         Equipment identifier is not changed.
@@ -376,6 +376,7 @@ class Interface(GenericClient):
         key = 'interfaces'
         return get_list_map(self.response(code, map, [key]), key)
 
+
     def listar_switch_router(self, id_equipamento):
 
         url = 'int/getbyidequip/' + str(id_equipamento) + '/'
@@ -383,6 +384,7 @@ class Interface(GenericClient):
 
         key = 'interfaces'
         return get_list_map(self.response(code, xml, [key]), key)
+
 
     def list_all_interface_types(self):
 
@@ -398,7 +400,9 @@ class Interface(GenericClient):
         interface_map['ambiente'] = ambiente
         interface_map['interface'] = interface
 
-        code, xml = self.submit({'interface': interface_map}, 'POST', 'interface/associar-ambiente/')
+        code, xml = self.submit(
+            {'interface': interface_map}, 'POST', 'int/associar-ambiente/')
+
         return self.response(code, xml)
 
     def dissociar(self, interface):
@@ -435,3 +439,33 @@ class Interface(GenericClient):
 
         return self.response(code, map)
 
+    def delete_channel(self, channel_name):
+
+        url = 'channel/delete/' + str(channel_name) + '/'
+
+        code, xml = self.submit(None, 'DELETE', url)
+
+        return self.response(code, xml)
+
+    def get_interface_by_channel(self, channel_name):
+
+        url = 'interface/get-by-channel/' + str(channel_name) + '/'
+
+        code, map = self.submit(None, 'GET', url)
+
+        return self.response(code, map)
+
+    def editar_channel (self, id_channel, nome, lacp, int_type, vlan, envs, ids_interface):
+
+        channel_map = dict ()
+        channel_map['id_channel'] = id_channel
+        channel_map['nome'] = nome
+        channel_map['lacp'] = lacp
+        channel_map['int_type'] = int_type
+        channel_map['vlan'] = vlan
+        channel_map['envs'] = envs
+        channel_map['ids_interface'] = ids_interface
+
+        code, xml = self.submit({'channel': channel_map}, 'PUT', 'channel/editar/')
+
+        return self.response(code, xml)
