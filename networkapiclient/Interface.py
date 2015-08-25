@@ -153,8 +153,8 @@ class Interface(GenericClient):
             id_ligacao_front,
             id_ligacao_back,
             id_equipamento,
-            tipo,
-            vlan):
+            tipo=None,
+            vlan=None):
         """Insert new interface for an equipment.
 
         :param nome: Interface name.
