@@ -469,3 +469,11 @@ class Interface(GenericClient):
         code, xml = self.submit({'channel': channel_map}, 'PUT', 'channel/editar/')
 
         return self.response(code, xml)
+
+    def list_available_interfaces(self, channel_name, id_equip):
+
+        url = 'interface/get/' + str(channel_name) + '/' + str(id_equip) + '/'
+
+        code, map = self.submit(None, 'GET', url)
+
+        return self.response(code, map)
