@@ -39,7 +39,7 @@ class ApiInterfaceRequest(ApiGenericClient):
 
 		data = dict()
 
-		return self.put(uri)
+		return self.put(uri, data)
 
 	def deploy_channel_config_sync(self, channel_id):
 		"""
@@ -49,4 +49,4 @@ class ApiInterfaceRequest(ApiGenericClient):
 
 		data = dict()
 
-		return self.put(uri)
+		return self.put(uri, data)
