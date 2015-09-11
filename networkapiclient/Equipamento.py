@@ -138,7 +138,7 @@ class Equipamento(GenericClient):
                 code, xml, [
                     key, "ips", "grupos"]), key)
 
-    def inserir(self, name, id_equipment_type, id_model, id_group):
+    def inserir(self, name, id_equipment_type, id_model, id_group, maintenance=False):
         """Inserts a new Equipment and returns its identifier
 
         Além de inserir o equipamento, a networkAPI também associa o equipamento
@@ -173,7 +173,8 @@ class Equipamento(GenericClient):
         equip_map['id_modelo'] = id_model
         equip_map['nome'] = name
         equip_map['id_grupo'] = id_group
-
+        equip_map['maintenance'] = maintenance
+        
         code, xml = self.submit(
             {'equipamento': equip_map}, 'POST', 'equipamento/')
 

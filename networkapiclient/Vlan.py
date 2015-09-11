@@ -237,7 +237,8 @@ class Vlan(GenericClient):
             id_tipo_rede,
             id_ambiente,
             descricao,
-            id_ambiente_vip=None):
+            id_ambiente_vip=None,
+            vrf=None):
         """Inserts a new VLAN.
 
         :param nome: Name of Vlan. String with a maximum of 50 characters.
@@ -288,6 +289,7 @@ class Vlan(GenericClient):
         vlan_map['id_ambiente'] = id_ambiente
         vlan_map['descricao'] = descricao
         vlan_map['id_ambiente_vip'] = id_ambiente_vip
+        vlan_map['vrf'] = vrf
 
         code, xml = self.submit({'vlan': vlan_map}, 'POST', 'vlan/')
 
@@ -302,7 +304,8 @@ class Vlan(GenericClient):
             acl_file,
             acl_file_v6,
             network_ipv4,
-            network_ipv6):
+            network_ipv6,
+            vrf=None):
         """Create new VLAN
 
         :param environment_id: ID for Environment.
@@ -352,6 +355,7 @@ class Vlan(GenericClient):
         vlan_map['number'] = number
         vlan_map['network_ipv4'] = network_ipv4
         vlan_map['network_ipv6'] = network_ipv6
+        vlan_map['vrf'] = vrf
 
         code, xml = self.submit({'vlan': vlan_map}, 'POST', 'vlan/insert/')
 
@@ -425,7 +429,7 @@ class Vlan(GenericClient):
 
         return self.response(code, xml)
 
-    def allocate_without_network(self, environment_id, name, description):
+    def allocate_without_network(self, environment_id, name, description, vrf=None):
         """Create new VLAN without add NetworkIPv4.
 
         :param environment_id: ID for Environment.
@@ -457,6 +461,7 @@ class Vlan(GenericClient):
         vlan_map['environment_id'] = environment_id
         vlan_map['name'] = name
         vlan_map['description'] = description
+        vlan_map['vrf'] = vrf
 
         code, xml = self.submit({'vlan': vlan_map}, 'POST', 'vlan/no-network/')
 

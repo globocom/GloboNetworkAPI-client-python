@@ -328,7 +328,8 @@ class Ambiente(GenericClient):
             min_num_vlan_1=None,
             max_num_vlan_1=None,
             min_num_vlan_2=None,
-            max_num_vlan_2=None):
+            max_num_vlan_2=None,
+            vrf=None):
         """Insere um novo ambiente e retorna o seu identificador.
 
         :param id_grupo_l3: Identificador do grupo layer 3.
@@ -370,6 +371,7 @@ class Ambiente(GenericClient):
         ambiente_map['max_num_vlan_1'] = max_num_vlan_1
         ambiente_map['min_num_vlan_2'] = min_num_vlan_2
         ambiente_map['max_num_vlan_2'] = max_num_vlan_2
+        ambiente_map['vrf'] = vrf
 
         code, xml = self.submit(
             {'ambiente': ambiente_map}, 'POST', 'ambiente/')
