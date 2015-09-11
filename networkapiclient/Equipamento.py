@@ -180,7 +180,7 @@ class Equipamento(GenericClient):
 
         return self.response(code, xml)
 
-    def edit(self, id_equip, nome, id_tipo_equipamento, id_modelo):
+    def edit(self, id_equip, nome, id_tipo_equipamento, id_modelo, maintenance=None):
         """Change Equipment from by the identifier.
 
         :param id_equip: Identifier of the Equipment. Integer value and greater than zero.
@@ -210,6 +210,8 @@ class Equipamento(GenericClient):
         equip_map['id_tipo_equipamento'] = id_tipo_equipamento
         equip_map['id_modelo'] = id_modelo
         equip_map['nome'] = nome
+        if maintenance is not None:
+            equip_map['maintenance'] = maintenance
 
         url = 'equipamento/edit/' + str(id_equip) + '/'
 
