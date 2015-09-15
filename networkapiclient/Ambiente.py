@@ -459,7 +459,8 @@ class Ambiente(GenericClient):
             min_num_vlan_1=None,
             max_num_vlan_1=None,
             min_num_vlan_2=None,
-            max_num_vlan_2=None):
+            max_num_vlan_2=None,
+            vrf=None):
         """Altera os dados de um ambiente a partir do seu identificador.
 
         :param id_ambiente: Identificador do ambiente.
