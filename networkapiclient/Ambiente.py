@@ -501,6 +501,7 @@ class Ambiente(GenericClient):
         ambiente_map['id_divisao'] = id_divisao
         ambiente_map['id_filter'] = id_filter
         ambiente_map['link'] = link
+        ambiente_map['vrf'] = vrf
         ambiente_map['acl_path'] = acl_path
         ambiente_map['ipv4_template'] = ipv4_template
         ambiente_map['ipv6_template'] = ipv6_template
