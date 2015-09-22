@@ -55,7 +55,7 @@ class Roteiro(GenericClient):
         key = 'script'
         return get_list_map(self.response(code, map, [key]), key)
 
-    def inserir(self, id_script_type, script, modelo, description):
+    def inserir(self, id_script_type, script, model, description):
         """Inserts a new Script and returns its identifier.
 
         :param id_script_type: Identifier of the Script Type. Integer value and greater than zero.
@@ -77,7 +77,7 @@ class Roteiro(GenericClient):
         script_map = dict()
         script_map['id_script_type'] = id_script_type
         script_map['script'] = script
-        script_map['modelo'] = modelo
+        script_map['model'] = model
         script_map['description'] = description
 
         code, xml = self.submit({'script': script_map}, 'POST', 'script/')
