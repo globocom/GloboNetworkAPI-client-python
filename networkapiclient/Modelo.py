@@ -59,6 +59,19 @@ class Modelo(GenericClient):
         key = 'model'
         return get_list_map(self.response(code, map, [key]), key)
 
+    def get_by_script_id(self, script_id):
+
+        if not is_valid_int_param(script_id):
+            raise InvalidParameterError(
+                u'The identifier of Script is invalid or was not informed.')
+
+        url = 'model/script/' + str(script_id) + '/'
+
+        code, map = self.submit(None, 'GET', url)
+
+        key = 'model'
+        return get_list_map(self.response(code, map, [key]), key)
+
     def listar(self):
         """List all Model.
 
