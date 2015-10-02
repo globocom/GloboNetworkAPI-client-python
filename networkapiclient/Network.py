@@ -17,6 +17,7 @@
 from networkapiclient.GenericClient import GenericClient
 from networkapiclient.utils import is_valid_int_param
 from networkapiclient.exception import InvalidParameterError
+from networkapiclient.ApiGenericClient import ApiGenericClient
 
 
 class Network(GenericClient):
@@ -527,3 +528,245 @@ class Network(GenericClient):
             {'network': network_map}, 'PUT', 'network/remove/')
 
         return self.response(code, xml)
+
+class DHCPRelayIPv4(ApiGenericClient):
+
+    def __init__(self, networkapi_url, user, password, user_ldap=None):
+        """Class constructor receives parameters to connect to the networkAPI.
+        :param networkapi_url: URL to access the network API.
+        :param user: User for authentication.
+        :param password: Password for authentication.
+        """
+        super(DHCPRelayIPv4, self).__init__(networkapi_url, user, password, user_ldap)
+
+    def add(self, networkipv4_id, ipv4_id):
+        """List all DHCPRelayIPv4.
+        
+        :param: networkipv4_id, ipv4_id
+
+        :return: Following dictionary:
+          {
+          "networkipv4": <networkipv4_id>,
+          "id": <id>,
+          "ipv4": {
+              "oct4": <oct4>,
+              "oct2": <oct2>,
+              "oct3": <oct3>,
+              "oct1": <oct1>,
+              "ip_formated": "<string IPv4>",
+              "networkipv4": <networkipv4_id>,
+              "id": <ipv4_id>,
+              "descricao": "<string description>"
+          }
+
+        :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        data = dict()
+
+        data["networkipv4"] = networkipv4_id
+        data["ipv4"] = dict()
+        data["ipv4"]["id"] = ipv4_id
+        print data
+        uri = "api/dhcprelayv4/" 
+        return self.post(uri, data=data)
+
+    def get_by_pk(self, dhcprelayv4_id):
+        """List DHCPRelayIPv4 by ID
+
+        :param: dhcprelayv4_id
+
+        :return: Following dictionary:
+          {
+          "networkipv4": <networkipv4_id>,
+          "id": <id>,
+          "ipv4": {
+              "oct4": <oct4>,
+              "oct2": <oct2>,
+              "oct3": <oct3>,
+              "oct1": <oct1>,
+              "ip_formated": "<string IPv4>",
+              "networkipv4": <networkipv4_id>,
+              "id": <ipv4_id>,
+              "descricao": "<string description>"
+          }
+
+        :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        uri = "api/dhcprelayv4/%s" % dhcprelayv4_id
+        return self.get(uri)
+
+    def list(self, networkipv4=None, ipv4=None):
+        """List all DHCPRelayIPv4.
+
+        :param: networkipv4: networkipv4 id - list all dhcprelay filtering by networkipv4 id
+          ipv4: ipv4 id - list all dhcprelay filtering by ipv4 id
+
+        :return: Following dictionary:
+          [
+            {
+            "networkipv4": <networkipv4_id>,
+            "id": <id>,
+            "ipv4": {
+                "oct4": <oct4>,
+                "oct2": <oct2>,
+                "oct3": <oct3>,
+                "oct1": <oct1>,
+                "ip_formated": "<string IPv4>",
+                "networkipv4": <networkipv4_id>,
+                "id": <ipv4_id>,
+                "descricao": "<string description>"
+            },
+            {...}
+          ]
+
+        :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        uri = "api/dhcprelayv4/?" 
+        if networkipv4:
+          uri += "networkipv4=%d&" % networkipv4
+        if ipv4:
+          uri += "ipv4=%d" % ipv4
+
+        return self.get(uri)
+
+    def remove(self, dhcprelayv4_id):
+        """Remove DHCPRelayIPv4 by ID
+
+        :param: dhcprelayv4_id
+
+        :return: Nothing
+
+        :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+        uri = "api/dhcprelayv4/%s" % dhcprelayv4_id
+        return self.delete(uri)
+
+
+class DHCPRelayIPv6(ApiGenericClient):
+
+    def __init__(self, networkapi_url, user, password, user_ldap=None):
+        """Class constructor receives parameters to connect to the networkAPI.
+        :param networkapi_url: URL to access the network API.
+        :param user: User for authentication.
+        :param password: Password for authentication.
+        """
+        super(DHCPRelayIPv6, self).__init__(networkapi_url, user, password, user_ldap)
+
+    def add(self, networkipv6_id, ipv6_id):
+        """List all DHCPRelayIPv4.
+        
+        :param: Object DHCPRelayIPv4
+
+        :return: Following dictionary:
+          {
+          "networkipv6": <networkipv4_id>,
+          "id": <id>,
+          "ipv6": {
+              "block1": <block1>,
+              "block2": <block2>,
+              "block3": <block3>,
+              "block4": <block4>,
+              "block5": <block5>,
+              "block6": <block6>,
+              "block7": <block7>,
+              "block8": <block8>,
+              "ip_formated": "<string IPv6>",
+              "networkipv6": <networkipv6_id>,
+              "id": <ipv6_id>,
+              "description": "<string description>"
+          }
+
+        :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        data = dict()
+
+        data["networkipv6"] = networkipv6_id
+        data["ipv6"] = dict()
+        data["ipv6"]["id"] = ipv6_id
+        uri = "api/dhcprelayv6/" 
+        return self.post(uri, data=data)
+
+    def get_by_pk(self, dhcprelayv6_id):
+        """List DHCPRelayIPv6 by ID
+
+        :param: dhcprelayv4_id
+
+        :return: Following dictionary:
+          {
+          "networkipv6": <networkipv4_id>,
+          "id": <id>,
+          "ipv6": {
+              "block1": <block1>,
+              "block2": <block2>,
+              "block3": <block3>,
+              "block4": <block4>,
+              "block5": <block5>,
+              "block6": <block6>,
+              "block7": <block7>,
+              "block8": <block8>,
+              "ip_formated": "<string IPv6>",
+              "networkipv6": <networkipv6_id>,
+              "id": <ipv6_id>,
+              "description": "<string description>"
+          }
+
+        :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        uri = "api/dhcprelayv6/%s" % dhcprelayv6_id
+        return self.get(uri)
+
+    def list(self, networkipv6=None, ipv6=None):
+        """List all DHCPRelayIPv6.
+
+        :param: networkipv6: networkipv6 id - list all dhcprelay filtering by networkipv6 id
+          ipv6: ipv6 id - list all dhcprelay filtering by ipv6 id
+
+        :return: Following dictionary:
+          [
+            {
+            "networkipv6": <networkipv4_id>,
+            "id": <id>,
+            "ipv6": {
+                "block1": <block1>,
+                "block2": <block2>,
+                "block3": <block3>,
+                "block4": <block4>,
+                "block5": <block5>,
+                "block6": <block6>,
+                "block7": <block7>,
+                "block8": <block8>,
+                "ip_formated": "<string IPv6>",
+                "networkipv6": <networkipv6_id>,
+                "id": <ipv6_id>,
+                "description": "<string description>"
+            },
+            {...}
+          ]
+
+        :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+
+        uri = "api/dhcprelayv6/?"
+        if networkipv6:
+          uri += "networkipv6=%d&" % networkipv6
+        if ipv6:
+          uri += "ipv6=%d" % ipv6
+
+        return self.get(uri)
+
+    def remove(self, dhcprelayv6_id):
+        """Remove DHCPRelayIPv6 by ID
+
+        :param: dhcprelayv6_id
+
+        :return: Nothing
+
+        :raise NetworkAPIException: Falha ao acessar fonte de dados
+        """
+        uri = "api/dhcprelayv6/%s" % dhcprelayv6_id
+        return self.delete(uri)

@@ -42,6 +42,8 @@ from networkapiclient.Usuario import Usuario
 from networkapiclient.UsuarioGrupo import UsuarioGrupo
 from networkapiclient.DireitoGrupoEquipamento import DireitoGrupoEquipamento
 from networkapiclient.Network import Network
+from networkapiclient.Network import DHCPRelayIPv4
+from networkapiclient.Network import DHCPRelayIPv6
 from networkapiclient.EnvironmentVIP import EnvironmentVIP
 from networkapiclient.OptionVIP import OptionVIP
 from networkapiclient.Filter import Filter
@@ -288,6 +290,24 @@ class ClientFactory(object):
             self.user,
             self.password,
             self.user_ldap)
+
+    def create_dhcprelay_ipv4(self):
+        """Get an instance of DHCPRelayIPv4 services facade."""
+        return DHCPRelayIPv4(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
+
+    def create_dhcprelay_ipv6(self):
+        """Get an instance of DHCPRelayIPv6 services facade."""
+        return DHCPRelayIPv6(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
 
     def create_environment_vip(self):
         """Get an instance of environment_vip services facade."""
