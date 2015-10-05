@@ -55,7 +55,7 @@ from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.ApiInterface import ApiInterfaceRequest
 from networkapiclient.Rack import Rack
 from networkapiclient.RackServers import RackServers
-
+from networkapiclient.System import System
 
 
 class ClientFactory(object):
@@ -353,8 +353,7 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap
-        )
+            self.user_ldap)
 
     def create_healthcheck(self):
 
@@ -364,8 +363,7 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap
-        )
+            self.user_ldap)
 
     def create_api_vip_request(self):
 
@@ -375,8 +373,7 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap
-        )
+            self.user_ldap)
 
     def create_api_interface_request(self):
 
@@ -386,9 +383,7 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap
-        )
-
+            self.user_ldap)
 
     def create_rack(self):
         """Get an instance of rack services facade."""
@@ -405,6 +400,7 @@ class ClientFactory(object):
             self.user,
             self.password,
             self.user_ldap)
+
     def create_api_vlan(self):
 
         """Get an instance of Api Vlan services facade."""
@@ -415,3 +411,13 @@ class ClientFactory(object):
             self.password,
             self.user_ldap
         )
+
+    def create_system(self):
+
+        """Get an instance of Api System Variables services facade."""
+
+        return System(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
