@@ -39,3 +39,9 @@ class System(ApiGenericClient):
         data['description'] = description
 
         return self.post(uri, data=data)
+
+    def get_all(self):
+
+        uri = "api/system/variables/list/"
+
+        return self.get(uri)
