@@ -626,9 +626,9 @@ class DHCPRelayIPv4(ApiGenericClient):
 
         uri = "api/dhcprelayv4/?" 
         if networkipv4:
-          uri += "networkipv4=%d&" % networkipv4
+          uri += "networkipv4=%s&" % networkipv4
         if ipv4:
-          uri += "ipv4=%d" % ipv4
+          uri += "ipv4=%s" % ipv4
 
         return self.get(uri)
 
@@ -753,9 +753,9 @@ class DHCPRelayIPv6(ApiGenericClient):
 
         uri = "api/dhcprelayv6/?"
         if networkipv6:
-          uri += "networkipv6=%d&" % networkipv6
+          uri += "networkipv6=%s&" % networkipv6
         if ipv6:
-          uri += "ipv6=%d" % ipv6
+          uri += "ipv6=%s" % ipv6
 
         return self.get(uri)
 

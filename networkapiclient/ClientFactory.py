@@ -55,6 +55,8 @@ from networkapiclient.OptionPool import OptionPool
 from networkapiclient.Healthcheck import Healthcheck
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.ApiInterface import ApiInterfaceRequest
+from networkapiclient.ApiNetworkIPv4 import ApiNetworkIPv4
+from networkapiclient.ApiNetworkIPv6 import ApiNetworkIPv6
 from networkapiclient.Rack import Rack
 from networkapiclient.RackServers import RackServers
 
@@ -409,6 +411,27 @@ class ClientFactory(object):
             self.user_ldap
         )
 
+    def create_api_network_ipv4(self):
+
+        """Get an instance of Api Networkv4 services facade."""
+
+        return ApiNetworkIPv4(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
+
+    def create_api_network_ipv6(self):
+
+        """Get an instance of Api Networkv6 services facade."""
+
+        return ApiNetworkIPv6(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
 
     def create_rack(self):
         """Get an instance of rack services facade."""
