@@ -45,3 +45,9 @@ class System(ApiGenericClient):
         uri = "api/system/variables/list/"
 
         return self.get(uri)
+
+    def delete_all(self, variable_id):
+
+        uri = 'api/system/variables/delete/' + str(variable_id) + '/'
+
+        return self.delete(uri)
