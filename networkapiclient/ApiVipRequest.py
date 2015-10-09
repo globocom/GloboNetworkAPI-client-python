@@ -81,7 +81,8 @@ class ApiVipRequest(ApiGenericClient):
             l7_filter,
             vip_ports_to_pools=None,
             rule_id=None,
-            pk=None
+            pk=None,
+            trafficreturn=None
     ):
         """
         Save/Update Request Vip.
@@ -153,6 +154,7 @@ class ApiVipRequest(ApiGenericClient):
         data['l7_filter'] = l7_filter
         data['rule'] = rule_id
         data['vip_ports_to_pools'] = vip_ports_to_pools
+        data['traffic_return'] = trafficreturn
 
         uri = "api/vip/request/save/"
 
