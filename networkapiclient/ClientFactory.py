@@ -56,6 +56,7 @@ from networkapiclient.ApiInterface import ApiInterfaceRequest
 from networkapiclient.Rack import Rack
 from networkapiclient.RackServers import RackServers
 from networkapiclient.System import System
+from networkapiclient.ApiRack import ApiRack
 
 
 class ClientFactory(object):
@@ -402,9 +403,7 @@ class ClientFactory(object):
             self.user_ldap)
 
     def create_api_vlan(self):
-
         """Get an instance of Api Vlan services facade."""
-
         return ApiVlan(
             self.networkapi_url,
             self.user,
@@ -413,10 +412,16 @@ class ClientFactory(object):
         )
 
     def create_system(self):
-
         """Get an instance of Api System Variables services facade."""
-
         return System(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_apirack(self):
+        """Get an instance of Api Rack Variables services facade."""
+        return ApiRack(
             self.networkapi_url,
             self.user,
             self.password,
