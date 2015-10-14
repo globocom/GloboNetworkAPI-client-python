@@ -31,7 +31,7 @@ class System(ApiGenericClient):
 
     def save(self, name, value, description):
 
-        uri = "api/system/variables/save/"
+        uri = "api/system/variables/"
 
         data = dict()
         data['name'] = name
@@ -42,12 +42,12 @@ class System(ApiGenericClient):
 
     def get_all(self):
 
-        uri = "api/system/variables/list/"
+        uri = "api/system/variables/"
 
         return self.get(uri)
 
     def delete_all(self, variable_id):
 
-        uri = 'api/system/variables/delete/' + str(variable_id) + '/'
+        uri = 'api/system/variables/' + str(variable_id) + '/'
 
         return self.delete(uri)
