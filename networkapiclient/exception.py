@@ -290,6 +290,12 @@ class RoteiroError(NetworkAPIClientError):
         NetworkAPIClientError.__init__(self, error)
 
 
+class VariableError(NetworkAPIClientError):
+
+    def __init__(self, error):
+        NetworkAPIClientError.__init__(self, error)
+
+
 class EquipamentoRoteiroError(NetworkAPIClientError):
 
     def __init__(self, error):
@@ -1085,8 +1091,9 @@ class ErrorHandler(object):
               380: RackAllreadyConfigError,
               381: NomeRackDuplicadoError,
               382: RackConfiguracaoError,
-              383: RackAplicarError
-              }
+              383: RackAplicarError,
+              407: VariableError
+    }
 
     @classmethod
     def handle(cls, code, description):
