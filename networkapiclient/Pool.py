@@ -35,6 +35,20 @@ class Pool(ApiGenericClient):
 
 
     def poolmember_state(self, pools):
+        """
+        Enable/Disable pool member by list
+
+        param: Following dictionary: {
+                "pools": [
+                    {
+                        "server_pool": {
+                        },
+                        "server_pool_members": [
+                        ]
+                    }
+                ]
+            }
+        """
 
         data = dict()
         
@@ -46,7 +60,22 @@ class Pool(ApiGenericClient):
 
 
     def list_all_members(self, id_pools, checkstatus=False):
-
+        """
+        Return pool member list by POST request method
+        
+        param: {"id_pools":[<id_pool>], "checkstatus":"<1 or 0>"}
+        
+        return: Following dictionary: {
+                "pools": [
+                    {
+                        "server_pool": {
+                        },
+                        "server_pool_members": [
+                        ]
+                    }
+                ]
+            }
+        """
         data = dict()
         
         uri = "api/pools/get_all_members/"
