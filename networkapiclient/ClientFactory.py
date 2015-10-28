@@ -42,6 +42,8 @@ from networkapiclient.Usuario import Usuario
 from networkapiclient.UsuarioGrupo import UsuarioGrupo
 from networkapiclient.DireitoGrupoEquipamento import DireitoGrupoEquipamento
 from networkapiclient.Network import Network
+from networkapiclient.Network import DHCPRelayIPv4
+from networkapiclient.Network import DHCPRelayIPv6
 from networkapiclient.EnvironmentVIP import EnvironmentVIP
 from networkapiclient.OptionVIP import OptionVIP
 from networkapiclient.Filter import Filter
@@ -53,6 +55,8 @@ from networkapiclient.OptionPool import OptionPool
 from networkapiclient.Healthcheck import Healthcheck
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.ApiInterface import ApiInterfaceRequest
+from networkapiclient.ApiNetworkIPv4 import ApiNetworkIPv4
+from networkapiclient.ApiNetworkIPv6 import ApiNetworkIPv6
 from networkapiclient.Rack import Rack
 from networkapiclient.RackServers import RackServers
 from networkapiclient.System import System
@@ -290,6 +294,24 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
+    def create_dhcprelay_ipv4(self):
+        """Get an instance of DHCPRelayIPv4 services facade."""
+        return DHCPRelayIPv4(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
+
+    def create_dhcprelay_ipv6(self):
+        """Get an instance of DHCPRelayIPv6 services facade."""
+        return DHCPRelayIPv6(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
+
     def create_environment_vip(self):
         """Get an instance of environment_vip services facade."""
         return EnvironmentVIP(
@@ -384,7 +406,30 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap)
+            self.user_ldap
+        )
+
+    def create_api_network_ipv4(self):
+
+        """Get an instance of Api Networkv4 services facade."""
+
+        return ApiNetworkIPv4(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
+
+    def create_api_network_ipv6(self):
+
+        """Get an instance of Api Networkv6 services facade."""
+
+        return ApiNetworkIPv6(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap
+        )
 
     def create_rack(self):
         """Get an instance of rack services facade."""
