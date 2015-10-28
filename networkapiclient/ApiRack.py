@@ -48,6 +48,13 @@ class ApiRack(ApiGenericClient):
         data['id_sw2'] = id_sw2
         data['id_ilo'] = id_ilo
 
-        uri = "rack/"
+        uri = "api/rack/"
+
+        return self.post(uri, data=data)
+
+    def rack_deploy( self, rack_id):
+
+        data = dict()
+        uri = "api/rack/" + str(rack_id) + "/equipments/"
 
         return self.post(uri, data=data)

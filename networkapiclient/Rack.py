@@ -217,14 +217,14 @@ class Rack(GenericClient):
         return self.response(code, xml)
 
 
-    def aplicar_configuracao(self, id_rack):
+    def alocar_configuracao(self, id_rack):
         
 
         if not is_valid_int_param(id_rack):
             raise InvalidParameterError(
                 u'The identifier of Rack is invalid or was not informed.')
 
-        url = 'rack/aplicar-config/' + str(id_rack) + '/'
+        url = 'rack/alocar-config/' + str(id_rack) + '/'
         code, xml = self.submit(None, 'POST', url)
 
         return self.response(code, xml)
