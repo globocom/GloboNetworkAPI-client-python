@@ -447,9 +447,9 @@ class Interface(GenericClient):
 
         return self.response(code, xml)
 
-    def get_interface_by_channel(self, channel_name):
+    def get_interface_by_channel(self, channel_name, equip_name):
 
-        url = 'interface/get-by-channel/' + str(channel_name) + '/'
+        url = 'interface/get-by-channel/' + str(channel_name) + '/' + str(equip_name) + '/'
 
         code, map = self.submit(None, 'GET', url)
 

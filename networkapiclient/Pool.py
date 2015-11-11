@@ -33,6 +33,59 @@ class Pool(ApiGenericClient):
             user_ldap
         )
 
+
+    def poolmember_state(self, pools):
+        """
+        Enable/Disable pool member by list
+
+        param: Following dictionary: {
+                "pools": [
+                    {
+                        "server_pool": {
+                        },
+                        "server_pool_members": [
+                        ]
+                    }
+                ]
+            }
+        """
+
+        data = dict()
+        
+        uri = "api/pools/poolmember_state/"
+
+        data["pools"] = pools
+        
+        return self.post(uri, data=data)
+
+
+    def list_all_members(self, id_pools, checkstatus=False):
+        """
+        Return pool member list by POST request method
+        
+        param: {"id_pools":[<id_pool>], "checkstatus":"<1 or 0>"}
+        
+        return: Following dictionary: {
+                "pools": [
+                    {
+                        "server_pool": {
+                        },
+                        "server_pool_members": [
+                        ]
+                    }
+                ]
+            }
+        """
+        data = dict()
+        
+        uri = "api/pools/get_all_members/"
+
+        data["id_pools"] = id_pools
+        data["checkstatus"] = checkstatus
+
+        return self.post(uri, data=data)
+
+
     def list_all(self, environment_id, pagination):
         """
             List All Pools To Populate Datatable
