@@ -120,7 +120,7 @@ class ApiGenericClient(object):
             error = self._parse(request.text)
             raise NetworkAPIClientError(error.get('detail', ''))
 
-    def delete(self, uri):
+    def delete(self, uri, data=None):
         """
             Sends a DELETE request.
 
@@ -132,6 +132,7 @@ class ApiGenericClient(object):
 
             request = requests.delete(
                 self._url(uri),
+                data=json.dumps(data),
                 auth=self._auth_basic(),
                 headers=self._header()
             )

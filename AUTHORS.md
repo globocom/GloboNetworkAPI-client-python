@@ -12,3 +12,4 @@
 - Mauricio Leoncio dos Santos
 - Mateus Constanzo
 - [Silvano Buback](https://github.com/snbuback)
+- [Ederson Brilhante](https://github.com/edersonbrilhante)

@@ -33,7 +33,6 @@ class Pool(ApiGenericClient):
             user_ldap
         )
 
-
     def poolmember_state(self, pools):
         """
         Enable/Disable pool member by list
@@ -51,20 +50,19 @@ class Pool(ApiGenericClient):
         """
 
         data = dict()
-        
+
         uri = "api/pools/poolmember_state/"
 
         data["pools"] = pools
-        
-        return self.post(uri, data=data)
 
+        return self.post(uri, data=data)
 
     def list_all_members(self, id_pools, checkstatus=False):
         """
         Return pool member list by POST request method
-        
+
         param: {"id_pools":[<id_pool>], "checkstatus":"<1 or 0>"}
-        
+
         return: Following dictionary: {
                 "pools": [
                     {
@@ -77,14 +75,13 @@ class Pool(ApiGenericClient):
             }
         """
         data = dict()
-        
+
         uri = "api/pools/get_all_members/"
 
         data["id_pools"] = id_pools
         data["checkstatus"] = checkstatus
 
         return self.post(uri, data=data)
-
 
     def list_all(self, environment_id, pagination):
         """
@@ -116,7 +113,6 @@ class Pool(ApiGenericClient):
         data["environment_id"] = environment_id or None
 
         return self.post(uri, data=data)
-
 
     def list_all_by_reqvip(self, id_vip, pagination):
         """
@@ -179,9 +175,31 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
+    def save_pool(self, pools):
+        """
+        Save pool
+        param: Following dictionary: {
+                "pools": [
+                    {
+                        "server_pool": {
+                        },
+                        "server_pool_members": [
+                        ]
+                    }
+                ]
+            }
+        """
+
+        data = dict()
+        data["pools"] = pools
+
+        uri = "api/pools/v2/"
+
+        return self.post(uri, data)
+
     def save(self, id, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
-                healthcheck_request, maxcom, ip_list_full, nome_equips, id_equips, priorities,
-                weight, ports_reals, id_pool_member, servicedownaction=None):
+             healthcheck_request, maxcom, ip_list_full, nome_equips, id_equips, priorities,
+             weight, ports_reals, id_pool_member, servicedownaction=None):
 
         uri = "api/pools/save/"
 
@@ -257,7 +275,7 @@ class Pool(ApiGenericClient):
     def list_all_members_by_pool(self, id_server_pool, checkstatus=False, pagination=None):
 
         data = dict()
-        
+
         uri = "api/pools/get_all_members/%s/?checkstatus=%s" % (id_server_pool, checkstatus)
 
         if pagination:
@@ -271,7 +289,6 @@ class Pool(ApiGenericClient):
             return self.get(uri)
 
     def get_equip_by_ip(self, id_ip):
-
         """
             Get equipment by IP id
 
@@ -319,7 +336,7 @@ class Pool(ApiGenericClient):
 
         return self.get(uri)
 
-    def delete(self, ids):
+    def delete_pool(self, ids):
         """
             Delete Pools
 
@@ -345,7 +362,7 @@ class Pool(ApiGenericClient):
 
         return self.get(uri)
 
-    def remove(self, ids):
+    def remove(self, pools):
         """
             Remove Pools Running Script And Update to Not Created
 
@@ -359,17 +376,17 @@ class Pool(ApiGenericClient):
         """
 
         data = dict()
-        data["ids"] = ids
+        data["pools"] = pools
 
-        uri = "api/pools/remove/"
+        uri = "api/pools/v2/"
 
-        return self.post(uri, data)
+        return self.delete(uri, data)
 
-    def create(self, ids):
+    def create(self, pools):
         """
             Create Pools Running Script And Update to Created
 
-            :param ids: List of ids
+            :param pools: List of pools
 
             :return: None on success
 
@@ -380,11 +397,11 @@ class Pool(ApiGenericClient):
         """
 
         data = dict()
-        data["ids"] = ids
+        data["pools"] = pools
 
-        uri = "api/pools/create/"
+        uri = "api/pools/v2/"
 
-        return self.post(uri, data)
+        return self.put(uri, data)
 
     def enable(self, ids):
         """
@@ -499,7 +516,6 @@ class Pool(ApiGenericClient):
 
         return self.get(uri)
 
-
     def list_environments_with_pools(self):
         """
         """
@@ -507,7 +523,6 @@ class Pool(ApiGenericClient):
         uri = "api/pools/list/environment/with/pools/"
 
         return self.get(uri)
-
 
     def list_all_environment_related_environment_vip(self):
         """
@@ -517,7 +532,6 @@ class Pool(ApiGenericClient):
         return self.get(uri)
 
     def get_available_ips_to_add_server_pool(self, equip_name, id_ambiente):
-
         """
         """
         uri = "api/pools/getipsbyambiente/{}/{}/".format(equip_name, id_ambiente)
