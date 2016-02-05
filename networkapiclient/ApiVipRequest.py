@@ -18,6 +18,7 @@ from networkapiclient.ApiGenericClient import ApiGenericClient
 
 
 class ApiVipRequest(ApiGenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -45,7 +46,7 @@ class ApiVipRequest(ApiGenericClient):
 
         return self.post(uri, data=data)
 
-    def delete(self, ids, delete_pools=True):
+    def delete_vip(self, ids, delete_pools=True):
         """
         """
 
@@ -65,25 +66,9 @@ class ApiVipRequest(ApiGenericClient):
 
         return self.get(uri)
 
-    def save(
-            self,
-            id_ipv4,
-            id_ipv6,
-            finality,
-            client,
-            environment,
-            cache,
-            persistence,
-            timeout,
-            host,
-            areanegocio,
-            nome_servico,
-            l7_filter,
-            vip_ports_to_pools=None,
-            rule_id=None,
-            pk=None,
-            trafficreturn=None
-    ):
+    def save(self, id_ipv4, id_ipv6, finality, client, environment, cache, persistence, timeout,
+             host, areanegocio, nome_servico, l7_filter, vip_ports_to_pools=None, rule_id=None,
+             pk=None, trafficreturn=None):
         """
         Save/Update Request Vip.
         :param id_ipv4: int
@@ -229,3 +214,93 @@ class ApiVipRequest(ApiGenericClient):
         uri = "api/vip/request/get/%s/" % pk
 
         return self.get(uri)
+
+    def option_vip_by_environmentvip(self, environment_vip_id):
+        """
+        List Option Vip by Environment Vip
+
+        param environment_vip_id: Id of Environment Vip
+        """
+
+        uri = "api/option-vip/environment-vip/%s/" % environment_vip_id
+
+        return self.get(uri)
+
+    def option_vip_combinate_by_environmentvip(self, environment_vip_id):
+        """
+        List Option Vip Combinate by Environment Vip
+
+        param environment_vip_id: Id of Environment Vip
+        """
+
+        uri = "api/option-vip-combinate/environment-vip/%s/" % environment_vip_id
+
+        return self.get(uri)
+
+    def option_vip_combinate_by_id(self, option_vip_combinate_id):
+        """
+        List Option Vip Combinate by Id
+
+        param option_vip_combinate_id: Id of option vip combinate
+        """
+
+        uri = "api/option-vip-combinate/%s/" % option_vip_combinate_id
+
+        return self.get(uri)
+
+    def save_option_vip_combinate(self, option_vip_combinate):
+        """
+        Method to save option vip combinate
+
+        param option_vip_combinate: option_vip_combinate object
+        """
+
+        data = dict()
+        data["info"] = option_vip_combinate
+
+        uri = "api/option-vip-combinate/"
+
+        return self.post(uri, data)
+
+    def edit_option_vip_combinate(self, option_vip_combinate_id, option_vip_combinate):
+        """
+        Method to edit option vip combinate
+
+        param option_vip_combinate_id: Id of Option Vip Combinate
+        param option_vip_combinate: option_vip_combinate object
+        """
+
+        data = dict()
+        data["info"] = option_vip_combinate
+
+        uri = "api/option-vip-combinate/%s/" % option_vip_combinate_id
+
+        return self.put(uri, data)
+
+    def delete_option_vip_combinate(self, option_vip_combinate):
+        """
+        Method to delete option vip combinate
+
+        param option_vip_combinate: option_vip_combinate object
+        """
+
+        data = dict()
+        data["info"] = option_vip_combinate
+
+        uri = "api/option-vip-combinate/"
+
+        return self.delete(uri, data)
+
+    def save_vip_request(self, vip_request):
+        """
+        Method to save traffic group
+
+        param vip_request: vip_request object
+        """
+
+        data = dict()
+        data["info"] = vip_request
+
+        uri = "api/vip-request/"
+
+        return self.post(uri, data)

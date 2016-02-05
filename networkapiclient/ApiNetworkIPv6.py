@@ -36,7 +36,7 @@ class ApiNetworkIPv6(ApiGenericClient):
 
         :return: IPv6 Network
         """
-        
+
         uri = "api/networkv4/%s/" % id_networkv6
         return self.get(uri)
 
@@ -45,10 +45,9 @@ class ApiNetworkIPv6(ApiGenericClient):
 
         :param environment_vip: environment vip to filter
 
-        :return: IPv6 Networks 
+        :return: IPv6 Networks
         """
 
-        data = dict()
         uri = "api/networkv6/?"
         if environment_vip:
             uri += "environment_vip=%s" % environment_vip
@@ -64,4 +63,20 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
 
         uri = "api/networkv6/%s/equipments/" % id_networkv6
+        return self.delete(uri)
+
+    def check_vip_ip(self, ip, environment_vip):
+        """
+        Check available ipv6 in environment vip
+        """
+        uri = "api/ipv6/ip/%s/environment-vip/%s/" % (ip, environment_vip)
+
+        return self.get(uri)
+
+    def delete_ipv6(self, ipv6_id):
+        """
+        Delete ipv6
+        """
+        uri = "api/ipv6/%s/" % (ipv6_id)
+
         return self.delete(uri)
