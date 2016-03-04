@@ -41,14 +41,13 @@ class ApiNetworkIPv4(ApiGenericClient):
         return self.get(uri)
 
     def list(self, environment_vip=None):
-        """List IPv4 networks 
+        """List IPv4 networks
 
         :param environment_vip: environment vip to filter
 
-        :return: IPv4 Networks 
+        :return: IPv4 Networks
         """
 
-        data = dict()
         uri = "api/networkv4/?"
         if environment_vip:
             uri += "environment_vip=%s" % environment_vip
@@ -64,4 +63,20 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
 
         uri = "api/networkv4/%s/equipments/" % id_networkv4
+        return self.delete(uri)
+
+    def check_vip_ip(self, ip, environment_vip):
+        """
+        Check available ip in environment vip
+        """
+        uri = "api/ipv4/ip/%s/environment-vip/%s/" % (ip, environment_vip)
+
+        return self.get(uri)
+
+    def delete_ipv4(self, ipv4_id):
+        """
+        Delete ipv4
+        """
+        uri = "api/ipv4/%s/" % (ipv4_id)
+
         return self.delete(uri)
