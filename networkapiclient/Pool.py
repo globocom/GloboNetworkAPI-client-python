@@ -33,55 +33,27 @@ class Pool(ApiGenericClient):
             user_ldap
         )
 
-    def poolmember_state(self, pools):
+    def set_poolmember_state(self, id_pools, pools):
         """
         Enable/Disable pool member by list
-
-        param: Following dictionary: {
-                "pools": [
-                    {
-                        "server_pool": {
-                        },
-                        "server_pool_members": [
-                        ]
-                    }
-                ]
-            }
         """
 
         data = dict()
 
-        uri = "api/pools/poolmember_state/"
+        uri = "api/v3/pool/real/%s/member/status/" % ';'.join(id_pools)
 
-        data["pools"] = pools
+        data["server_pools"] = pools
 
-        return self.post(uri, data=data)
+        return self.put(uri, data=data)
 
-    def list_all_members(self, id_pools, checkstatus=False):
+    def get_poolmember_state(self, id_pools, checkstatus=0):
         """
-        Return pool member list by POST request method
-
-        param: {"id_pools":[<id_pool>], "checkstatus":"<1 or 0>"}
-
-        return: Following dictionary: {
-                "pools": [
-                    {
-                        "server_pool": {
-                        },
-                        "server_pool_members": [
-                        ]
-                    }
-                ]
-            }
+        Enable/Disable pool member by list
         """
-        data = dict()
 
-        uri = "api/pools/get_all_members/"
+        uri = "api/v3/pool/real/%s/member/status/?checkstatus=%s" % (';'.join(id_pools), checkstatus)
 
-        data["id_pools"] = id_pools
-        data["checkstatus"] = checkstatus
-
-        return self.post(uri, data=data)
+        return self.get(uri)
 
     def list_all(self, environment_id, pagination):
         """
@@ -174,28 +146,6 @@ class Pool(ApiGenericClient):
         data['weight'] = weight
 
         return self.post(uri, data=data)
-
-    def save_pool(self, pools):
-        """
-        Save pool
-        param: Following dictionary: {
-                "pools": [
-                    {
-                        "server_pool": {
-                        },
-                        "server_pool_members": [
-                        ]
-                    }
-                ]
-            }
-        """
-
-        data = dict()
-        data["pools"] = pools
-
-        uri = "api/pools/v2/"
-
-        return self.post(uri, data)
 
     def save(self, id, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
              healthcheck_request, maxcom, ip_list_full, nome_equips, id_equips, priorities,
@@ -336,26 +286,26 @@ class Pool(ApiGenericClient):
 
         return self.get(uri)
 
-    def delete_pool(self, ids):
-        """
-            Delete Pools
+    # def delete_pool(self, ids):
+    #     """
+    #         Delete Pools
 
-            :param ids: List of ids
+    #         :param ids: List of ids
 
-            :return: None on success
+    #         :return: None on success
 
-            :raise PoolConstraintVipException
-            :raise ScriptDeletePoolException
-            :raise InvalidIdPoolException
-            :raise NetworkAPIException
-        """
+    #         :raise PoolConstraintVipException
+    #         :raise ScriptDeletePoolException
+    #         :raise InvalidIdPoolException
+    #         :raise NetworkAPIException
+    #     """
 
-        data = dict()
-        data["ids"] = ids
+    #     data = dict()
+    #     data["ids"] = ids
 
-        uri = "api/pools/delete/"
+    #     uri = "api/pools/delete/"
 
-        return self.post(uri, data)
+    #     return self.post(uri, data)
 
     def get_by_pk(self, pk):
         uri = "api/pools/getbypk/%s/" % pk
@@ -537,3 +487,32 @@ class Pool(ApiGenericClient):
         uri = "api/pools/getipsbyambiente/{}/{}/".format(equip_name, id_ambiente)
 
         return self.get(uri)
+
+    #######################
+    # API V3
+    #######################
+    def get_pool(self, pool_id):
+        uri = "api/v3/pool/%s/" % pool_id
+
+        return self.get(uri)
+
+    def save_pool(self, pool):
+        uri = "api/v3/pool/"
+
+        data = dict()
+        data['server_pools'] = list()
+        data['server_pools'].append(pool)
+        return self.post(uri, data)
+
+    def update_pool(self, pool, pool_id):
+        uri = "api/v3/pool/%s/" % pool_id
+
+        data = dict()
+        data['server_pools'] = list()
+        data['server_pools'].append(pool)
+        return self.put(uri, data)
+
+    def delete_pool(self, pool_ids):
+        uri = "api/v3/pool/%s/" % pool_ids
+
+        return self.delete(uri)
