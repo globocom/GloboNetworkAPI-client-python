@@ -222,6 +222,12 @@ class Pool(ApiGenericClient):
 
         return self.post(uri, data=data)
 
+    def list_all_members_by_poolll_members(self, id_pools):
+
+        uri = "api/pools/get_all_members/%s/" % id_pools
+
+        return self.get(uri)
+
     def list_all_members_by_pool(self, id_server_pool, checkstatus=False, pagination=None):
 
         data = dict()
@@ -496,6 +502,11 @@ class Pool(ApiGenericClient):
 
         return self.get(uri)
 
+    def list(self, pool):
+        uri = "api/v3/pool/"
+
+        return self.get(uri)
+
     def save_pool(self, pool):
         uri = "api/v3/pool/"
 
@@ -516,3 +527,9 @@ class Pool(ApiGenericClient):
         uri = "api/v3/pool/%s/" % pool_ids
 
         return self.delete(uri)
+
+    def get_pool_members(self, pool_id, checkstatus='0'):
+
+        uri = "api/v3/pool/deploy/%s/member/status/?checkstatus=%s/" % (pool_id, checkstatus)
+
+        return self.get(uri)
