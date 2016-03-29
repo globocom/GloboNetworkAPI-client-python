@@ -533,3 +533,12 @@ class Pool(ApiGenericClient):
         uri = "api/v3/pool/deploy/%s/member/status/?checkstatus=%s/" % (pool_id, checkstatus)
 
         return self.get(uri)
+
+    def deploy_update_pool(self, pool, pool_ids):
+
+        uri = "api/v3/pool/deploy/%s/" % str(pool_ids)
+
+        data = dict()
+        data['server_pools'] = list()
+        data['server_pools'].append(pool)
+        return self.put(uri, data)
