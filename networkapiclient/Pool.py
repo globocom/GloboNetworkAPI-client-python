@@ -551,3 +551,13 @@ class Pool(ApiGenericClient):
         data['server_pools'] = list()
         data['server_pools'].append(pool)
         return self.put(uri, data)
+
+    def deploy_remove_pool(self, pool_ids):
+        uri = "api/v3/pool/deploy/%s/" % pool_ids
+
+        return self.delete(uri)
+
+    def deploy_create_pool(self, pool_ids):
+        uri = "api/v3/pool/deploy/%s/" % pool_ids
+
+        return self.post(uri)
