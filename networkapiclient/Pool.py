@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
+import urllib
 
 
 class Pool(ApiGenericClient):
@@ -502,9 +503,9 @@ class Pool(ApiGenericClient):
 
         return self.get(uri)
 
-    def list(self, pool):
-        uri = "api/v3/pool/"
+    def list_pool(self, search):
 
+        uri = "api/v3/pool/?%s" % urllib.urlencode({"search": search})
         return self.get(uri)
 
     def save_pool(self, pool):
