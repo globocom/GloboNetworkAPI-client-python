@@ -215,6 +215,9 @@ class ApiVipRequest(ApiGenericClient):
 
         return self.get(uri)
 
+    #######################
+    # API V3
+    #######################
     def option_vip_by_environmentvip(self, environment_vip_id):
         """
         List Option Vip by Environment Vip
@@ -226,81 +229,41 @@ class ApiVipRequest(ApiGenericClient):
 
         return self.get(uri)
 
-    def option_vip_combinate_by_environmentvip(self, environment_vip_id):
-        """
-        List Option Vip Combinate by Environment Vip
-
-        param environment_vip_id: Id of Environment Vip
-        """
-
-        uri = "api/option-vip-combinate/environment-vip/%s/" % environment_vip_id
-
-        return self.get(uri)
-
-    def option_vip_combinate_by_id(self, option_vip_combinate_id):
-        """
-        List Option Vip Combinate by Id
-
-        param option_vip_combinate_id: Id of option vip combinate
-        """
-
-        uri = "api/option-vip-combinate/%s/" % option_vip_combinate_id
-
-        return self.get(uri)
-
-    def save_option_vip_combinate(self, option_vip_combinate):
-        """
-        Method to save option vip combinate
-
-        param option_vip_combinate: option_vip_combinate object
-        """
-
-        data = dict()
-        data["info"] = option_vip_combinate
-
-        uri = "api/option-vip-combinate/"
-
-        return self.post(uri, data)
-
-    def edit_option_vip_combinate(self, option_vip_combinate_id, option_vip_combinate):
-        """
-        Method to edit option vip combinate
-
-        param option_vip_combinate_id: Id of Option Vip Combinate
-        param option_vip_combinate: option_vip_combinate object
-        """
-
-        data = dict()
-        data["info"] = option_vip_combinate
-
-        uri = "api/option-vip-combinate/%s/" % option_vip_combinate_id
-
-        return self.put(uri, data)
-
-    def delete_option_vip_combinate(self, option_vip_combinate):
-        """
-        Method to delete option vip combinate
-
-        param option_vip_combinate: option_vip_combinate object
-        """
-
-        data = dict()
-        data["info"] = option_vip_combinate
-
-        uri = "api/option-vip-combinate/"
-
-        return self.delete(uri, data)
-
     def save_vip_request(self, vip_request):
         """
-        Method to save traffic group
+        Method to save vip request
 
         param vip_request: vip_request object
         """
+        uri = "api/v3/vip-request/"
 
         data = dict()
-        data["info"] = vip_request
-
-        uri = "api/vip-request/"
+        data['vips'] = list()
+        data['vips'].append(vip_request)
 
         return self.post(uri, data)
+
+    def update_vip_request(self, vip_request, vip_request_id):
+        """
+        Method to update vip request
+
+        param vip_request: vip_request object
+        param vip_request_id: vip_request id
+        """
+        uri = "api/v3/vip-request/%s/" % vip_request_id
+
+        data = dict()
+        data['vips'] = list()
+        data['vips'].append(vip_request)
+
+        return self.put(uri, data)
+
+    def delete_vip_request(self, vip_request_ids):
+        """
+        Method to delete vip request
+
+        param vip_request_ids: vip_request ids
+        """
+        uri = "api/v3/vip-request/%s/" % vip_request_ids
+
+        return self.delete(uri)
