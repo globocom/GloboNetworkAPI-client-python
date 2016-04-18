@@ -62,7 +62,7 @@ class Network(GenericClient):
         """
         Add new network
 
-        :param network: 0 to IPv4 or 1 to IPv6
+        :param network: IPV4 or IPV6 (ex.: "10.0.0.3/24")
         :param id_vlan: Identifier of the Vlan. Integer value and greater than zero.
         :param id_network_type: Identifier of the NetworkType. Integer value and greater than zero.
         :param id_environment_vip: Identifier of the Environment Vip. Integer value and greater than zero.

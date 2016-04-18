@@ -16,17 +16,17 @@
 
 from networkapiclient.Ambiente import Ambiente
 from networkapiclient.AmbienteLogico import AmbienteLogico
-from networkapiclient.ApiBlockRule import ApiBlockRule
-from networkapiclient.ApiEnvironmentVip import ApiEnvironmentVip
-from networkapiclient.ApiEquipment import ApiEquipment
+#from networkapiclient.ApiBlockRule import ApiBlockRule
+#from networkapiclient.ApiEnvironmentVip import ApiEnvironmentVip
+#from networkapiclient.ApiEquipment import ApiEquipment
 from networkapiclient.ApiInterface import ApiInterfaceRequest
 from networkapiclient.ApiNetworkIPv4 import ApiNetworkIPv4
 from networkapiclient.ApiNetworkIPv6 import ApiNetworkIPv6
-from networkapiclient.ApiOptionPool import ApiOptionPool
-from networkapiclient.ApiOptionVip import ApiOptionVip
-from networkapiclient.ApiPool import ApiPool
+#from networkapiclient.ApiOptionPool import ApiOptionPool
+#from networkapiclient.ApiOptionVip import ApiOptionVip
+#from networkapiclient.ApiPool import ApiPool
 from networkapiclient.ApiRack import ApiRack
-from networkapiclient.ApiTrafficGroup import ApiTrafficGroup
+#from networkapiclient.ApiTrafficGroup import ApiTrafficGroup
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.ApiVlan import ApiVlan
 from networkapiclient.BlockRule import BlockRule
@@ -99,30 +99,6 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
-    def create_api_block_rule(self):
-        """Get an instance of block rule services facade."""
-        return ApiBlockRule(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
-
-    def create_api_environment_vip(self):
-        """Get an instance of Api Environment Vip services facade."""
-        return ApiEnvironmentVip(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
-
-    def create_api_equipment(self):
-        """Get an instance of Api Equipment services facade."""
-        return ApiEquipment(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
-
     def create_api_interface_request(self):
         """Get an instance of Api Vip Requests services facade."""
 
@@ -150,41 +126,9 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
-    def create_api_option_pool(self):
-        """Get an instance of Api Option Pool services facade."""
-        return ApiOptionPool(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
-
-    def create_api_option_vip(self):
-        """Get an instance of Api Option Vip services facade."""
-        return ApiOptionVip(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
-
-    def create_api_pool(self):
-        """Get an instance of Api Pool services facade."""
-        return ApiPool(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
-
     def create_apirack(self):
         """Get an instance of Api Rack Variables services facade."""
         return ApiRack(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
-
-    def create_api_traffic_group(self):
-        """Get an instance of Api TrafficGroup services facade."""
-        return ApiTrafficGroup(
             self.networkapi_url,
             self.user,
             self.password,
