@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from networkapiclient.ApiGenericClient import ApiGenericClient
 import urllib
+
+from networkapiclient.ApiGenericClient import ApiGenericClient
 
 
 class Pool(ApiGenericClient):
