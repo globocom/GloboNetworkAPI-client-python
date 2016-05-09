@@ -13,9 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import urllib
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
-import urllib
 
 
 class Pool(ApiGenericClient):
@@ -531,7 +531,7 @@ class Pool(ApiGenericClient):
 
     def get_pool_members(self, pool_id, checkstatus='0'):
 
-        uri = "api/v3/pool/deploy/%s/member/status/?checkstatus=%s/" % (pool_id, checkstatus)
+        uri = "api/v3/pool/deploy/%s/member/status/?checkstatus=%s" % (pool_id, checkstatus)
 
         return self.get(uri)
 
