@@ -17,7 +17,7 @@
 from networkapiclient.ApiGenericClient import ApiGenericClient
 
 
-class ApiEnvironmentVip(ApiGenericClient):
+class ApiPool(ApiGenericClient):
 
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
@@ -26,31 +26,31 @@ class ApiEnvironmentVip(ApiGenericClient):
         :param password: Password for authentication.
         """
 
-        super(ApiEnvironmentVip, self).__init__(
+        super(ApiPool, self).__init__(
             networkapi_url,
             user,
             password,
             user_ldap
         )
 
-    def get_environment_vip(self, environment_vip_id):
+    def pool_by_environmentvip(self, environment_vip_id):
+        """
+        Method to return list object pool by environment vip id
+        Param environment_vip_id: environment vip id
+        Return list object pool
+        """
 
-        uri = "api/v3/environment-vip/%s/" % environment_vip_id
+        uri = "/api/v3/pool/environment-vip/%s/" % environment_vip_id
 
         return self.get(uri)
 
-    def environmentvip_step(self, finality='', client='', environmentp44=''):
+    def pool_by_id(self, pool_id):
         """
-        List finality, client or environment vip list.
-        Param finality: finality of environment(optional)
-        Param client: client of environment(optional)
-        Param environmentp44: environmentp44(optional)
-        Return finality list: when request has no finality and client.
-        Return client list: when request has only finality.
-        Return list environment vip: when request has finality and client.
-        Return environment vip: when request has finality, client and environmentvip
+        Method to return object pool by id
+        Param pool_id: pool id
+        Returns object pool
         """
 
-        uri = "api/v3/environment-vip/step/?finality=%s&client=%s&environmentp44=%s" % (finality, client, environmentp44)
+        uri = "/api/v3/pool/%s/" % pool_id
 
         return self.get(uri)

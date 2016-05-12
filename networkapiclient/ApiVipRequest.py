@@ -225,7 +225,27 @@ class ApiVipRequest(ApiGenericClient):
         param environment_vip_id: Id of Environment Vip
         """
 
-        uri = "api/option-vip/environment-vip/%s/" % environment_vip_id
+        uri = "api/v3/option-vip/environment-vip/%s/" % environment_vip_id
+
+        return self.get(uri)
+
+    def get_vip_request_details(self, vip_request_id):
+        """
+        Method to get details of vip request
+
+        param vip_request_id: vip_request id
+        """
+        uri = "api/v3/vip-request/details/%s/" % vip_request_id
+
+        return self.get(uri)
+
+    def get_vip_request(self, vip_request_id):
+        """
+        Method to get vip request
+
+        param vip_request_id: vip_request id
+        """
+        uri = "api/v3/vip-request/%s/" % vip_request_id
 
         return self.get(uri)
 
