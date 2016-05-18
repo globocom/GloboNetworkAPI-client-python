@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import urllib
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
 
@@ -236,6 +237,16 @@ class ApiVipRequest(ApiGenericClient):
         param vip_request_id: vip_request id
         """
         uri = "api/v3/vip-request/details/%s/" % vip_request_id
+
+        return self.get(uri)
+
+    def list_vip_request(self, search):
+        """
+        Method to list vip request
+
+        param search: search
+        """
+        uri = "api/v3/vip-request/details/?%s" % urllib.urlencode({"search": search})
 
         return self.get(uri)
 
