@@ -240,7 +240,7 @@ class ApiVipRequest(ApiGenericClient):
 
         return self.get(uri)
 
-    def list_vip_request(self, search):
+    def search_vip_request_details(self, search):
         """
         Method to list vip request
 
@@ -257,6 +257,16 @@ class ApiVipRequest(ApiGenericClient):
         param vip_request_id: vip_request id
         """
         uri = "api/v3/vip-request/%s/" % vip_request_id
+
+        return self.get(uri)
+
+    def search_vip_request(self, search):
+        """
+        Method to list vip request
+
+        param search: search
+        """
+        uri = "api/v3/vip-request/?%s" % urllib.urlencode({"search": search})
 
         return self.get(uri)
 
