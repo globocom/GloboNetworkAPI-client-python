@@ -308,3 +308,38 @@ class ApiVipRequest(ApiGenericClient):
         uri = "api/v3/vip-request/%s/" % vip_request_ids
 
         return self.delete(uri)
+
+    def create_vip(self, vip_request_ids):
+        """
+        Method to delete vip request
+
+        param vip_request_ids: vip_request ids
+        """
+        uri = "api/v3/vip-request/deploy/%s/" % vip_request_ids
+
+        return self.post(uri)
+
+    def update_vip(self, vip_request, vip_request_id):
+        """
+        Method to update vip request
+
+        param vip_request: vip_request object
+        param vip_request_id: vip_request id
+        """
+        uri = "api/v3/vip-request/deploy/%s/" % vip_request_id
+
+        data = dict()
+        data['vips'] = list()
+        data['vips'].append(vip_request)
+
+        return self.put(uri, data)
+
+    def remove_vip(self, vip_request_ids):
+        """
+        Method to delete vip request
+
+        param vip_request_ids: vip_request ids
+        """
+        uri = "api/v3/vip-request/deploy/%s/" % vip_request_ids
+
+        return self.delete(uri)
