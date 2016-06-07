@@ -119,7 +119,7 @@ class Pool(ApiGenericClient):
         return self.post(uri, data=data)
 
     def inserir(self, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
-                healthcheck_request, old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities,
+                healthcheck_request, old_healthcheck_id, maxcon, ip_list_full, nome_equips, id_equips, priorities,
                 weight, ports_reals, servicedownaction=None):
 
         uri = "api/pools/insert/"
@@ -138,7 +138,7 @@ class Pool(ApiGenericClient):
             old_healthcheck_id = None
 
         data['old_healthcheck_id'] = old_healthcheck_id
-        data['maxcom'] = maxcom
+        data['maxcon'] = maxcon
         data['ip_list_full'] = ip_list_full
         data['id_equips'] = id_equips
         data['priorities'] = priorities
@@ -149,7 +149,7 @@ class Pool(ApiGenericClient):
         return self.post(uri, data=data)
 
     def save(self, id, identifier, default_port, environment, balancing, healthcheck_type, healthcheck_expect,
-             healthcheck_request, maxcom, ip_list_full, nome_equips, id_equips, priorities,
+             healthcheck_request, maxcon, ip_list_full, nome_equips, id_equips, priorities,
              weight, ports_reals, id_pool_member, servicedownaction=None):
 
         uri = "api/pools/save/"
@@ -164,7 +164,7 @@ class Pool(ApiGenericClient):
         data['healthcheck_type'] = healthcheck_type
         data['healthcheck_expect'] = healthcheck_expect
         data['healthcheck_request'] = healthcheck_request
-        data['maxcom'] = maxcom
+        data['maxcon'] = maxcon
 
         data['id_pool_member'] = id_pool_member
         data['ip_list_full'] = ip_list_full
@@ -194,7 +194,7 @@ class Pool(ApiGenericClient):
         return self.post(uri, data=data)
 
     def update(self, id_server_pool, default_port, balancing, healthcheck_type, healthcheck_expect, healthcheck_request,
-               old_healthcheck_id, maxcom, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals, servicedownaction=None):
+               old_healthcheck_id, maxcon, ip_list_full, nome_equips, id_equips, priorities, weight, ports_reals, servicedownaction=None):
 
         uri = "api/pools/edit/"
 
@@ -212,7 +212,7 @@ class Pool(ApiGenericClient):
             old_healthcheck_id = None
 
         data['old_healthcheck_id'] = old_healthcheck_id
-        data['maxcom'] = maxcom
+        data['maxcon'] = maxcon
         data['ip_list_full'] = ip_list_full
         data['id_equips'] = id_equips
         data['priorities'] = priorities

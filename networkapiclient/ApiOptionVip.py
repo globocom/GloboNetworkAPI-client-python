@@ -43,3 +43,13 @@ class ApiOptionVip(ApiGenericClient):
         uri = "api/v3/option-vip/environment-vip/%s/type-option/%s/" % (environment_vip_id, type_option)
 
         return self.get(uri)
+
+    def option_vip_by_environment(self, environment_vip_id):
+        """
+        List option vip.
+        param environment_vip_id: Id of Environment Vip
+        """
+
+        uri = "api/v3/option-vip/environment-vip/%s/" % (environment_vip_id)
+
+        return self.get(uri)
