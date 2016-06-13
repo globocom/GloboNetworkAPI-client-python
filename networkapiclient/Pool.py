@@ -562,3 +562,15 @@ class Pool(ApiGenericClient):
         uri = "api/v3/pool/deploy/%s/" % pool_ids
 
         return self.post(uri)
+
+    def get_vip_by_pool(self, pool_id):
+
+        uri = "api/v3/vip-request/pool/%s/" % pool_id
+
+        return self.get(uri)
+
+    def get_opcoes_pool_by_environment(self, env_id):
+
+        uri = "api/v3/option-pool/environment/%s/" % env_id
+
+        return self.get(uri)
