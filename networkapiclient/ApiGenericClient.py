@@ -15,12 +15,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
-import requests
-from requests.auth import HTTPBasicAuth
 from io import BytesIO
 import json
+
 from networkapiclient.exception import NetworkAPIClientError
+
+import requests
+from requests.auth import HTTPBasicAuth
 from requests.exceptions import HTTPError
 
 
@@ -42,7 +43,7 @@ class ApiGenericClient(object):
         self.password = password
         self.user_ldap = user_ldap
 
-    def get(self, uri):
+    def get(self, uri, verify=False):
         """
             Sends a GET request.
 
@@ -56,7 +57,8 @@ class ApiGenericClient(object):
             request = requests.get(
                 self._url(uri),
                 auth=self._auth_basic(),
-                headers=self._header()
+                headers=self._header(),
+                verify=verify
             )
 
             request.raise_for_status()
@@ -67,7 +69,7 @@ class ApiGenericClient(object):
             error = self._parse(request.text)
             raise NetworkAPIClientError(error.get('detail', ''))
 
-    def post(self, uri, data=None, files=None):
+    def post(self, uri, data=None, files=None, verify=False):
         """
             Sends a POST request.
 
@@ -83,7 +85,8 @@ class ApiGenericClient(object):
                 data=json.dumps(data),
                 files=files,
                 auth=self._auth_basic(),
-                headers=self._header()
+                headers=self._header(),
+                verify=verify
             )
 
             request.raise_for_status()
@@ -94,7 +97,7 @@ class ApiGenericClient(object):
             error = self._parse(request.text)
             raise NetworkAPIClientError(error.get('detail', ''))
 
-    def put(self, uri, data=None):
+    def put(self, uri, data=None, verify=False):
         """
             Sends a PUT request.
 
@@ -109,7 +112,8 @@ class ApiGenericClient(object):
                 self._url(uri),
                 data=json.dumps(data),
                 auth=self._auth_basic(),
-                headers=self._header()
+                headers=self._header(),
+                verify=verify
             )
 
             request.raise_for_status()
@@ -120,7 +124,7 @@ class ApiGenericClient(object):
             error = self._parse(request.text)
             raise NetworkAPIClientError(error.get('detail', ''))
 
-    def delete(self, uri, data=None):
+    def delete(self, uri, data=None, verify=False):
         """
             Sends a DELETE request.
 
@@ -134,7 +138,8 @@ class ApiGenericClient(object):
                 self._url(uri),
                 data=json.dumps(data),
                 auth=self._auth_basic(),
-                headers=self._header()
+                headers=self._header(),
+                verify=False
             )
 
             request.raise_for_status()
