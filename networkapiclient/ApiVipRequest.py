@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import urllib
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
 
@@ -225,7 +226,47 @@ class ApiVipRequest(ApiGenericClient):
         param environment_vip_id: Id of Environment Vip
         """
 
-        uri = "api/option-vip/environment-vip/%s/" % environment_vip_id
+        uri = "api/v3/option-vip/environment-vip/%s/" % environment_vip_id
+
+        return self.get(uri)
+
+    def get_vip_request_details(self, vip_request_id):
+        """
+        Method to get details of vip request
+
+        param vip_request_id: vip_request id
+        """
+        uri = "api/v3/vip-request/details/%s/" % vip_request_id
+
+        return self.get(uri)
+
+    def search_vip_request_details(self, search):
+        """
+        Method to list vip request
+
+        param search: search
+        """
+        uri = "api/v3/vip-request/details/?%s" % urllib.urlencode({"search": search})
+
+        return self.get(uri)
+
+    def get_vip_request(self, vip_request_id):
+        """
+        Method to get vip request
+
+        param vip_request_id: vip_request id
+        """
+        uri = "api/v3/vip-request/%s/" % vip_request_id
+
+        return self.get(uri)
+
+    def search_vip_request(self, search):
+        """
+        Method to list vip request
+
+        param search: search
+        """
+        uri = "api/v3/vip-request/?%s" % urllib.urlencode({"search": search})
 
         return self.get(uri)
 
@@ -265,5 +306,40 @@ class ApiVipRequest(ApiGenericClient):
         param vip_request_ids: vip_request ids
         """
         uri = "api/v3/vip-request/%s/" % vip_request_ids
+
+        return self.delete(uri)
+
+    def create_vip(self, vip_request_ids):
+        """
+        Method to delete vip request
+
+        param vip_request_ids: vip_request ids
+        """
+        uri = "api/v3/vip-request/deploy/%s/" % vip_request_ids
+
+        return self.post(uri)
+
+    def update_vip(self, vip_request, vip_request_id):
+        """
+        Method to update vip request
+
+        param vip_request: vip_request object
+        param vip_request_id: vip_request id
+        """
+        uri = "api/v3/vip-request/deploy/%s/" % vip_request_id
+
+        data = dict()
+        data['vips'] = list()
+        data['vips'].append(vip_request)
+
+        return self.put(uri, data)
+
+    def remove_vip(self, vip_request_ids):
+        """
+        Method to delete vip request
+
+        param vip_request_ids: vip_request ids
+        """
+        uri = "api/v3/vip-request/deploy/%s/" % vip_request_ids
 
         return self.delete(uri)

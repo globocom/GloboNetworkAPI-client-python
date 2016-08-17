@@ -383,6 +383,7 @@ class Ip(GenericClient):
 
         url = 'ip/availableip4/vip/' + str(id_evip) + "/"
 
+
         ip_map = dict()
         ip_map['id_evip'] = id_evip
         ip_map['name'] = name
@@ -675,12 +676,10 @@ class Ip(GenericClient):
         """
 
         if not is_valid_int_param(id_ip):
-            raise InvalidParameterError(
-                u'Ipv4 identifier is invalid or was not informed.')
+            raise InvalidParameterError(u'Ipv4 identifier is invalid or was not informed.')
 
         url = 'ip4/delete/' + str(id_ip) + "/"
-
-        code, xml = self.submit(None, 'GET', url)
+        code, xml = self.submit(None, 'DELETE', url)
 
         return self.response(code, xml)
 

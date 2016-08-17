@@ -53,12 +53,8 @@ class Network(GenericClient):
 
         return self.response(code, xml)
 
-    def add_network(
-            self,
-            network,
-            id_vlan,
-            id_network_type,
-            id_environment_vip=None):
+    def add_network(self, network, id_vlan, id_network_type,
+                    id_environment_vip=None, cluster_unit=None):
         """
         Add new network
 
@@ -93,6 +89,7 @@ class Network(GenericClient):
         network_map['id_vlan'] = id_vlan
         network_map['id_network_type'] = id_network_type
         network_map['id_environment_vip'] = id_environment_vip
+        network_map['cluster_unit'] = cluster_unit
 
         code, xml = self.submit(
             {'network': network_map}, 'POST', 'network/add/')
@@ -211,7 +208,7 @@ class Network(GenericClient):
 
         return self.response(code, xml)
 
-    def edit_network(self, id_network, ip_type, id_net_type, id_env_vip=None):
+    def edit_network(self, id_network, ip_type, id_net_type, id_env_vip=None, cluster_unit=None):
         """
         Edit a network 4 or 6
 
@@ -234,6 +231,7 @@ class Network(GenericClient):
         net_map['ip_type'] = ip_type
         net_map['id_net_type'] = id_net_type
         net_map['id_env_vip'] = id_env_vip
+        net_map['cluster_unit'] = cluster_unit
 
         code, xml = self.submit({'net': net_map}, 'POST', 'network/edit/')
 
@@ -529,6 +527,7 @@ class Network(GenericClient):
 
         return self.response(code, xml)
 
+
 class DHCPRelayIPv4(ApiGenericClient):
 
     def __init__(self, networkapi_url, user, password, user_ldap=None):
@@ -541,7 +540,7 @@ class DHCPRelayIPv4(ApiGenericClient):
 
     def add(self, networkipv4_id, ipv4_id):
         """List all DHCPRelayIPv4.
-        
+
         :param: networkipv4_id, ipv4_id
 
         :return: Following dictionary:
@@ -568,7 +567,7 @@ class DHCPRelayIPv4(ApiGenericClient):
         data["ipv4"] = dict()
         data["ipv4"]["id"] = ipv4_id
         print data
-        uri = "api/dhcprelayv4/" 
+        uri = "api/dhcprelayv4/"
         return self.post(uri, data=data)
 
     def get_by_pk(self, dhcprelayv4_id):
@@ -624,11 +623,11 @@ class DHCPRelayIPv4(ApiGenericClient):
         :raise NetworkAPIException: Falha ao acessar fonte de dados
         """
 
-        uri = "api/dhcprelayv4/?" 
+        uri = "api/dhcprelayv4/?"
         if networkipv4:
-          uri += "networkipv4=%s&" % networkipv4
+            uri += "networkipv4=%s&" % networkipv4
         if ipv4:
-          uri += "ipv4=%s" % ipv4
+            uri += "ipv4=%s" % ipv4
 
         return self.get(uri)
 
@@ -657,7 +656,7 @@ class DHCPRelayIPv6(ApiGenericClient):
 
     def add(self, networkipv6_id, ipv6_id):
         """List all DHCPRelayIPv4.
-        
+
         :param: Object DHCPRelayIPv4
 
         :return: Following dictionary:
@@ -687,7 +686,7 @@ class DHCPRelayIPv6(ApiGenericClient):
         data["networkipv6"] = networkipv6_id
         data["ipv6"] = dict()
         data["ipv6"]["id"] = ipv6_id
-        uri = "api/dhcprelayv6/" 
+        uri = "api/dhcprelayv6/"
         return self.post(uri, data=data)
 
     def get_by_pk(self, dhcprelayv6_id):
@@ -753,9 +752,9 @@ class DHCPRelayIPv6(ApiGenericClient):
 
         uri = "api/dhcprelayv6/?"
         if networkipv6:
-          uri += "networkipv6=%s&" % networkipv6
+            uri += "networkipv6=%s&" % networkipv6
         if ipv6:
-          uri += "ipv6=%s" % ipv6
+            uri += "ipv6=%s" % ipv6
 
         return self.get(uri)
 
