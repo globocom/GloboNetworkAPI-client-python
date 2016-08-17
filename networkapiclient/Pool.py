@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
+import urllib
 
 
 class Pool(ApiGenericClient):
@@ -221,6 +222,12 @@ class Pool(ApiGenericClient):
         data['weight'] = weight
 
         return self.post(uri, data=data)
+
+    def list_all_members_by_poolll_members(self, id_pools):
+
+        uri = "api/pools/get_all_members/%s/" % id_pools
+
+        return self.get(uri)
 
     def list_all_members_by_pool(self, id_server_pool, checkstatus=False, pagination=None):
 
@@ -496,6 +503,11 @@ class Pool(ApiGenericClient):
 
         return self.get(uri)
 
+    def list_pool(self, search):
+
+        uri = "api/v3/pool/?%s" % urllib.urlencode({"search": search})
+        return self.get(uri)
+
     def save_pool(self, pool):
         uri = "api/v3/pool/"
 
@@ -516,3 +528,37 @@ class Pool(ApiGenericClient):
         uri = "api/v3/pool/%s/" % pool_ids
 
         return self.delete(uri)
+
+    def get_pool_members(self, pool_id, checkstatus='0'):
+
+        uri = "api/v3/pool/deploy/%s/member/status/?checkstatus=%s/" % (pool_id, checkstatus)
+
+        return self.get(uri)
+
+    def deploy_update_pool(self, pool, pool_ids):
+
+        uri = "api/v3/pool/deploy/%s/" % str(pool_ids)
+
+        data = dict()
+        data['server_pools'] = list()
+        data['server_pools'].append(pool)
+        return self.put(uri, data)
+
+    def deploy_update_pool_members(self, pool_id, pool):
+
+        uri = "api/v3/pool/deploy/%s/member/status/" % (pool_id)
+
+        data = dict()
+        data['server_pools'] = list()
+        data['server_pools'].append(pool)
+        return self.put(uri, data)
+
+    def deploy_remove_pool(self, pool_ids):
+        uri = "api/v3/pool/deploy/%s/" % pool_ids
+
+        return self.delete(uri)
+
+    def deploy_create_pool(self, pool_ids):
+        uri = "api/v3/pool/deploy/%s/" % pool_ids
+
+        return self.post(uri)
