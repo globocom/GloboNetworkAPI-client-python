@@ -33,9 +33,12 @@ class ApiEnvironmentVip(ApiGenericClient):
             user_ldap
         )
 
-    def get_environment_vip(self, environment_vip_id):
+    def get_environment_vip(self, environment_vip_id, fields=None):
 
         uri = "api/v3/environment-vip/%s/" % environment_vip_id
+
+        if fields:
+            uri += '?fields={}'.format(','.join(fields))
 
         return self.get(uri)
 
