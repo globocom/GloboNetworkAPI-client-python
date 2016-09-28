@@ -17,6 +17,7 @@
 from networkapiclient.Ambiente import Ambiente
 from networkapiclient.AmbienteLogico import AmbienteLogico
 from networkapiclient.ApiEnvironmentVip import ApiEnvironmentVip
+from networkapiclient.ApiEnvironment import ApiEnvironment
 # from networkapiclient.ApiEquipment import ApiEquipment
 from networkapiclient.ApiInterface import ApiInterfaceRequest
 from networkapiclient.ApiNetworkIPv4 import ApiNetworkIPv4
@@ -100,6 +101,14 @@ class ClientFactory(object):
     def create_api_environment_vip(self):
         """Get an instance of Api Environment Vip services facade."""
         return ApiEnvironmentVip(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_environment(self):
+        """Get an instance of Api Environment services facade."""
+        return ApiEnvironment(
             self.networkapi_url,
             self.user,
             self.password,
