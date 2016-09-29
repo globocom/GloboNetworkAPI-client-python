@@ -42,23 +42,36 @@ class ApiEnvironment(ApiGenericClient):
 
         return self.get(uri)
 
-    def create_enviroment(self):
+    def get_environment(self, environment_ids):
+        """
+        Method to get environment
+        """
+
+        uri = "api/v3/environment/%s/" % environment_ids
+
+        return self.get(uri)
+
+    def create_environment(self, environment):
         """
         Method to create environment
         """
 
-        uri = "api/v3/environment/environment-vip/"
+        uri = "api/v3/environment/"
 
-        return self.post(uri)
+        data = dict()
+        data['environments'] = list()
+        data['environments'].append(environment)
 
-    def update_enviroment(self, environment, environment_ids):
+        return self.post(uri, data)
+
+    def update_environment(self, environment, environment_ids):
         """
         Method to update environment
 
         :param environment_ids: Ids of Environment
         """
 
-        uri = "api/v3/environment/environment-vip/%s/" % environment_ids
+        uri = "api/v3/environment/%s/" % environment_ids
 
         data = dict()
         data['environments'] = list()
@@ -66,7 +79,7 @@ class ApiEnvironment(ApiGenericClient):
 
         return self.put(uri, data)
 
-    def delete_enviroment(self, environment_ids):
+    def delete_environment(self, environment_ids):
         """
         Method to delete environment
 
