@@ -186,3 +186,26 @@ class ApiGenericClient(object):
         }
 
         return headers
+<<<<<<< Updated upstream
+=======
+
+    def prepare_url(self, uri, kwargs):
+        """Convert dict for URL params
+        """
+        params = dict()
+        for key in kwargs:
+            if key in ('kind', 'include', 'exclude', 'fields'):
+                params.update({
+                    key: ','.join(kwargs.get(key))
+                })
+            elif key == 'search':
+                params.update({
+                    key: kwargs.get(key)
+                })
+
+        if params:
+            params = urllib.urlencode(params)
+            uri = '%s?%s' % (uri, params)
+
+        return uri
+>>>>>>> Stashed changes
