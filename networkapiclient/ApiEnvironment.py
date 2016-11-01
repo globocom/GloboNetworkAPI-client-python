@@ -118,42 +118,39 @@ class ApiEnvironment(ApiGenericClient):
         return super(ApiEnvironment, self).get(self.prepare_url("api/v3/environment/",
                                                                 kwargs))
 
-    def delete(self, id):
+    def delete(self, ids):
         """
         Method to delete environments by their ids
 
-        :param id: Identifier of environment
+        :param ids: Identifiers of environments
         :return: None
         """
 
-        return super(ApiEnvironment, self).delete("api/v3/environment/%s/" % id)
+        return super(ApiEnvironment, self).delete("api/v3/environment/%s/" % ';'.join(ids))
 
-    def update(self, environment, environment_id):
+    def update(self, environments):
         """
-        Method to update environment
+        Method to update environments
 
-        :param environment: Dict containing informations about the environment desired to updated
-        :param environment_id: Id of environment desired to be updated
+        :param environments: List containing environments desired to updated
+        :param environment_ids: Id of environments desired to be updated
         :return: None
         """
 
-        data = dict()
-        data['environments'] = list()
-        data['environments'].append(environment)
+        data = {'environments' : environments}
+        environments_ids = [env.get("id") for env in environments]
 
-        return super(ApiEnvironment, self).put("api/v3/environment/%s/" % environment_id)
+        return super(ApiEnvironment, self).put("api/v3/environment/%s/" %
+                                               ';'.join(environments_ids), data)
 
-    def create(self, environment):
+    def create(self, environments):
         """
         Method to create environment
 
-        :param environment: Dict containing environment desired to be created on database
+        :param environments: Dict containing environment desired to be created on database
         :return: None
         """
 
-        data = {}
-        data['environments'] = list()
-        data['environments'].append(environment)
-
+        data = {'environments': environments }
         return super(ApiEnvironment, self).post("api/v3/environment/", data)
 
