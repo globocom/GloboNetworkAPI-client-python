@@ -40,7 +40,7 @@ class ApiPool(ApiGenericClient):
         Return list object pool
         """
 
-        uri = "/api/v3/pool/environment-vip/%s/" % environment_vip_id
+        uri = "api/v3/pool/environment-vip/%s/" % environment_vip_id
 
         return self.get(uri)
 
@@ -51,7 +51,7 @@ class ApiPool(ApiGenericClient):
         Returns object pool
         """
 
-        uri = "/api/v3/pool/%s/" % pool_id
+        uri = "api/v3/pool/%s/" % pool_id
 
         return self.get(uri)
 
@@ -62,6 +62,6 @@ class ApiPool(ApiGenericClient):
         Returns object pool
         """
 
-        uri = "/api/v3/pool/details/%s/" % pool_id
+        uri = "api/v3/pool/details/%s/" % pool_id
 
         return self.get(uri)
