@@ -80,3 +80,69 @@ class ApiNetworkIPv6(ApiGenericClient):
         uri = "api/ipv6/%s/" % (ipv6_id)
 
         return self.delete(uri)
+
+
+    def search(self, **kwargs):
+        """
+        Method to search ipv6's based on extends search.
+
+        :param search: Dict containing QuerySets to find ipv6's.
+        :param include: Array containing fields to include on response.
+        :param exclude: Array containing fields to exclude on response.
+        :param fields:  Array containing fields to override default fields.
+        :param kind: Determine if result will be detailed ('detail') or basic ('basic').
+        :return: Dict containing ipv6's
+        """
+
+        return super(ApiNetworkIPv6, self).get(self.prepare_url("api/v3/networkv6/",
+                                                         kwargs))
+
+    def get(self, ids, **kwargs):
+        """
+        Method to get network-ipv6's by their ids
+
+        :param ids: List containing identifiers of network-ipv6's
+        :param include: Array containing fields to include on response.
+        :param exclude: Array containing fields to exclude on response.
+        :param fields: Array containing fields to override default fields.
+        :param kind: Determine if result will be detailed ('detail') or basic ('basic').
+        :return: Dict containing network-ipv6's
+        """
+
+        return super(ApiNetworkIPv6, self).get(self.prepare_url("api/v3/networkv6/%s/"
+                                                         % ';'.join(ids), kwargs))
+
+    def delete(self, ids):
+        """
+        Method to delete network-ipv6's by their ids
+
+        :param ids: Identifiers of network-ipv6's
+        :return: None
+        """
+
+        return super(ApiNetworkIPv6, self).delete("api/v3/networkv6/%s/" % ';'.join(ids))
+
+    def update(self, networkipv6s):
+        """
+        Method to update network-ipv6's
+
+        :param networkipv6s: List containing network-ipv6's desired to updated
+        :return: None
+        """
+
+        data = {'networkipv6s': networkipv6s}
+        networkipv6s_ids = [networkipv6.get("id") for networkipv6 in networkipv6s]
+
+        return super(ApiNetworkIPv6, self).put("api/v3/networkv6/%s/" %
+                                        ';'.join(networkipv6s_ids), data)
+
+    def create(self, networkipv6s):
+        """
+        Method to create network-ipv6's
+
+        :param networkipv6s: Dict containing networkipv6's desired to be created on database
+        :return: None
+        """
+
+        data = {'networkipv6s': networkipv6s}
+        return super(ApiNetworkIPv6, self).post("api/v3/networkv6/", data)

@@ -80,3 +80,68 @@ class ApiNetworkIPv4(ApiGenericClient):
         uri = "api/ipv4/%s/" % (ipv4_id)
 
         return self.delete(uri)
+
+    def search(self, **kwargs):
+        """
+        Method to search ipv4's based on extends search.
+
+        :param search: Dict containing QuerySets to find ipv4's.
+        :param include: Array containing fields to include on response.
+        :param exclude: Array containing fields to exclude on response.
+        :param fields:  Array containing fields to override default fields.
+        :param kind: Determine if result will be detailed ('detail') or basic ('basic').
+        :return: Dict containing ipv4's
+        """
+
+        return super(ApiNetworkIPv4, self).get(self.prepare_url("api/v3/networkv4/",
+                                                         kwargs))
+
+    def get(self, ids, **kwargs):
+        """
+        Method to get network-ipv4's by their ids
+
+        :param ids: List containing identifiers of network-ipv4's
+        :param include: Array containing fields to include on response.
+        :param exclude: Array containing fields to exclude on response.
+        :param fields: Array containing fields to override default fields.
+        :param kind: Determine if result will be detailed ('detail') or basic ('basic').
+        :return: Dict containing network-ipv4's
+        """
+
+        return super(ApiNetworkIPv4, self).get(self.prepare_url("api/v3/networkv4/%s/"
+                                                         % ';'.join(ids), kwargs))
+
+    def delete(self, ids):
+        """
+        Method to delete network-ipv4's by their ids
+
+        :param ids: Identifiers of network-ipv4's
+        :return: None
+        """
+
+        return super(ApiNetworkIPv4, self).delete("api/v3/networkv4/%s/" % ';'.join(ids))
+
+    def update(self, networkipv4s):
+        """
+        Method to update network-ipv4's
+
+        :param networkipv4s: List containing network-ipv4's desired to updated
+        :return: None
+        """
+
+        data = {'networkipv4s': networkipv4s}
+        networkipv4s_ids = [networkipv4.get("id") for networkipv4 in networkipv4s]
+
+        return super(ApiNetworkIPv4, self).put("api/v3/networkv4/%s/" %
+                                        ';'.join(networkipv4s_ids), data)
+
+    def create(self, networkipv4s):
+        """
+        Method to create network-ipv4's
+
+        :param networkipv4s: Dict containing networkipv4's desired to be created on database
+        :return: None
+        """
+
+        data = {'networkipv4s': networkipv4s}
+        return super(ApiNetworkIPv4, self).post("api/v3/networkv4/", data)

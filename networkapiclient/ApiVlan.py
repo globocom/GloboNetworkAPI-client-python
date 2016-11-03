@@ -73,3 +73,68 @@ class ApiVlan(ApiGenericClient):
         uri = "api/vlan/acl/save/draft/%(id_vlan)s/%(type_acl)s/" % parameters
 
         return self.post(uri, data=data)
+
+    def search(self, **kwargs):
+        """
+        Method to search vlan's based on extends search.
+
+        :param search: Dict containing QuerySets to find vlan's.
+        :param include: Array containing fields to include on response.
+        :param exclude: Array containing fields to exclude on response.
+        :param fields:  Array containing fields to override default fields.
+        :param kind: Determine if result will be detailed ('detail') or basic ('basic').
+        :return: Dict containing vlan's
+        """
+
+        return super(ApiVlan, self).get(self.prepare_url("api/v3/vlan/",
+                                                         kwargs))
+
+    def get(self, ids, **kwargs):
+        """
+        Method to get vlan's by their id's
+
+        :param ids: List containing identifiers of vlan's
+        :param include: Array containing fields to include on response.
+        :param exclude: Array containing fields to exclude on response.
+        :param fields: Array containing fields to override default fields.
+        :param kind: Determine if result will be detailed ('detail') or basic ('basic').
+        :return: Dict containing vlan's
+        """
+
+        return super(ApiVlan, self).get(self.prepare_url("api/v3/vlan/%s/"
+                                                         % ';'.join(ids), kwargs))
+
+    def delete(self, ids):
+        """
+        Method to delete vlan's by their ids
+
+        :param ids: Identifiers of vlan's
+        :return: None
+        """
+
+        return super(ApiVlan, self).delete("api/v3/vlan/%s/" % ';'.join(ids))
+
+    def update(self, vlans):
+        """
+        Method to update vlan's
+
+        :param vlans: List containing vlan's desired to updated
+        :return: None
+        """
+
+        data = {'vlans': vlans}
+        vlans_ids = [vlan.get("id") for vlan in vlans]
+
+        return super(ApiVlan, self).put("api/v3/vlan/%s/" %
+                                        ';'.join(vlans_ids), data)
+
+    def create(self, vlans):
+        """
+        Method to create vlan's
+
+        :param vlans: Dict containing vlan's desired to be created on database
+        :return: None
+        """
+
+        data = {'vlans': vlans}
+        return super(ApiVlan, self).post("api/v3/vlan/", data)

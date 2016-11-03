@@ -115,12 +115,12 @@ class ApiEnvironment(ApiGenericClient):
         :return: Dict containing environments
         """
 
-        return super(ApiEnvironment, self).get(self.prepare_url("api/v3/environment/",
-                                                                kwargs))
+        return super(ApiEnvironment, self).get(self.prepare_url("api/v3/environment/%s/"
+                                                                % ';'.join(ids),kwargs))
 
     def delete(self, ids):
         """
-        Method to delete environments by their ids
+        Method to delete environments by their id's
 
         :param ids: Identifiers of environments
         :return: None
@@ -133,7 +133,6 @@ class ApiEnvironment(ApiGenericClient):
         Method to update environments
 
         :param environments: List containing environments desired to updated
-        :param environment_ids: Id of environments desired to be updated
         :return: None
         """
 
@@ -145,9 +144,9 @@ class ApiEnvironment(ApiGenericClient):
 
     def create(self, environments):
         """
-        Method to create environment
+        Method to create environments
 
-        :param environments: Dict containing environment desired to be created on database
+        :param environments: Dict containing environments desired to be created on database
         :return: None
         """
 
