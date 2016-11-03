@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from django.core.serializers import json
-from networkapiclient.ApiGenericClient import ApiGenericClient
 
+from networkapiclient.ApiGenericClient import ApiGenericClient
 
 class ApiEnvironment(ApiGenericClient):
     def __init__(self, networkapi_url, user, password, user_ldap=None):
@@ -152,4 +152,3 @@ class ApiEnvironment(ApiGenericClient):
 
         data = {'environments': environments }
         return super(ApiEnvironment, self).post("api/v3/environment/", data)
-

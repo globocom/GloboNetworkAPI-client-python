@@ -17,6 +17,7 @@
 import urllib
 from io import BytesIO
 import json
+import urllib
 
 from networkapiclient.exception import NetworkAPIClientError
 
@@ -186,7 +187,6 @@ class ApiGenericClient(object):
         }
 
         return headers
-
 
     def prepare_url(self, uri, kwargs):
         """Convert dict for URL params
