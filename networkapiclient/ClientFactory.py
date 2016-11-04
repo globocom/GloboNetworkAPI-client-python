@@ -28,6 +28,8 @@ from networkapiclient.ApiPool import ApiPool
 from networkapiclient.ApiRack import ApiRack
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.ApiVlan import ApiVlan
+from networkapiclient.ApiVrf import ApiVrf
+
 from networkapiclient.BlockRule import BlockRule
 from networkapiclient.DireitoGrupoEquipamento import DireitoGrupoEquipamento
 from networkapiclient.DivisaoDc import DivisaoDc
@@ -185,6 +187,14 @@ class ClientFactory(object):
     def create_api_vlan(self):
         """Get an instance of Api Vlan services facade."""
         return ApiVlan(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_vrf(self):
+        """Get an instance of Api Vrf services facade."""
+        return ApiVrf(
             self.networkapi_url,
             self.user,
             self.password,
