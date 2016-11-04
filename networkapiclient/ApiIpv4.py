@@ -81,7 +81,7 @@ class ApiIpv4(ApiGenericClient):
         """
 
         data = {'ipv4s': ipv4s}
-        ipv4s_ids = [ipv4.get("id") for ipv4 in ipv4s]
+        ipv4s_ids = [str(ipv4.get("id")) for ipv4 in ipv4s]
 
         return super(ApiIpv4, self).put("api/v3/ipv4/%s/" %
                                         ';'.join(ipv4s_ids), data)

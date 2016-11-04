@@ -137,7 +137,7 @@ class ApiEnvironment(ApiGenericClient):
         """
 
         data = {'environments' : environments}
-        environments_ids = [env.get("id") for env in environments]
+        environments_ids = [str(env.get("id")) for env in environments]
 
         return super(ApiEnvironment, self).put("api/v3/environment/%s/" %
                                                ';'.join(environments_ids), data)

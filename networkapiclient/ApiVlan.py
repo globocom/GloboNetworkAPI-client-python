@@ -123,7 +123,7 @@ class ApiVlan(ApiGenericClient):
         """
 
         data = {'vlans': vlans}
-        vlans_ids = [vlan.get("id") for vlan in vlans]
+        vlans_ids = [str(vlan.get("id")) for vlan in vlans]
 
         return super(ApiVlan, self).put("api/v3/vlan/%s/" %
                                         ';'.join(vlans_ids), data)

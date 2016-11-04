@@ -81,7 +81,7 @@ class ApiVrf(ApiGenericClient):
         """
 
         data = {'vrfs': vrfs}
-        vrfs_ids = [vrf.get("id") for vrf in vrfs]
+        vrfs_ids = [str(vrf.get("id")) for vrf in vrfs]
 
         return super(ApiVrf, self).put("api/v3/vrf/%s/" %
                                         ';'.join(vrfs_ids), data)

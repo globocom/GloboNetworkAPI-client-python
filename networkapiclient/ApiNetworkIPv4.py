@@ -130,7 +130,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
 
         data = {'networkipv4s': networkipv4s}
-        networkipv4s_ids = [networkipv4.get("id") for networkipv4 in networkipv4s]
+        networkipv4s_ids = [str(networkipv4.get("id")) for networkipv4 in networkipv4s]
 
         return super(ApiNetworkIPv4, self).put("api/v3/networkv4/%s/" %
                                         ';'.join(networkipv4s_ids), data)

@@ -131,7 +131,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
 
         data = {'networkipv6s': networkipv6s}
-        networkipv6s_ids = [networkipv6.get("id") for networkipv6 in networkipv6s]
+        networkipv6s_ids = [str(networkipv6.get("id")) for networkipv6 in networkipv6s]
 
         return super(ApiNetworkIPv6, self).put("api/v3/networkv6/%s/" %
                                         ';'.join(networkipv6s_ids), data)

@@ -81,7 +81,7 @@ class ApiIpv6(ApiGenericClient):
         """
 
         data = {'ipv6s': ipv6s}
-        ipv6s_ids = [ipv6.get("id") for ipv6 in ipv6s]
+        ipv6s_ids = [str(ipv6.get("id")) for ipv6 in ipv6s]
 
         return super(ApiIpv6, self).put("api/v3/ipv6/%s/" %
                                         ';'.join(ipv6s_ids), data)
