@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
+from utils import build_uri_with_ids
 
 
 class ApiVrf(ApiGenericClient):
@@ -58,9 +59,9 @@ class ApiVrf(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing vrf's
         """
+        url = build_uri_with_ids("api/v3/vrf/%s/", ids)
 
-        return super(ApiVrf, self).get(self.prepare_url("api/v3/vrf/%s/"
-                                                         % ';'.join(ids), kwargs))
+        return super(ApiVrf, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
         """
@@ -69,8 +70,9 @@ class ApiVrf(ApiGenericClient):
         :param ids: Identifiers of vrf's
         :return: None
         """
+        url = build_uri_with_ids("api/v3/vrf/%s/", ids)
 
-        return super(ApiVrf, self).delete("api/v3/vrf/%s/" % ';'.join(ids))
+        return super(ApiVrf, self).delete(url)
 
     def update(self, vrfs):
         """

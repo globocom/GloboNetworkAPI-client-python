@@ -16,6 +16,8 @@
 from django.core.serializers import json
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
+from utils import build_uri_with_ids
+
 
 class ApiEnvironment(ApiGenericClient):
     def __init__(self, networkapi_url, user, password, user_ldap=None):
@@ -114,9 +116,8 @@ class ApiEnvironment(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing environments
         """
-
-        return super(ApiEnvironment, self).get(self.prepare_url("api/v3/environment/%s/"
-                                                                % ';'.join(ids),kwargs))
+        url = build_uri_with_ids("api/v3/environment/%s/", ids)
+        return super(ApiEnvironment, self).get(self.prepare_url(url,kwargs))
 
     def delete(self, ids):
         """
@@ -125,8 +126,8 @@ class ApiEnvironment(ApiGenericClient):
         :param ids: Identifiers of environments
         :return: None
         """
-
-        return super(ApiEnvironment, self).delete("api/v3/environment/%s/" % ';'.join(ids))
+        url = build_uri_with_ids("api/v3/environment/%s/", ids)
+        return super(ApiEnvironment, self).delete(url)
 
     def update(self, environments):
         """

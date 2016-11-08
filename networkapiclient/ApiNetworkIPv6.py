@@ -1,4 +1,5 @@
 from networkapiclient.ApiGenericClient import ApiGenericClient
+from utils import build_uri_with_ids
 
 
 class ApiNetworkIPv6(ApiGenericClient):
@@ -108,9 +109,9 @@ class ApiNetworkIPv6(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing network-ipv6's
         """
+        url = build_uri_with_ids("api/v3/networkv6/%s/", ids)
 
-        return super(ApiNetworkIPv6, self).get(self.prepare_url("api/v3/networkv6/%s/"
-                                                         % ';'.join(ids), kwargs))
+        return super(ApiNetworkIPv6, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
         """
@@ -119,8 +120,9 @@ class ApiNetworkIPv6(ApiGenericClient):
         :param ids: Identifiers of network-ipv6's
         :return: None
         """
+        url = build_uri_with_ids("api/v3/networkv6/%s/", ids)
 
-        return super(ApiNetworkIPv6, self).delete("api/v3/networkv6/%s/" % ';'.join(ids))
+        return super(ApiNetworkIPv6, self).delete(url)
 
     def update(self, networkipv6s):
         """

@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
+from utils import build_uri_with_ids
 
 
 class ApiVlan(ApiGenericClient):
@@ -100,9 +101,9 @@ class ApiVlan(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing vlan's
         """
+        url = build_uri_with_ids("api/v3/vlan/%s/", ids)
 
-        return super(ApiVlan, self).get(self.prepare_url("api/v3/vlan/%s/"
-                                                         % ';'.join(ids), kwargs))
+        return super(ApiVlan, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
         """
@@ -111,8 +112,9 @@ class ApiVlan(ApiGenericClient):
         :param ids: Identifiers of vlan's
         :return: None
         """
+        url = build_uri_with_ids("api/v3/vlan/%s/", ids)
 
-        return super(ApiVlan, self).delete("api/v3/vlan/%s/" % ';'.join(ids))
+        return super(ApiVlan, self).delete(url)
 
     def update(self, vlans):
         """

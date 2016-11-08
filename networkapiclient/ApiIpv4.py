@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
+from utils import build_uri_with_ids
 
 
 class ApiIpv4(ApiGenericClient):
@@ -58,9 +59,9 @@ class ApiIpv4(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing ipv4's
         """
+        url = build_uri_with_ids("api/v3/ipv4/%s/", ids)
 
-        return super(ApiIpv4, self).get(self.prepare_url("api/v3/ipv4/%s/"
-                                                         % ';'.join(ids), kwargs))
+        return super(ApiIpv4, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
         """
@@ -69,8 +70,10 @@ class ApiIpv4(ApiGenericClient):
         :param ids: Identifiers of ipv4's
         :return: None
         """
+        url = build_uri_with_ids("api/v3/ipv4/%s/", ids)
 
-        return super(ApiIpv4, self).delete("api/v3/ipv4/%s/" % ';'.join(ids))
+
+        return super(ApiIpv4, self).delete(url)
 
     def update(self, ipv4s):
         """

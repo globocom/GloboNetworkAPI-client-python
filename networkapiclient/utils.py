@@ -88,3 +88,6 @@ def is_valid_version_ip(param):
         return True
 
     return False
+
+def build_uri_with_ids(prefix, ids):
+    return prefix % ';'.join(str(id) for id in ids)
