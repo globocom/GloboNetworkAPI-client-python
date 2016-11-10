@@ -41,7 +41,7 @@ class ApiEnvironment(ApiGenericClient):
 
         uri = "api/v3/environment/environment-vip/"
 
-        return self.get(uri)
+        return super(ApiEnvironment, self).get(uri)
 
     def get_environment(self, environment_ids):
         """
@@ -50,7 +50,7 @@ class ApiEnvironment(ApiGenericClient):
 
         uri = "api/v3/environment/%s/" % environment_ids
 
-        return self.get(uri)
+        return super(ApiEnvironment, self).get(uri)
 
     def create_environment(self, environment):
         """
@@ -63,7 +63,7 @@ class ApiEnvironment(ApiGenericClient):
         data['environments'] = list()
         data['environments'].append(environment)
 
-        return self.post(uri, data)
+        return super(ApiEnvironment, self).post(uri, data)
 
     def update_environment(self, environment, environment_ids):
         """
@@ -78,7 +78,7 @@ class ApiEnvironment(ApiGenericClient):
         data['environments'] = list()
         data['environments'].append(environment)
 
-        return self.put(uri, data)
+        return super(ApiEnvironment, self).put(uri, data)
 
     def delete_environment(self, environment_ids):
         """
@@ -88,7 +88,7 @@ class ApiEnvironment(ApiGenericClient):
         """
         uri = "api/v3/environment/%s/" % environment_ids
 
-        return self.delete(uri)
+        return super(ApiEnvironment, self).delete(uri)
 
     def search(self, **kwargs):
         """

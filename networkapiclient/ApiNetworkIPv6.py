@@ -28,7 +28,8 @@ class ApiNetworkIPv6(ApiGenericClient):
 
         data = dict()
         uri = "api/networkv6/%s/equipments/" % id_networkv6
-        return self.post(uri, data=data)
+
+        return super(ApiNetworkIPv6, self).post(uri, data=data)
 
     def get_by_id(self, id_networkv6):
         """Get IPv6 network
@@ -39,7 +40,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
 
         uri = "api/networkv4/%s/" % id_networkv6
-        return self.get(uri)
+        return super(ApiNetworkIPv6, self).get(uri)
 
     def list(self, environment_vip=None):
         """List networks redeipv6 ]
@@ -53,7 +54,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         if environment_vip:
             uri += "environment_vip=%s" % environment_vip
 
-        return self.get(uri)
+        return super(ApiNetworkIPv6, self).get(uri)
 
     def undeploy(self, id_networkv6):
         """Remove deployment of network in equipments and set column 'active = 0' in tables redeipv6 ]
@@ -64,7 +65,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
 
         uri = "api/networkv6/%s/equipments/" % id_networkv6
-        return self.delete(uri)
+        return super(ApiNetworkIPv6, self).delete(uri)
 
     def check_vip_ip(self, ip, environment_vip):
         """
@@ -72,7 +73,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
         uri = "api/ipv6/ip/%s/environment-vip/%s/" % (ip, environment_vip)
 
-        return self.get(uri)
+        return super(ApiNetworkIPv6, self).get(uri)
 
     def delete_ipv6(self, ipv6_id):
         """
@@ -80,8 +81,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
         uri = "api/ipv6/%s/" % (ipv6_id)
 
-        return self.delete(uri)
-
+        return super(ApiNetworkIPv6, self).delete(uri)
 
     def search(self, **kwargs):
         """

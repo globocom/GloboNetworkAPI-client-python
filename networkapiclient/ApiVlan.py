@@ -51,7 +51,7 @@ class ApiVlan(ApiGenericClient):
 
         uri = "api/vlan/acl/remove/draft/%(id_vlan)s/%(type_acl)s/" % parameters
 
-        return self.get(uri)
+        return super(ApiVlan, self).get(uri)
 
     def acl_save_draft(self, id_vlan, type_acl, content_draft):
         """
@@ -73,7 +73,7 @@ class ApiVlan(ApiGenericClient):
 
         uri = "api/vlan/acl/save/draft/%(id_vlan)s/%(type_acl)s/" % parameters
 
-        return self.post(uri, data=data)
+        return super(ApiVlan, self).post(uri, data=data)
 
     def search(self, **kwargs):
         """

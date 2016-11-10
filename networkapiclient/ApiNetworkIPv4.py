@@ -28,7 +28,9 @@ class ApiNetworkIPv4(ApiGenericClient):
 
         data = dict()
         uri = "api/networkv4/%s/equipments/" % id_networkv4
-        return self.post(uri, data=data)
+
+        return super(ApiNetworkIPv4, self).post(uri, data=data)
+
 
     def get_by_id(self, id_networkv4):
         """Get IPv4 network
@@ -39,7 +41,8 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
 
         uri = "api/networkv4/%s/" % id_networkv4
-        return self.get(uri)
+
+        return super(ApiNetworkIPv4, self).get(uri)
 
     def list(self, environment_vip=None):
         """List IPv4 networks
@@ -53,7 +56,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         if environment_vip:
             uri += "environment_vip=%s" % environment_vip
 
-        return self.get(uri)
+        return super(ApiNetworkIPv4, self).get(uri)
 
     def undeploy(self, id_networkv4):
         """Remove deployment of network in equipments and set column 'active = 0' in tables redeipv4 ]
@@ -64,7 +67,8 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
 
         uri = "api/networkv4/%s/equipments/" % id_networkv4
-        return self.delete(uri)
+
+        return super(ApiNetworkIPv4, self).delete(uri)
 
     def check_vip_ip(self, ip, environment_vip):
         """
@@ -72,7 +76,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
         uri = "api/ipv4/ip/%s/environment-vip/%s/" % (ip, environment_vip)
 
-        return self.get(uri)
+        return super(ApiNetworkIPv4, self).get(uri)
 
     def delete_ipv4(self, ipv4_id):
         """
@@ -80,7 +84,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
         uri = "api/ipv4/%s/" % (ipv4_id)
 
-        return self.delete(uri)
+        return super(ApiNetworkIPv4, self).delete(uri)
 
     def search(self, **kwargs):
         """
