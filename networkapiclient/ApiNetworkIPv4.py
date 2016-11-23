@@ -145,7 +145,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
         Method to create network-ipv4's
 
-        :param networkipv4s: Dict containing networkipv4's desired to be created on database
+        :param networkipv4s: List containing networkipv4's desired to be created on database
         :return: None
         """
 

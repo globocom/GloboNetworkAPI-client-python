@@ -93,7 +93,7 @@ class ApiIpv4(ApiGenericClient):
         """
         Method to create ipv4's
 
-        :param ipv4s: Dict containing ipv4's desired to be created on database
+        :param ipv4s: List containing ipv4's desired to be created on database
         :return: None
         """
 

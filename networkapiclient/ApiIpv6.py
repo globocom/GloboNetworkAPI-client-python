@@ -90,7 +90,7 @@ class ApiIpv6(ApiGenericClient):
         """
         Method to create ipv6's
 
-        :param ipv6s: Dict containing vrf desired to be created on database
+        :param ipv6s: List containing vrf desired to be created on database
         :return: None
         """
 

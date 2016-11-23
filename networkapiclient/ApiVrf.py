@@ -92,7 +92,7 @@ class ApiVrf(ApiGenericClient):
         """
         Method to create vrf's
 
-        :param vrfs: Dict containing vrf's desired to be created on database
+        :param vrfs: List containing vrf's desired to be created on database
         :return: None
         """
 

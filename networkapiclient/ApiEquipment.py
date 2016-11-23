@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
+from utils import build_uri_with_ids
 
 
 class ApiEquipment(ApiGenericClient):
@@ -40,5 +41,71 @@ class ApiEquipment(ApiGenericClient):
 
         uri = "api/v3/equipment/"
         uri = self.prepare_url(uri, kwargs)
+    
+        return super(ApiEquipment, self).get(uri)
 
-        return self.get(uri)
+    
+    def search(self, **kwargs):
+        """
+        Method to search equipments based on extends search.
+
+        :param search: Dict containing QuerySets to find equipments.
+        :param include: Array containing fields to include on response.
+        :param exclude: Array containing fields to exclude on response.
+        :param fields:  Array containing fields to override default fields.
+        :param kind: Determine if result will be detailed ('detail') or basic ('basic').
+        :return: Dict containing equipments
+        """
+
+        return super(ApiEquipment, self).get(self.prepare_url("api/v3/equipment/",
+                                                                kwargs))
+
+    def get(self, ids, **kwargs):
+        """
+        Method to get equipments by their ids
+
+        :param ids: List containing identifiers of equipments
+        :param include: Array containing fields to include on response.
+        :param exclude: Array containing fields to exclude on response.
+        :param fields: Array containing fields to override default fields.
+        :param kind: Determine if result will be detailed ('detail') or basic ('basic').
+        :return: Dict containing equipments
+        """
+        url = build_uri_with_ids("api/v3/equipment/%s/", ids)
+        return super(ApiEquipment, self).get(self.prepare_url(url,kwargs))
+
+    def delete(self, ids):
+        """
+        Method to delete equipments by their id's
+
+        :param ids: Identifiers of equipments
+        :return: None
+        """
+        url = build_uri_with_ids("api/v3/equipment/%s/", ids)
+        return super(ApiEquipment, self).delete(url)
+
+    def update(self, equipments):
+        """
+        Method to update equipments
+
+        :param equipments: List containing equipments desired to updated
+        :return: None
+        """
+
+        data = {'equipments' : equipments}
+        equipments_ids = [str(env.get("id")) for env in equipments]
+
+        return super(ApiEquipment, self).put("api/v3/equipment/%s/" %
+                                               ';'.join(equipments_ids), data)
+
+    def create(self, equipments):
+        """
+        Method to create equipments
+
+        :param equipments: List containing equipments desired to be created on database
+        :return: None
+        """
+
+        data = {'equipments': equipments }
+        return super(ApiEquipment, self).post("api/v3/equipment/", data)
+

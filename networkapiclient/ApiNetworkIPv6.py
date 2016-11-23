@@ -142,7 +142,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
         Method to create network-ipv6's
 
-        :param networkipv6s: Dict containing networkipv6's desired to be created on database
+        :param networkipv6s: List containing networkipv6's desired to be created on database
         :return: None
         """
 

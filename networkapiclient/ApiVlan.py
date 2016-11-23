@@ -134,7 +134,7 @@ class ApiVlan(ApiGenericClient):
         """
         Method to create vlan's
 
-        :param vlans: Dict containing vlan's desired to be created on database
+        :param vlans: List containing vlan's desired to be created on database
         :return: None
         """
 
