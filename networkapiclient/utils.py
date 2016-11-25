@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,18 +13,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import re
+
 from Config import IP_VERSION
 
 
 def is_valid_int_param(param):
-    '''Verifica se o parâmetro é um valor inteiro válido.
+    """Verifica se o parâmetro é um valor inteiro válido.
 
     :param param: Valor para ser validado.
 
     :return: True se o parâmetro tem um valor inteiro válido, ou False, caso contrário.
-    '''
+    """
     if param is None:
         return False
     try:
@@ -47,7 +47,7 @@ def is_valid_ip(address):
     """
     if address is None:
         return False
-    pattern = r"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
+    pattern = r'\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
     return re.match(pattern, address)
 
 
@@ -55,7 +55,7 @@ def is_valid_0_1(param):
     """
     Checks if param is zero or one
     """
-    return param == "0" or param == "1" or param == 0 or param == 1
+    return param == '0' or param == '1' or param == 0 or param == 1
 
 
 def get_list_map(map, key):
@@ -75,12 +75,12 @@ def get_list_map(map, key):
 
 
 def is_valid_version_ip(param):
-    '''Checks if the parameter is a valid ip version value.
+    """Checks if the parameter is a valid ip version value.
 
     :param param: Value to be validated.
 
     :return: True if the parameter has a valid ip version value, or False otherwise.
-    '''
+    """
     if param is None:
         return False
 
@@ -88,6 +88,7 @@ def is_valid_version_ip(param):
         return True
 
     return False
+
 
 def build_uri_with_ids(prefix, ids):
     return prefix % ';'.join(str(id) for id in ids)

@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,14 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiEquipment(ApiGenericClient):
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, log_level='INFO'):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
@@ -39,12 +38,11 @@ class ApiEquipment(ApiGenericClient):
         Return list environments related with environment vip
         """
 
-        uri = "api/v3/equipment/"
+        uri = 'api/v3/equipment/'
         uri = self.prepare_url(uri, kwargs)
-    
+
         return super(ApiEquipment, self).get(uri)
 
-    
     def search(self, **kwargs):
         """
         Method to search equipments based on extends search.
@@ -57,8 +55,8 @@ class ApiEquipment(ApiGenericClient):
         :return: Dict containing equipments
         """
 
-        return super(ApiEquipment, self).get(self.prepare_url("api/v3/equipment/",
-                                                                kwargs))
+        return super(ApiEquipment, self).get(self.prepare_url('api/v3/equipment/',
+                                                              kwargs))
 
     def get(self, ids, **kwargs):
         """
@@ -71,8 +69,8 @@ class ApiEquipment(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing equipments
         """
-        url = build_uri_with_ids("api/v3/equipment/%s/", ids)
-        return super(ApiEquipment, self).get(self.prepare_url(url,kwargs))
+        url = build_uri_with_ids('api/v3/equipment/%s/', ids)
+        return super(ApiEquipment, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
         """
@@ -81,7 +79,7 @@ class ApiEquipment(ApiGenericClient):
         :param ids: Identifiers of equipments
         :return: None
         """
-        url = build_uri_with_ids("api/v3/equipment/%s/", ids)
+        url = build_uri_with_ids('api/v3/equipment/%s/', ids)
         return super(ApiEquipment, self).delete(url)
 
     def update(self, equipments):
@@ -92,11 +90,11 @@ class ApiEquipment(ApiGenericClient):
         :return: None
         """
 
-        data = {'equipments' : equipments}
-        equipments_ids = [str(env.get("id")) for env in equipments]
+        data = {'equipments': equipments}
+        equipments_ids = [str(env.get('id')) for env in equipments]
 
-        return super(ApiEquipment, self).put("api/v3/equipment/%s/" %
-                                               ';'.join(equipments_ids), data)
+        return super(ApiEquipment, self).put('api/v3/equipment/%s/' %
+                                             ';'.join(equipments_ids), data)
 
     def create(self, equipments):
         """
@@ -106,6 +104,5 @@ class ApiEquipment(ApiGenericClient):
         :return: None
         """
 
-        data = {'equipments': equipments }
-        return super(ApiEquipment, self).post("api/v3/equipment/", data)
-
+        data = {'equipments': equipments}
+        return super(ApiEquipment, self).post('api/v3/equipment/', data)

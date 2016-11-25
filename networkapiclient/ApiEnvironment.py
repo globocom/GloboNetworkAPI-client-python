@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,12 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiEnvironment(ApiGenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -38,7 +38,7 @@ class ApiEnvironment(ApiGenericClient):
         Return list environments related with environment vip
         """
 
-        uri = "api/v3/environment/environment-vip/"
+        uri = 'api/v3/environment/environment-vip/'
 
         return super(ApiEnvironment, self).get(uri)
 
@@ -47,7 +47,7 @@ class ApiEnvironment(ApiGenericClient):
         Method to get environment
         """
 
-        uri = "api/v3/environment/%s/" % environment_ids
+        uri = 'api/v3/environment/%s/' % environment_ids
 
         return super(ApiEnvironment, self).get(uri)
 
@@ -56,7 +56,7 @@ class ApiEnvironment(ApiGenericClient):
         Method to create environment
         """
 
-        uri = "api/v3/environment/"
+        uri = 'api/v3/environment/'
 
         data = dict()
         data['environments'] = list()
@@ -71,7 +71,7 @@ class ApiEnvironment(ApiGenericClient):
         :param environment_ids: Ids of Environment
         """
 
-        uri = "api/v3/environment/%s/" % environment_ids
+        uri = 'api/v3/environment/%s/' % environment_ids
 
         data = dict()
         data['environments'] = list()
@@ -85,7 +85,7 @@ class ApiEnvironment(ApiGenericClient):
 
         :param environment_ids: Ids of Environment
         """
-        uri = "api/v3/environment/%s/" % environment_ids
+        uri = 'api/v3/environment/%s/' % environment_ids
 
         return super(ApiEnvironment, self).delete(uri)
 
@@ -101,7 +101,7 @@ class ApiEnvironment(ApiGenericClient):
         :return: Dict containing environments
         """
 
-        return super(ApiEnvironment, self).get(self.prepare_url("api/v3/environment/",
+        return super(ApiEnvironment, self).get(self.prepare_url('api/v3/environment/',
                                                                 kwargs))
 
     def get(self, ids, **kwargs):
@@ -115,8 +115,8 @@ class ApiEnvironment(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing environments
         """
-        url = build_uri_with_ids("api/v3/environment/%s/", ids)
-        return super(ApiEnvironment, self).get(self.prepare_url(url,kwargs))
+        url = build_uri_with_ids('api/v3/environment/%s/', ids)
+        return super(ApiEnvironment, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
         """
@@ -125,7 +125,7 @@ class ApiEnvironment(ApiGenericClient):
         :param ids: Identifiers of environments
         :return: None
         """
-        url = build_uri_with_ids("api/v3/environment/%s/", ids)
+        url = build_uri_with_ids('api/v3/environment/%s/', ids)
         return super(ApiEnvironment, self).delete(url)
 
     def update(self, environments):
@@ -136,10 +136,10 @@ class ApiEnvironment(ApiGenericClient):
         :return: None
         """
 
-        data = {'environments' : environments}
-        environments_ids = [str(env.get("id")) for env in environments]
+        data = {'environments': environments}
+        environments_ids = [str(env.get('id')) for env in environments]
 
-        return super(ApiEnvironment, self).put("api/v3/environment/%s/" %
+        return super(ApiEnvironment, self).put('api/v3/environment/%s/' %
                                                ';'.join(environments_ids), data)
 
     def create(self, environments):
@@ -150,5 +150,5 @@ class ApiEnvironment(ApiGenericClient):
         :return: None
         """
 
-        data = {'environments': environments }
-        return super(ApiEnvironment, self).post("api/v3/environment/", data)
+        data = {'environments': environments}
+        return super(ApiEnvironment, self).post('api/v3/environment/', data)

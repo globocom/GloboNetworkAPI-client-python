@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiNetworkIPv6(ApiGenericClient):
@@ -27,7 +28,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
 
         data = dict()
-        uri = "api/networkv6/%s/equipments/" % id_networkv6
+        uri = 'api/networkv6/%s/equipments/' % id_networkv6
 
         return super(ApiNetworkIPv6, self).post(uri, data=data)
 
@@ -39,7 +40,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         :return: IPv6 Network
         """
 
-        uri = "api/networkv4/%s/" % id_networkv6
+        uri = 'api/networkv4/%s/' % id_networkv6
         return super(ApiNetworkIPv6, self).get(uri)
 
     def list(self, environment_vip=None):
@@ -50,9 +51,9 @@ class ApiNetworkIPv6(ApiGenericClient):
         :return: IPv6 Networks
         """
 
-        uri = "api/networkv6/?"
+        uri = 'api/networkv6/?'
         if environment_vip:
-            uri += "environment_vip=%s" % environment_vip
+            uri += 'environment_vip=%s' % environment_vip
 
         return super(ApiNetworkIPv6, self).get(uri)
 
@@ -64,14 +65,14 @@ class ApiNetworkIPv6(ApiGenericClient):
         :return: Equipments configuration output
         """
 
-        uri = "api/networkv6/%s/equipments/" % id_networkv6
+        uri = 'api/networkv6/%s/equipments/' % id_networkv6
         return super(ApiNetworkIPv6, self).delete(uri)
 
     def check_vip_ip(self, ip, environment_vip):
         """
         Check available ipv6 in environment vip
         """
-        uri = "api/ipv6/ip/%s/environment-vip/%s/" % (ip, environment_vip)
+        uri = 'api/ipv6/ip/%s/environment-vip/%s/' % (ip, environment_vip)
 
         return super(ApiNetworkIPv6, self).get(uri)
 
@@ -79,7 +80,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         """
         Delete ipv6
         """
-        uri = "api/ipv6/%s/" % (ipv6_id)
+        uri = 'api/ipv6/%s/' % (ipv6_id)
 
         return super(ApiNetworkIPv6, self).delete(uri)
 
@@ -95,8 +96,8 @@ class ApiNetworkIPv6(ApiGenericClient):
         :return: Dict containing ipv6's
         """
 
-        return super(ApiNetworkIPv6, self).get(self.prepare_url("api/v3/networkv6/",
-                                                         kwargs))
+        return super(ApiNetworkIPv6, self).get(self.prepare_url('api/v3/networkv6/',
+                                                                kwargs))
 
     def get(self, ids, **kwargs):
         """
@@ -109,7 +110,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing network-ipv6's
         """
-        url = build_uri_with_ids("api/v3/networkv6/%s/", ids)
+        url = build_uri_with_ids('api/v3/networkv6/%s/', ids)
 
         return super(ApiNetworkIPv6, self).get(self.prepare_url(url, kwargs))
 
@@ -120,7 +121,7 @@ class ApiNetworkIPv6(ApiGenericClient):
         :param ids: Identifiers of network-ipv6's
         :return: None
         """
-        url = build_uri_with_ids("api/v3/networkv6/%s/", ids)
+        url = build_uri_with_ids('api/v3/networkv6/%s/', ids)
 
         return super(ApiNetworkIPv6, self).delete(url)
 
@@ -132,11 +133,12 @@ class ApiNetworkIPv6(ApiGenericClient):
         :return: None
         """
 
-        data = {'networkipv6s': networkipv6s}
-        networkipv6s_ids = [str(networkipv6.get("id")) for networkipv6 in networkipv6s]
+        data = {'networks': networkipv6s}
+        networkipv6s_ids = [str(networkipv6.get('id'))
+                            for networkipv6 in networkipv6s]
 
-        return super(ApiNetworkIPv6, self).put("api/v3/networkv6/%s/" %
-                                        ';'.join(networkipv6s_ids), data)
+        return super(ApiNetworkIPv6, self).put('api/v3/networkv6/%s/' %
+                                               ';'.join(networkipv6s_ids), data)
 
     def create(self, networkipv6s):
         """
@@ -146,5 +148,5 @@ class ApiNetworkIPv6(ApiGenericClient):
         :return: None
         """
 
-        data = {'networkipv6s': networkipv6s}
-        return super(ApiNetworkIPv6, self).post("api/v3/networkv6/", data)
+        data = {'networks': networkipv6s}
+        return super(ApiNetworkIPv6, self).post('api/v3/networkv6/', data)

@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,12 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiIpv4(ApiGenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -45,7 +45,7 @@ class ApiIpv4(ApiGenericClient):
         :return: Dict containing ipv4's
         """
 
-        return super(ApiIpv4, self).get(self.prepare_url("api/v3/ipv4/",
+        return super(ApiIpv4, self).get(self.prepare_url('api/v3/ipv4/',
                                                          kwargs))
 
     def get(self, ids, **kwargs):
@@ -59,7 +59,7 @@ class ApiIpv4(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing ipv4's
         """
-        url = build_uri_with_ids("api/v3/ipv4/%s/", ids)
+        url = build_uri_with_ids('api/v3/ipv4/%s/', ids)
 
         return super(ApiIpv4, self).get(self.prepare_url(url, kwargs))
 
@@ -70,8 +70,7 @@ class ApiIpv4(ApiGenericClient):
         :param ids: Identifiers of ipv4's
         :return: None
         """
-        url = build_uri_with_ids("api/v3/ipv4/%s/", ids)
-
+        url = build_uri_with_ids('api/v3/ipv4/%s/', ids)
 
         return super(ApiIpv4, self).delete(url)
 
@@ -83,10 +82,10 @@ class ApiIpv4(ApiGenericClient):
         :return: None
         """
 
-        data = {'ipv4s': ipv4s}
-        ipv4s_ids = [str(ipv4.get("id")) for ipv4 in ipv4s]
+        data = {'ips': ipv4s}
+        ipv4s_ids = [str(ipv4.get('id')) for ipv4 in ipv4s]
 
-        return super(ApiIpv4, self).put("api/v3/ipv4/%s/" %
+        return super(ApiIpv4, self).put('api/v3/ipv4/%s/' %
                                         ';'.join(ipv4s_ids), data)
 
     def create(self, ipv4s):
@@ -97,5 +96,5 @@ class ApiIpv4(ApiGenericClient):
         :return: None
         """
 
-        data = {'ipv4s': ipv4s}
-        return super(ApiIpv4, self).post("api/v3/ipv4/", data)
+        data = {'ips': ipv4s}
+        return super(ApiIpv4, self).post('api/v3/ipv4/', data)

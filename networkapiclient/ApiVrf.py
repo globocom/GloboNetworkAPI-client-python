@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,12 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiVrf(ApiGenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -45,8 +45,8 @@ class ApiVrf(ApiGenericClient):
         :return: Dict containing vrf's
         """
 
-        return super(ApiVrf, self).get(self.prepare_url("api/v3/vrf/",
-                                                         kwargs))
+        return super(ApiVrf, self).get(self.prepare_url('api/v3/vrf/',
+                                                        kwargs))
 
     def get(self, ids, **kwargs):
         """
@@ -59,7 +59,7 @@ class ApiVrf(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing vrf's
         """
-        url = build_uri_with_ids("api/v3/vrf/%s/", ids)
+        url = build_uri_with_ids('api/v3/vrf/%s/', ids)
 
         return super(ApiVrf, self).get(self.prepare_url(url, kwargs))
 
@@ -70,7 +70,7 @@ class ApiVrf(ApiGenericClient):
         :param ids: Identifiers of vrf's
         :return: None
         """
-        url = build_uri_with_ids("api/v3/vrf/%s/", ids)
+        url = build_uri_with_ids('api/v3/vrf/%s/', ids)
 
         return super(ApiVrf, self).delete(url)
 
@@ -83,10 +83,10 @@ class ApiVrf(ApiGenericClient):
         """
 
         data = {'vrfs': vrfs}
-        vrfs_ids = [str(vrf.get("id")) for vrf in vrfs]
+        vrfs_ids = [str(vrf.get('id')) for vrf in vrfs]
 
-        return super(ApiVrf, self).put("api/v3/vrf/%s/" %
-                                        ';'.join(vrfs_ids), data)
+        return super(ApiVrf, self).put('api/v3/vrf/%s/' %
+                                       ';'.join(vrfs_ids), data)
 
     def create(self, vrfs):
         """
@@ -97,4 +97,4 @@ class ApiVrf(ApiGenericClient):
         """
 
         data = {'vrfs': vrfs}
-        return super(ApiVrf, self).post("api/v3/vrf/", data)
+        return super(ApiVrf, self).post('api/v3/vrf/', data)

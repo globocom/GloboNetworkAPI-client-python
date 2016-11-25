@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiNetworkIPv4(ApiGenericClient):
@@ -27,10 +28,9 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
 
         data = dict()
-        uri = "api/networkv4/%s/equipments/" % id_networkv4
+        uri = 'api/networkv4/%s/equipments/' % id_networkv4
 
         return super(ApiNetworkIPv4, self).post(uri, data=data)
-
 
     def get_by_id(self, id_networkv4):
         """Get IPv4 network
@@ -40,7 +40,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         :return: IPv4 Network
         """
 
-        uri = "api/networkv4/%s/" % id_networkv4
+        uri = 'api/networkv4/%s/' % id_networkv4
 
         return super(ApiNetworkIPv4, self).get(uri)
 
@@ -52,9 +52,9 @@ class ApiNetworkIPv4(ApiGenericClient):
         :return: IPv4 Networks
         """
 
-        uri = "api/networkv4/?"
+        uri = 'api/networkv4/?'
         if environment_vip:
-            uri += "environment_vip=%s" % environment_vip
+            uri += 'environment_vip=%s' % environment_vip
 
         return super(ApiNetworkIPv4, self).get(uri)
 
@@ -66,7 +66,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         :return: Equipments configuration output
         """
 
-        uri = "api/networkv4/%s/equipments/" % id_networkv4
+        uri = 'api/networkv4/%s/equipments/' % id_networkv4
 
         return super(ApiNetworkIPv4, self).delete(uri)
 
@@ -74,7 +74,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
         Check available ip in environment vip
         """
-        uri = "api/ipv4/ip/%s/environment-vip/%s/" % (ip, environment_vip)
+        uri = 'api/ipv4/ip/%s/environment-vip/%s/' % (ip, environment_vip)
 
         return super(ApiNetworkIPv4, self).get(uri)
 
@@ -82,7 +82,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         """
         Delete ipv4
         """
-        uri = "api/ipv4/%s/" % (ipv4_id)
+        uri = 'api/ipv4/%s/' % (ipv4_id)
 
         return super(ApiNetworkIPv4, self).delete(uri)
 
@@ -98,8 +98,8 @@ class ApiNetworkIPv4(ApiGenericClient):
         :return: Dict containing ipv4's
         """
 
-        return super(ApiNetworkIPv4, self).get(self.prepare_url("api/v3/networkv4/",
-                                                         kwargs))
+        return super(ApiNetworkIPv4, self).get(self.prepare_url('api/v3/networkv4/',
+                                                                kwargs))
 
     def get(self, ids, **kwargs):
         """
@@ -112,7 +112,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing network-ipv4's
         """
-        url = build_uri_with_ids("api/v3/networkv4/%s/", ids)
+        url = build_uri_with_ids('api/v3/networkv4/%s/', ids)
 
         return super(ApiNetworkIPv4, self).get(self.prepare_url(url, kwargs))
 
@@ -123,7 +123,7 @@ class ApiNetworkIPv4(ApiGenericClient):
         :param ids: Identifiers of network-ipv4's
         :return: None
         """
-        url = build_uri_with_ids("api/v3/networkv4/%s/", ids)
+        url = build_uri_with_ids('api/v3/networkv4/%s/', ids)
 
         return super(ApiNetworkIPv4, self).delete(url)
 
@@ -135,11 +135,12 @@ class ApiNetworkIPv4(ApiGenericClient):
         :return: None
         """
 
-        data = {'networkipv4s': networkipv4s}
-        networkipv4s_ids = [str(networkipv4.get("id")) for networkipv4 in networkipv4s]
+        data = {'networks': networkipv4s}
+        networkipv4s_ids = [str(networkipv4.get('id'))
+                            for networkipv4 in networkipv4s]
 
-        return super(ApiNetworkIPv4, self).put("api/v3/networkv4/%s/" %
-                                        ';'.join(networkipv4s_ids), data)
+        return super(ApiNetworkIPv4, self).put('api/v3/networkv4/%s/' %
+                                               ';'.join(networkipv4s_ids), data)
 
     def create(self, networkipv4s):
         """
@@ -149,5 +150,5 @@ class ApiNetworkIPv4(ApiGenericClient):
         :return: None
         """
 
-        data = {'networkipv4s': networkipv4s}
-        return super(ApiNetworkIPv4, self).post("api/v3/networkv4/", data)
+        data = {'networks': networkipv4s}
+        return super(ApiNetworkIPv4, self).post('api/v3/networkv4/', data)

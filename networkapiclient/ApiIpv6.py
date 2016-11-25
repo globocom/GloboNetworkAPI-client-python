@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,12 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiIpv6(ApiGenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -45,7 +45,7 @@ class ApiIpv6(ApiGenericClient):
         :return: Dict containing ipv6's
         """
 
-        return super(ApiIpv6, self).get(self.prepare_url("api/v3/ipv6/",
+        return super(ApiIpv6, self).get(self.prepare_url('api/v3/ipv6/',
                                                          kwargs))
 
     def get(self, ids, **kwargs):
@@ -59,7 +59,7 @@ class ApiIpv6(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing ipv6's
         """
-        url = build_uri_with_ids("api/v3/ipv6/%s/", ids)
+        url = build_uri_with_ids('api/v3/ipv6/%s/', ids)
         return super(ApiIpv6, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
@@ -69,7 +69,7 @@ class ApiIpv6(ApiGenericClient):
         :param ids: Identifiers of ipv6's
         :return: None
         """
-        url = build_uri_with_ids("api/v3/ipv6/%s/", ids)
+        url = build_uri_with_ids('api/v3/ipv6/%s/', ids)
         return super(ApiIpv6, self).delete(url)
 
     def update(self, ipv6s):
@@ -80,10 +80,10 @@ class ApiIpv6(ApiGenericClient):
         :return: None
         """
 
-        data = {'ipv6s': ipv6s}
-        ipv6s_ids = [str(ipv6.get("id")) for ipv6 in ipv6s]
+        data = {'ips': ipv6s}
+        ipv6s_ids = [str(ipv6.get('id')) for ipv6 in ipv6s]
 
-        return super(ApiIpv6, self).put("api/v3/ipv6/%s/" %
+        return super(ApiIpv6, self).put('api/v3/ipv6/%s/' %
                                         ';'.join(ipv6s_ids), data)
 
     def create(self, ipv6s):
@@ -94,5 +94,5 @@ class ApiIpv6(ApiGenericClient):
         :return: None
         """
 
-        data = {'ipv6s': ipv6s}
-        return super(ApiIpv6, self).post("api/v3/ipv6/", data)
+        data = {'ips': ipv6s}
+        return super(ApiIpv6, self).post('api/v3/ipv6/', data)

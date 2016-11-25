@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,12 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiVlan(ApiGenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -49,7 +49,7 @@ class ApiVlan(ApiGenericClient):
 
         parameters = dict(id_vlan=id_vlan, type_acl=type_acl)
 
-        uri = "api/vlan/acl/remove/draft/%(id_vlan)s/%(type_acl)s/" % parameters
+        uri = 'api/vlan/acl/remove/draft/%(id_vlan)s/%(type_acl)s/' % parameters
 
         return super(ApiVlan, self).get(uri)
 
@@ -71,7 +71,7 @@ class ApiVlan(ApiGenericClient):
 
         data = dict(content_draft=content_draft)
 
-        uri = "api/vlan/acl/save/draft/%(id_vlan)s/%(type_acl)s/" % parameters
+        uri = 'api/vlan/acl/save/draft/%(id_vlan)s/%(type_acl)s/' % parameters
 
         return super(ApiVlan, self).post(uri, data=data)
 
@@ -87,7 +87,7 @@ class ApiVlan(ApiGenericClient):
         :return: Dict containing vlan's
         """
 
-        return super(ApiVlan, self).get(self.prepare_url("api/v3/vlan/",
+        return super(ApiVlan, self).get(self.prepare_url('api/v3/vlan/',
                                                          kwargs))
 
     def get(self, ids, **kwargs):
@@ -101,7 +101,7 @@ class ApiVlan(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing vlan's
         """
-        url = build_uri_with_ids("api/v3/vlan/%s/", ids)
+        url = build_uri_with_ids('api/v3/vlan/%s/', ids)
 
         return super(ApiVlan, self).get(self.prepare_url(url, kwargs))
 
@@ -112,7 +112,7 @@ class ApiVlan(ApiGenericClient):
         :param ids: Identifiers of vlan's
         :return: None
         """
-        url = build_uri_with_ids("api/v3/vlan/%s/", ids)
+        url = build_uri_with_ids('api/v3/vlan/%s/', ids)
 
         return super(ApiVlan, self).delete(url)
 
@@ -125,9 +125,9 @@ class ApiVlan(ApiGenericClient):
         """
 
         data = {'vlans': vlans}
-        vlans_ids = [str(vlan.get("id")) for vlan in vlans]
+        vlans_ids = [str(vlan.get('id')) for vlan in vlans]
 
-        return super(ApiVlan, self).put("api/v3/vlan/%s/" %
+        return super(ApiVlan, self).put('api/v3/vlan/%s/' %
                                         ';'.join(vlans_ids), data)
 
     def create(self, vlans):
@@ -139,4 +139,4 @@ class ApiVlan(ApiGenericClient):
         """
 
         data = {'vlans': vlans}
-        return super(ApiVlan, self).post("api/v3/vlan/", data)
+        return super(ApiVlan, self).post('api/v3/vlan/', data)

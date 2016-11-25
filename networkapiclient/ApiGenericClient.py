@@ -1,5 +1,4 @@
-# -*- coding:utf-8 -*-
-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -14,16 +13,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
+import logging
 import urllib
 from io import BytesIO
-import json
-import urllib
-
-from networkapiclient.exception import NetworkAPIClientError
 
 import requests
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import HTTPError
+
+from networkapiclient.exception import NetworkAPIClientError
 
 
 class ApiGenericClient(object):
@@ -33,7 +32,7 @@ class ApiGenericClient(object):
         who implements access methods to new pattern rest networkAPI.
     """
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, log_level='INFO'):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
@@ -43,6 +42,10 @@ class ApiGenericClient(object):
         self.user = user
         self.password = password
         self.user_ldap = user_ldap
+        self.log_level = log_level
+
+        logging.basicConfig(level=self.log_level, format='%(message)s')
+        self.logger = logging.getLogger('Networkapiclient')
 
     def get(self, uri, verify=False):
         """
@@ -68,7 +71,15 @@ class ApiGenericClient(object):
 
         except HTTPError:
             error = self._parse(request.text)
+            self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
+        finally:
+            self.logger.info('URI: %s', uri)
+            self.logger.info('Status Code: %s', request.status_code)
+            self.logger.info('X-Request-Id: %s',
+                             request.headers.get('x-request-id'))
+            self.logger.info('X-Request-Context: %s',
+                             request.headers.get('x-request-context'))
 
     def post(self, uri, data=None, files=None, verify=False):
         """
@@ -96,7 +107,15 @@ class ApiGenericClient(object):
 
         except HTTPError:
             error = self._parse(request.text)
+            self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
+        finally:
+            self.logger.info('URI: %s', uri)
+            self.logger.info('Status Code: %s', request.status_code)
+            self.logger.info('X-Request-Id: %s',
+                             request.headers.get('x-request-id'))
+            self.logger.info('X-Request-Context: %s',
+                             request.headers.get('x-request-context'))
 
     def put(self, uri, data=None, verify=False):
         """
@@ -123,7 +142,15 @@ class ApiGenericClient(object):
 
         except HTTPError:
             error = self._parse(request.text)
+            self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
+        finally:
+            self.logger.info('URI: %s', uri)
+            self.logger.info('Status Code: %s', request.status_code)
+            self.logger.info('X-Request-Id: %s',
+                             request.headers.get('x-request-id'))
+            self.logger.info('X-Request-Context: %s',
+                             request.headers.get('x-request-context'))
 
     def delete(self, uri, data=None, verify=False):
         """
@@ -149,7 +176,15 @@ class ApiGenericClient(object):
 
         except HTTPError:
             error = self._parse(request.text)
+            self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
+        finally:
+            self.logger.info('URI: %s', uri)
+            self.logger.info('Status Code: %s', request.status_code)
+            self.logger.info('X-Request-Id: %s',
+                             request.headers.get('x-request-id'))
+            self.logger.info('X-Request-Context: %s',
+                             request.headers.get('x-request-context'))
 
     def _parse(self, content):
         """
@@ -170,7 +205,7 @@ class ApiGenericClient(object):
         """Create Full URI To Send API.
         """
 
-        return "%s%s" % (self.networkapi_url, uri)
+        return '%s%s' % (self.networkapi_url, uri)
 
     def _auth_basic(self):
         """Attaches HTTP Basic Authentication to the given Request object.
@@ -193,11 +228,11 @@ class ApiGenericClient(object):
         """
         params = dict()
         for key in kwargs:
-            if key in ('kind', 'include', 'exclude', 'fields'):
+            if key in ('include', 'exclude', 'fields'):
                 params.update({
                     key: ','.join(kwargs.get(key))
                 })
-            elif key == 'search':
+            elif key in ('search', 'kind'):
                 params.update({
                     key: kwargs.get(key)
                 })
