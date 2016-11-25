@@ -45,7 +45,7 @@ class ApiGenericClient(object):
         self.log_level = log_level
 
         logging.basicConfig(level=self.log_level, format='%(message)s')
-        self.logger = logging.getLogger('Networkapiclient')
+        self.logger = logging.getLogger('networkapiclient')
 
     def get(self, uri, verify=False):
         """
