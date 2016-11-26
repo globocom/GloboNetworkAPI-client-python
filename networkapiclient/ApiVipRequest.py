@@ -47,7 +47,7 @@ class ApiVipRequest(ApiGenericClient):
         data['vip_request_id'] = vip_request_id
         data['pool_ids'] = pool_ids
 
-        return self.post(uri, data=data)
+        return super(ApiVipRequest, self).post(uri, data=data)
 
     def delete_vip(self, ids, delete_pools=True):
         """
@@ -59,7 +59,7 @@ class ApiVipRequest(ApiGenericClient):
 
         data['ids'] = ids
 
-        return self.post(uri, data=data)
+        return super(ApiVipRequest, self).post(uri, data=data)
 
     def list_environment_by_environmet_vip(self, environment_vip_id):
         """
@@ -68,7 +68,7 @@ class ApiVipRequest(ApiGenericClient):
         uri = 'api/vip/list/environment/by/environment/vip/%s/' % (
             environment_vip_id)
 
-        return self.get(uri)
+        return super(ApiVipRequest, self).get(uri)
 
     def save(self, id_ipv4, id_ipv6, finality, client, environment, cache, persistence, timeout,
              host, areanegocio, nome_servico, l7_filter, vip_ports_to_pools=None, rule_id=None,
@@ -151,7 +151,7 @@ class ApiVipRequest(ApiGenericClient):
             uri += '%s/' % pk
             return self.put(uri, data=data)
 
-        return self.post(uri, data=data)
+        return super(ApiVipRequest, self).post(uri, data=data)
 
     def get_by_pk(self, pk):
         """
@@ -217,7 +217,7 @@ class ApiVipRequest(ApiGenericClient):
         """
         uri = 'api/vip/request/get/%s/' % pk
 
-        return self.get(uri)
+        return super(ApiVipRequest, self).get(uri)
 
     #######################
     # API V3
@@ -231,7 +231,7 @@ class ApiVipRequest(ApiGenericClient):
 
         uri = 'api/v3/option-vip/environment-vip/%s/' % environment_vip_id
 
-        return self.get(uri)
+        return super(ApiVipRequest, self).get(uri)
 
     def get_vip_request_details(self, vip_request_id):
         """
@@ -241,7 +241,7 @@ class ApiVipRequest(ApiGenericClient):
         """
         uri = 'api/v3/vip-request/details/%s/' % vip_request_id
 
-        return self.get(uri)
+        return super(ApiVipRequest, self).get(uri)
 
     def search_vip_request_details(self, search):
         """
@@ -252,7 +252,7 @@ class ApiVipRequest(ApiGenericClient):
         uri = 'api/v3/vip-request/details/?%s' % urllib.urlencode(
             {'search': search})
 
-        return self.get(uri)
+        return super(ApiVipRequest, self).get(uri)
 
     def get_vip_request(self, vip_request_id):
         """
@@ -262,7 +262,7 @@ class ApiVipRequest(ApiGenericClient):
         """
         uri = 'api/v3/vip-request/%s/' % vip_request_id
 
-        return self.get(uri)
+        return super(ApiVipRequest, self).get(uri)
 
     def search_vip_request(self, search):
         """
@@ -272,7 +272,7 @@ class ApiVipRequest(ApiGenericClient):
         """
         uri = 'api/v3/vip-request/?%s' % urllib.urlencode({'search': search})
 
-        return self.get(uri)
+        return super(ApiVipRequest, self).get(uri)
 
     def save_vip_request(self, vip_request):
         """
@@ -286,7 +286,7 @@ class ApiVipRequest(ApiGenericClient):
         data['vips'] = list()
         data['vips'].append(vip_request)
 
-        return self.post(uri, data)
+        return super(ApiVipRequest, self).post(uri, data)
 
     def update_vip_request(self, vip_request, vip_request_id):
         """
@@ -301,7 +301,7 @@ class ApiVipRequest(ApiGenericClient):
         data['vips'] = list()
         data['vips'].append(vip_request)
 
-        return self.put(uri, data)
+        return super(ApiVipRequest, self).put(uri, data)
 
     def delete_vip_request(self, vip_request_ids):
         """
@@ -311,7 +311,7 @@ class ApiVipRequest(ApiGenericClient):
         """
         uri = 'api/v3/vip-request/%s/' % vip_request_ids
 
-        return self.delete(uri)
+        return super(ApiVipRequest, self).delete(uri)
 
     def create_vip(self, vip_request_ids):
         """
@@ -321,7 +321,7 @@ class ApiVipRequest(ApiGenericClient):
         """
         uri = 'api/v3/vip-request/deploy/%s/' % vip_request_ids
 
-        return self.post(uri)
+        return super(ApiVipRequest, self).post(uri)
 
     def update_vip(self, vip_request, vip_request_id):
         """
@@ -336,7 +336,7 @@ class ApiVipRequest(ApiGenericClient):
         data['vips'] = list()
         data['vips'].append(vip_request)
 
-        return self.put(uri, data)
+        return super(ApiVipRequest, self).put(uri, data)
 
     def remove_vip(self, vip_request_ids):
         """
@@ -346,7 +346,7 @@ class ApiVipRequest(ApiGenericClient):
         """
         uri = 'api/v3/vip-request/deploy/%s/' % vip_request_ids
 
-        return self.delete(uri)
+        return super(ApiVipRequest, self).delete(uri)
 
     def search(self, **kwargs):
         """
