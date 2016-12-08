@@ -40,7 +40,8 @@ class ApiEnvironmentVip(ApiGenericClient):
         if fields:
             uri += '?fields={}'.format(','.join(fields))
 
-        return self.get(uri)
+        return super(ApiEnvironmentVip, self).get(
+            uri)
 
     def environmentvip_step(self, finality='', client='', environmentp44=''):
         """
@@ -57,7 +58,8 @@ class ApiEnvironmentVip(ApiGenericClient):
         uri = 'api/v3/environment-vip/step/?finality=%s&client=%s&environmentp44=%s' % (
             finality, client, environmentp44)
 
-        return self.get(uri)
+        return super(ApiEnvironmentVip, self).get(
+            uri)
 
     def search(self, **kwargs):
         """
