@@ -17,7 +17,7 @@ from networkapiclient.ApiGenericClient import ApiGenericClient
 from networkapiclient.utils import build_uri_with_ids
 
 
-class ApiIpv4(ApiGenericClient):
+class ApiIPv6(ApiGenericClient):
 
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
@@ -26,7 +26,7 @@ class ApiIpv4(ApiGenericClient):
         :param password: Password for authentication.
         """
 
-        super(ApiIpv4, self).__init__(
+        super(ApiIPv6, self).__init__(
             networkapi_url,
             user,
             password,
@@ -35,66 +35,64 @@ class ApiIpv4(ApiGenericClient):
 
     def search(self, **kwargs):
         """
-        Method to search ipv4's based on extends search.
+        Method to search ipv6's based on extends search.
 
-        :param search: Dict containing QuerySets to find ipv4's.
+        :param search: Dict containing QuerySets to find ipv6's.
         :param include: Array containing fields to include on response.
         :param exclude: Array containing fields to exclude on response.
         :param fields:  Array containing fields to override default fields.
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
-        :return: Dict containing ipv4's
+        :return: Dict containing ipv6's
         """
 
-        return super(ApiIpv4, self).get(self.prepare_url('api/v3/ipv4/',
+        return super(ApiIPv6, self).get(self.prepare_url('api/v3/ipv6/',
                                                          kwargs))
 
     def get(self, ids, **kwargs):
         """
-        Method to get ipv4's by their ids
+        Method to get ipv6's by their ids
 
-        :param ids: List containing identifiers of ipv4's
+        :param ids: List containing identifiers of ipv6's
         :param include: Array containing fields to include on response.
         :param exclude: Array containing fields to exclude on response.
         :param fields: Array containing fields to override default fields.
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
-        :return: Dict containing ipv4's
+        :return: Dict containing ipv6's
         """
-        url = build_uri_with_ids('api/v3/ipv4/%s/', ids)
-
-        return super(ApiIpv4, self).get(self.prepare_url(url, kwargs))
+        url = build_uri_with_ids('api/v3/ipv6/%s/', ids)
+        return super(ApiIPv6, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
         """
-        Method to delete ipv4's by their ids
+        Method to delete ipv6's by their ids
 
-        :param ids: Identifiers of ipv4's
+        :param ids: Identifiers of ipv6's
         :return: None
         """
-        url = build_uri_with_ids('api/v3/ipv4/%s/', ids)
+        url = build_uri_with_ids('api/v3/ipv6/%s/', ids)
+        return super(ApiIPv6, self).delete(url)
 
-        return super(ApiIpv4, self).delete(url)
-
-    def update(self, ipv4s):
+    def update(self, ipv6s):
         """
-        Method to update ipv4's
+        Method to update ipv6's
 
-        :param ipv4s: List containing ipv4's desired to updated
-        :return: None
-        """
-
-        data = {'ips': ipv4s}
-        ipv4s_ids = [str(ipv4.get('id')) for ipv4 in ipv4s]
-
-        return super(ApiIpv4, self).put('api/v3/ipv4/%s/' %
-                                        ';'.join(ipv4s_ids), data)
-
-    def create(self, ipv4s):
-        """
-        Method to create ipv4's
-
-        :param ipv4s: List containing ipv4's desired to be created on database
+        :param ipv6s: List containing ipv6's desired to updated
         :return: None
         """
 
-        data = {'ips': ipv4s}
-        return super(ApiIpv4, self).post('api/v3/ipv4/', data)
+        data = {'ips': ipv6s}
+        ipv6s_ids = [str(ipv6.get('id')) for ipv6 in ipv6s]
+
+        return super(ApiIPv6, self).put('api/v3/ipv6/%s/' %
+                                        ';'.join(ipv6s_ids), data)
+
+    def create(self, ipv6s):
+        """
+        Method to create ipv6's
+
+        :param ipv6s: List containing vrf desired to be created on database
+        :return: None
+        """
+
+        data = {'ips': ipv6s}
+        return super(ApiIPv6, self).post('api/v3/ipv6/', data)
