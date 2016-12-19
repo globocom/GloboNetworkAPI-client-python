@@ -40,6 +40,9 @@ test: compile
 setup: requirements.txt
 	$(PIP) install -r $^
 
+test_setup: requirements_test.txt
+	$(PIP) install -r $^
+
 install:
 	@python setup.py install
 
