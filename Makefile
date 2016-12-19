@@ -1,6 +1,9 @@
 # Makefile for globonetworkapi-client-python
 VERSION=$(shell python -c 'import networkapiclient; print networkapiclient.VERSION')
 
+# Pip executable path
+PIP := $(shell which pip)
+
 help:
 	@echo
 	@echo "Please use 'make <target>' where <target> is one of"
@@ -33,6 +36,9 @@ test: compile
 	@echo "Nothing yet"
 #	@echo "Starting tests..."
 # 	@nosetests -s --verbose --with-coverage --cover-erase --cover-package=networkapiclient tests
+
+setup: requirements.txt
+	$(PIP) install -r $^
 
 install:
 	@python setup.py install
