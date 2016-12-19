@@ -18,7 +18,7 @@ help:
 	@echo
 
 clean:
-	@echo "Cleaning..."
+	@echo "Cleaning project ..."
 	@rm -rf build dist *.egg-info
 	@rm -rf docs/_build
 	@find . \( -name '*.pyc' -o -name '**/*.pyc' -o -name '*~' \) -delete
@@ -31,11 +31,10 @@ compile: clean
 	@python -tt -m compileall .
 	@pep8 --format=pylint --statistics networkapiclient setup.py
 
-test: compile
+test:
 	@make clean
-	@echo "Nothing yet"
-#	@echo "Starting tests..."
-# 	@nosetests -s --verbose --with-coverage --cover-erase --cover-package=networkapiclient tests
+	@echo "Starting tests..."
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase --where tests
 
 setup: requirements.txt
 	$(PIP) install -r $^
