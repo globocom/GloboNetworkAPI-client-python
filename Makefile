@@ -34,7 +34,8 @@ compile: clean
 test:
 	@make clean
 	@echo "Starting tests..."
-	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase --where tests
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
+		--cover-package=networkapiclient --where tests
 
 setup: requirements.txt
 	$(PIP) install -r $^
