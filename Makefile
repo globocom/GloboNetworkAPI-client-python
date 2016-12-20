@@ -15,6 +15,8 @@ help:
 	@echo "  install    to install"
 	@echo "  dist       to create egg for distribution"
 	@echo "  publish    to publish the package to PyPI"
+	@echo "  setup      to setup environment locally to run project"
+	@echo "  test_setup to setup test environment locally to run tests"
 	@echo
 
 clean:
