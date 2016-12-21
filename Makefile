@@ -4,6 +4,12 @@ VERSION=$(shell python -c 'import networkapiclient; print networkapiclient.VERSI
 # Pip executable path
 PIP := $(shell which pip)
 
+# GloboNetworkAPI project URL
+GNETAPIURL := git@github.com:/globocom/GloboNetworkAPI
+
+# Local path to GloboNetworkAPI used in tests
+GNETAPI_PATH := networkapi_test_project
+
 help:
 	@echo
 	@echo "Please use 'make <target>' where <target> is one of"
@@ -43,7 +49,16 @@ setup: requirements.txt
 	$(PIP) install -r $^
 
 test_setup: requirements_test.txt
+	@echo "Installing test dependencies..."
 	$(PIP) install -r $^
+	@echo "Cloning GloboNetworkAPI..."
+	@if [ ! -d $(GNETAPI_PATH) ]; then \
+		git clone $(GNETAPIURL) $(GNETAPI_PATH); \
+		cd $(GNETAPI_PATH) && git submodule update --init --recursive; \
+	fi
+	@echo "Running GloboNetworkAPI.."
+	cd $(GNETAPI_PATH) && git pull origin master
+	cd $(GNETAPI_PATH) && vagrant up --provider virtualbox
 
 install:
 	@python setup.py install
