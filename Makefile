@@ -1,6 +1,15 @@
 # Makefile for globonetworkapi-client-python
 VERSION=$(shell python -c 'import networkapiclient; print networkapiclient.VERSION')
 
+# Pip executable path
+PIP := $(shell which pip)
+
+# GloboNetworkAPI project URL
+GNETAPIURL := git@github.com:/globocom/GloboNetworkAPI
+
+# Local path to GloboNetworkAPI used in tests
+GNETAPI_PATH := networkapi_test_project
+
 help:
 	@echo
 	@echo "Please use 'make <target>' where <target> is one of"
@@ -12,10 +21,12 @@ help:
 	@echo "  install    to install"
 	@echo "  dist       to create egg for distribution"
 	@echo "  publish    to publish the package to PyPI"
+	@echo "  setup      to setup environment locally to run project"
+	@echo "  test_setup to setup test environment locally to run tests"
 	@echo
 
 clean:
-	@echo "Cleaning..."
+	@echo "Cleaning project ..."
 	@rm -rf build dist *.egg-info
 	@rm -rf docs/_build
 	@find . \( -name '*.pyc' -o -name '**/*.pyc' -o -name '*~' \) -delete
@@ -28,11 +39,26 @@ compile: clean
 	@python -tt -m compileall .
 	@pep8 --format=pylint --statistics networkapiclient setup.py
 
-test: compile
+test:
 	@make clean
-	@echo "Nothing yet"
-#	@echo "Starting tests..."
-# 	@nosetests -s --verbose --with-coverage --cover-erase --cover-package=networkapiclient tests
+	@echo "Starting tests..."
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
+		--cover-package=networkapiclient --where tests
+
+setup: requirements.txt
+	$(PIP) install -r $^
+
+test_setup: requirements_test.txt
+	@echo "Installing test dependencies..."
+	$(PIP) install -r $^
+	@echo "Cloning GloboNetworkAPI..."
+	@if [ ! -d $(GNETAPI_PATH) ]; then \
+		git clone $(GNETAPIURL) $(GNETAPI_PATH); \
+		cd $(GNETAPI_PATH) && git submodule update --init --recursive; \
+	fi
+	@echo "Running GloboNetworkAPI.."
+	cd $(GNETAPI_PATH) && git pull origin master
+	cd $(GNETAPI_PATH) && vagrant up --provider virtualbox
 
 install:
 	@python setup.py install

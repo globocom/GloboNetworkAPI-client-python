@@ -1,16 +1,16 @@
-# -*- coding:utf-8 -*-
-from setuptools import setup, find_packages
+# -*- coding: utf-8 -*-
 import os.path
 
-version = __import__('networkapiclient').VERSION
+from setuptools import find_packages
+from setuptools import setup
 
-base_path = os.path.abspath(os.path.join(__file__, '..'))
+version = __import__('networkapiclient').VERSION
 
 setup(
     name='GloboNetworkAPI',
     version=version,
     description='GloboNetworkAPI Client Python',
-    long_description=open(os.path.join(base_path, 'README.rst')).read(),
+    long_description='Python implementation of a client library for GloboNetworkAPI',
     keywords='network GloboNetwork GloboNetworkAPI',
     author='Marcus Vinicius Gonçalves Cesário',
     author_email='marcus.vinicius@corp.globo.com',
