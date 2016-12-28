@@ -45,6 +45,24 @@ test:
 	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
 		--cover-package=networkapiclient --where tests
 
+unit:
+	@make clean
+	@echo "Starting tests..."
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
+		--cover-package=networkapiclient --where tests/unit
+
+integration:
+	@make clean
+	@echo "Starting tests..."
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
+		--cover-package=networkapiclient --where tests/integration
+
+functional:
+	@make clean
+	@echo "Starting tests..."
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
+		--cover-package=networkapiclient --where tests/functional
+
 setup: requirements.txt
 	$(PIP) install -r $^
 
