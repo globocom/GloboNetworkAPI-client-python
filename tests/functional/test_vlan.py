@@ -196,3 +196,13 @@ class TestApiVlan(TestCase):
 
         with assert_raises(NetworkAPIClientError):
             self.api_vlan.update([vlan])
+
+    def test_create_vlan_with_unauthorized_number_for_environment(self):
+        """ Do not allow create a vlan with unauthorized number """
+        vlan_data = {
+            'name': 'Vlan 38',
+            'environment': 3,
+        }
+
+        with assert_raises(NetworkAPIClientError):
+            self.api_vlan.create([vlan_data])
