@@ -22,8 +22,8 @@ class ApiNetworksTestCase(TestCase):
         self.networkapi_url = os.getenv(
             'NETWORKAPI_URL', 'http://10.0.0.2:8000/')
         self.networkapi_user = os.getenv(
-            'NETWORKAPI_USER', 'teste_integracao')
-        self.networkapi_pwd = os.getenv('NETWORKAPI_PWD', '12345678')
+            'NETWORKAPI_USER', 'networkapi')
+        self.networkapi_pwd = os.getenv('NETWORKAPI_PWD', 'networkapi')
 
         self.client_api = ClientFactory(
             self.networkapi_url, self.networkapi_user, self.networkapi_pwd)
