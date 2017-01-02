@@ -149,3 +149,51 @@ class TestApiEnvironment(TestCase):
         envs = self.api_environment.search(search=search_data)
 
         assert_equal(envs['total'], 0)
+
+    def test_get_an_environment_by_id(self):
+        """ Get an enviroment by id """
+
+        env = self.api_environment.get([1])
+        assert_equal(env['environments'][0]['id'], 1)
+
+    def test_try_to_get_a_non_existent_environment_by_id(self):
+        """ Tries to get a non existent environment by id """
+
+        with assert_raises(NetworkAPIClientError):
+            self.api_environment.get([1000])
+
+    def test_update_an_environment(self):
+        """ Updates an environment """
+
+        env_data = {
+            'grupo_l3': 32,
+            'ambiente_logico': 12,
+            'divisao_dc': 21,
+            'default_vrf': 1,
+        }
+
+        env_id = self.api_environment.create([env_data])[0]['id']
+        env = self.api_environment.get([env_id])['environments'][0]
+
+        assert_equal(env['id'], env_id)
+
+        new_dc_division = env['divisao_dc'] = 23
+        self.api_environment.update([env])
+        env = self.api_environment.get([env_id])['environments'][0]
+
+        assert_equal(env['divisao_dc'], new_dc_division)
+        self.api_environment.delete([env_id])
+
+    def test_update_a_non_existent_environment(self):
+        """ Tries to update a non existent environment """
+
+        env_data = {
+            'id': 1000,
+            'grupo_l3': 32,
+            'ambiente_logico': 12,
+            'divisao_dc': 21,
+            'default_vrf': 1,
+        }
+
+        with assert_raises(NetworkAPIClientError):
+            self.api_environment.update([env_data])
