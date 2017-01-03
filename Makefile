@@ -5,7 +5,7 @@ VERSION=$(shell python -c 'import networkapiclient; print networkapiclient.VERSI
 PIP := $(shell which pip)
 
 # GloboNetworkAPI project URL
-GNETAPIURL := git@github.com:/globocom/GloboNetworkAPI
+GNETAPIURL := https://github.com/globocom/GloboNetworkAPI.git
 
 # Local path to GloboNetworkAPI used in tests
 GNETAPI_PATH := networkapi_test_project
