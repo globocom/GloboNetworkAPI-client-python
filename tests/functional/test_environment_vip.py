@@ -220,7 +220,7 @@ class TestApiEnvironmentVip(TestCase):
             'acl_valida': True,
             'acl_file_name_v6': None,
             'acl_valida_v6': False,
-            'active': True,
+            'active': False,
             'vrf': None,
             'acl_draft': '1',
             'acl_draft_v6': None
@@ -248,8 +248,8 @@ class TestApiEnvironmentVip(TestCase):
         with assert_raises(Exception):
             self.api_environment_vip.delete([env_vip_id])
 
-        # self.api_network_ipv4.delete([netipv4_id])
-        # self.api_vlan.delete([vlan_id])
+        self.api_network_ipv4.delete([netipv4_id])
+        self.api_vlan.delete([vlan_id])
 
 
     def test_try_delete_environment_vip_assoc_with_netipv6(self):
@@ -263,7 +263,7 @@ class TestApiEnvironmentVip(TestCase):
             'acl_valida': True,
             'acl_file_name_v6': None,
             'acl_valida_v6': False,
-            'active': True,
+            'active': False,
             'vrf': None,
             'acl_draft': '1',
             'acl_draft_v6': None
@@ -299,3 +299,5 @@ class TestApiEnvironmentVip(TestCase):
     # TODO pode inserir dois amb vip com as mesmas info?
 
     # TODO No caso de nao poder remover env vip associado com rede, isso vale tanto pra assoc direta como indireta?
+
+    # TODO Verificar forma correta de se lançar exceção pra ser capturada no client
