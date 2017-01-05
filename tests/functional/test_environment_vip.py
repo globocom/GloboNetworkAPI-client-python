@@ -21,15 +21,10 @@ class TestApiEnvironmentVip(TestCase):
         self.client = ClientFactory(NETWORKAPI_URL, NETWORKAPI_USER,
                                     NETWORKAPI_PWD)
         self.api_environment_vip = self.client.create_api_environment_vip()
-
         self.api_network_ipv4 = self.client.create_api_network_ipv4()
-
         self.api_network_ipv6 = self.client.create_api_network_ipv6()
-
         self.api_environment = self.client.create_api_environment()
-
         self.api_vlan = self.client.create_api_vlan()
-
         self.non_existent_env_vip_id = 1111
 
     def tearDown(self):
@@ -103,7 +98,6 @@ class TestApiEnvironmentVip(TestCase):
 
         assert_equal(envs['total'], 0)
 
-
     # post tests
 
     def test_create_environment_vip(self):
@@ -172,19 +166,19 @@ class TestApiEnvironmentVip(TestCase):
     def test_update_a_non_existent_environment_vip(self):
         """ Try to update a non existent environment vip """
 
-        env_data = {
+        env_vip_data = {
             'id': self.non_existent_env_vip_id,
             'finalidade_txt': 'Green',
             'cliente_txt': 'Red'
         }
 
         with assert_raises(NetworkAPIClientError):
-            self.api_environment_vip.update([env_data])
+            self.api_environment_vip.update([env_vip_data])
 
     # delete tests
 
     def test_delete_environment_vip(self):
-        """ Tests if we can delete an environment vip """
+        """ Test if we can delete an environment vip """
 
         env_vip_data = {
             'finalidade_txt': 'Fin-1',
@@ -201,7 +195,31 @@ class TestApiEnvironmentVip(TestCase):
             self.api_environment_vip.get([env_vip_id])
 
     def test_delete_two_environments_vip(self):
-        pass
+        """ Test if we can delete two environment vips """
+
+        envs_vip_data = [
+            {
+                'finalidade_txt': 'Fin-1',
+                'cliente_txt': 'ClientTxt-1',
+                'ambiente_p44_txt': 'EnvP44Txt-1',
+                'description': 'Description-1',
+            },
+            {
+                'finalidade_txt': 'Fin-2',
+                'cliente_txt': 'ClientTxt-2',
+                'ambiente_p44_txt': 'EnvP44Txt-2',
+                'description': 'Description-2',
+            }
+        ]
+
+        envs_vip_id = [e['id'] for e in self.api_environment_vip.create(envs_vip_data)]
+        assert_is_instance(self.api_environment_vip.get(envs_vip_id), dict)
+
+        self.api_environment_vip.delete(envs_vip_id)
+
+        for env_vip_id in envs_vip_id:
+            with assert_raises(NetworkAPIClientError):
+                self.api_environment_vip.get([env_vip_id])
 
     def test_delete_a_non_existent_environment_vip(self):
         """ Try to delete a non existent environment vip """
@@ -250,7 +268,7 @@ class TestApiEnvironmentVip(TestCase):
 
         self.api_network_ipv4.delete([netipv4_id])
         self.api_vlan.delete([vlan_id])
-
+        self.api_environment_vip.delete([env_vip_id])
 
     def test_try_delete_environment_vip_assoc_with_netipv6(self):
         """ Try to violate delete restriction on environment vip removal when env vip is associated with some network ipv6"""
@@ -293,11 +311,118 @@ class TestApiEnvironmentVip(TestCase):
 
         self.api_network_ipv6.delete([netipv6_id])
         self.api_vlan.delete([vlan_id])
+        self.api_environment_vip.delete([env_vip_id])
+
+    def test_try_delete_environment_vip_assoc_with_netipv4_and_netipv6(self):
+        """ Try to violate delete restriction on environment vip removal when env vip is associated with some ipv4 and ipv6 network """
+
+        vlan_data = {
+            'name': 'Vlan Test',
+            'environment': 6,
+            'description': '',
+            'acl_file_name': '',
+            'acl_valida': True,
+            'acl_file_name_v6': None,
+            'acl_valida_v6': False,
+            'active': False,
+            'vrf': None,
+            'acl_draft': '1',
+            'acl_draft_v6': None
+        }
+
+        vlan_id = self.api_vlan.create([vlan_data])[0]['id']
+
+        env_vip_data = {
+            'finalidade_txt': 'Fin-Test',
+            'cliente_txt': 'ClientTxt-Test',
+            'ambiente_p44_txt': 'EnvP44Txt-Test',
+            'description': 'Description-Test',
+        }
+
+        env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
+
+        netipv4_data = {
+            'vlan': vlan_id,
+            'network_type': 2,
+            'environmentvip': env_vip_id
+        }
+
+        netipv4_id = self.api_network_ipv4.create([netipv4_data])[0]['id']
+
+        with assert_raises(Exception):
+            self.api_environment_vip.delete([env_vip_id])
+
+        self.api_network_ipv4.delete([netipv4_id])
+        self.api_vlan.delete([vlan_id])
+        self.api_environment_vip.delete([env_vip_id])
+
+    def test_try_delete_environment_vip_assoc_to_option_vip(self):
+        """ Try to delete environment vip associated to some option vip """
+        env_vip_data = {
+            'finalidade_txt': 'Fin-Test',
+            'cliente_txt': 'ClientTxt-Test',
+            'ambiente_p44_txt': 'EnvP44Txt-Test',
+            'description': 'Description-Test',
+        }
+
+        env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
+
+        option_vip = 1
+
+        self.client.create_option_vip().associate(option_vip, env_vip_id)
+
+        self.api_environment_vip.delete([env_vip_id])
+
+        with assert_raises(NetworkAPIClientError):
+            self.api_environment_vip.get([env_vip_id])
 
 
+    def test_try_delete_environment_vip_assoc_to_env(self):
+        """ Try to delete environment vip associated to some environment """
 
-    # TODO pode inserir dois amb vip com as mesmas info?
+        env_vip_data = {
+            'finalidade_txt': 'Fin-Test',
+            'cliente_txt': 'ClientTxt-Test',
+            'ambiente_p44_txt': 'EnvP44Txt-Test',
+            'description': 'Description-Test',
+        }
 
-    # TODO No caso de nao poder remover env vip associado com rede, isso vale tanto pra assoc direta como indireta?
+        env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
+
+        env = 7
+
+        self.client.create_ambiente().associate(env, env_vip_id)
+
+        self.api_environment_vip.delete([env_vip_id])
+
+        with assert_raises(NetworkAPIClientError):
+            self.api_environment_vip.get([env_vip_id])
+
+
+    def test_try_delete_environment_vip_assoc_to_options_vip_and_envs(self):
+        """ Try to delete environment vip associated to some options vip and environments """
+
+        env_vip_data = {
+            'finalidade_txt': 'Fin-Test',
+            'cliente_txt': 'ClientTxt-Test',
+            'ambiente_p44_txt': 'EnvP44Txt-Test',
+            'description': 'Description-Test',
+        }
+
+        env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
+
+        options_vip = [1, 2]
+        environments = [7, 8]
+
+        for opt in options_vip:
+            self.client.create_option_vip().associate(opt, env_vip_id)
+
+        for env in environments:
+            self.client.create_ambiente().associate(env, env_vip_id)
+
+        self.api_environment_vip.delete([env_vip_id])
+
+        with assert_raises(NetworkAPIClientError):
+            self.api_environment_vip.get([env_vip_id])
 
     # TODO Verificar forma correta de se lançar exceção pra ser capturada no client
