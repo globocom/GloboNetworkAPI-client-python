@@ -424,5 +424,3 @@ class TestApiEnvironmentVip(TestCase):
 
         with assert_raises(NetworkAPIClientError):
             self.api_environment_vip.get([env_vip_id])
-
-    # TODO Verificar forma correta de se lançar exceção pra ser capturada no client
