@@ -30,66 +30,22 @@ class TestApiequipment(TestCase):
     def tearDown(self):
         pass
 
-    def test_create_equipment(self):
-        """ Tries to create a new network equipment """
-        eqpt_data = [{
-            'name': 'Eqpt Teste',
-            'maintenance': False,
-            'equipment_type': 1,
-            'model': 1
-        }]
 
-        eqpt_id = self.api_equipment.create(eqpt_data)[0]['id']
-        eqpt = self.api_equipment.get([eqpt_id])
+    # get tests
 
-        assert_equal(eqpt['equipments'][0]['id'], eqpt_id)
-        self.api_equipment.delete([eqpt_id])
+    def test_get_an_equipment_by_id(self):
+        """ Get an equipment by id """
 
-    def test_create_many_equipments(self):
-        """ Tries to create many equipments """
+        eqpt = self.api_equipment.get([1])
+        assert_equal(eqpt['equipments'][0]['id'], 1)
 
-        eqpts_data = [{
-            'name': 'Eqpt Teste-1',
-            'maintenance': False,
-            'equipment_type': 1,
-            'model': 1
-        }, {
-            'name': 'Eqpt Teste-2',
-            'maintenance': False,
-            'equipment_type': 1,
-            'model': 1
-        }]
-
-        eqpts_ids = [e['id'] for e in self.api_equipment.create(eqpts_data)]
-        eqpts = self.api_equipment.get(eqpts_ids)
-
-        assert_equal(len(eqpts['equipments']), 2)
-        for eqpt in eqpts['equipments']:
-            assert_in(eqpt['id'], eqpts_ids)
-        self.api_equipment.delete(eqpts_ids)
-
-    def test_delete_equipment(self):
-        """ Tests if we can delete an equipment """
-
-        eqpt_data = [{
-            'name': 'Eqpt Teste',
-            'maintenance': False,
-            'equipment_type': 1,
-            'model': 1
-        }]
-
-        eqpt_id = self.api_equipment.create(eqpt_data)[0]['id']
-        assert_is_instance(self.api_equipment.get([eqpt_id]), dict)
-
-        self.api_equipment.delete([eqpt_id])
-        with assert_raises(NetworkAPIClientError):
-            self.api_equipment.get([eqpt_id])
-
-    def test_delete_a_non_existent_equipment(self):
-        """ Tries to delete a non existent equipment """
+    def test_try_to_get_a_non_existent_equipment_by_id(self):
+        """ Tries to get a non existent equipment by id """
 
         with assert_raises(NetworkAPIClientError):
-            self.api_equipment.delete([self.non_existent_eqpt])
+            self.api_equipment.get([self.non_existent_eqpt])
+
+    # search tests
 
     def test_search_an_equipment(self):
         """ Searches an equipment """
@@ -135,17 +91,49 @@ class TestApiequipment(TestCase):
 
         assert_equal(eqpts['total'], 0)
 
-    def test_get_an_equipment_by_id(self):
-        """ Get an eqptiroment by id """
 
-        eqpt = self.api_equipment.get([1])
-        assert_equal(eqpt['equipments'][0]['id'], 1)
+    # post tests
 
-    def test_try_to_get_a_non_existent_equipment_by_id(self):
-        """ Tries to get a non existent equipment by id """
+    def test_create_equipment(self):
+        """ Tries to create a new equipment """
+        eqpt_data = [{
+            'name': 'Eqpt Teste',
+            'maintenance': False,
+            'equipment_type': 1,
+            'model': 1
+        }]
 
-        with assert_raises(NetworkAPIClientError):
-            self.api_equipment.get([self.non_existent_eqpt])
+        eqpt_id = self.api_equipment.create(eqpt_data)[0]['id']
+        eqpt = self.api_equipment.get([eqpt_id])
+
+        assert_equal(eqpt['equipments'][0]['id'], eqpt_id)
+        self.api_equipment.delete([eqpt_id])
+
+    def test_create_many_equipments(self):
+        """ Tries to create many equipments """
+
+        eqpts_data = [{
+            'name': 'Eqpt Teste-1',
+            'maintenance': False,
+            'equipment_type': 1,
+            'model': 1
+        }, {
+            'name': 'Eqpt Teste-2',
+            'maintenance': False,
+            'equipment_type': 1,
+            'model': 1
+        }]
+
+        eqpts_ids = [e['id'] for e in self.api_equipment.create(eqpts_data)]
+        eqpts = self.api_equipment.get(eqpts_ids)
+
+        assert_equal(len(eqpts['equipments']), 2)
+        for eqpt in eqpts['equipments']:
+            assert_in(eqpt['id'], eqpts_ids)
+        self.api_equipment.delete(eqpts_ids)
+
+
+    # put tests
 
     def test_update_an_equipment(self):
         """ Updates an equipment """
@@ -182,3 +170,32 @@ class TestApiequipment(TestCase):
 
         with assert_raises(NetworkAPIClientError):
             self.api_equipment.update([eqpt_data])
+
+
+    # delete tests
+
+    def test_delete_equipment(self):
+        """ Tests if we can delete an equipment """
+
+        eqpt_data = [{
+            'name': 'Eqpt Teste',
+            'maintenance': False,
+            'equipment_type': 1,
+            'model': 1
+        }]
+
+        eqpt_id = self.api_equipment.create(eqpt_data)[0]['id']
+        assert_is_instance(self.api_equipment.get([eqpt_id]), dict)
+
+        self.api_equipment.delete([eqpt_id])
+        with assert_raises(NetworkAPIClientError):
+            self.api_equipment.get([eqpt_id])
+
+    def test_delete_a_non_existent_equipment(self):
+        """ Tries to delete a non existent equipment """
+
+        with assert_raises(NetworkAPIClientError):
+            self.api_equipment.delete([self.non_existent_eqpt])
+
+
+

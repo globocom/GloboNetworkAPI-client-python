@@ -213,6 +213,6 @@ class TestApiVrf(TestCase):
         pass
 
     def test_try_delete_vrf_assoc_to_vlan_eqpt(self):
-        """ Try to violate delete restriction when Vrf is associated to vlan-eqpt"""
+        """ Try to violate delete restriction when Vrf is associated to vlan-eqpt """
         pass
 
