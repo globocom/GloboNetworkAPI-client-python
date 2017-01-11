@@ -367,7 +367,7 @@ class TestApiEnvironmentVip(TestCase):
 
         env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
 
-        option_vip = 1
+        option_vip = 47
 
         self.client.create_option_vip().associate(option_vip, env_vip_id)
 
