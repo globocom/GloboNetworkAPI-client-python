@@ -41,7 +41,6 @@ class TestApiPool(TestCase):
             'default_port': 555,
             'environment': 1,
             'servicedownaction': {
-                'id': 6,
                 'name': 'drop'
             },
             'lb_method': 'least-conn',
@@ -74,7 +73,6 @@ class TestApiPool(TestCase):
             'default_port': 443,
             'environment': initial_data['id_env_of_pool'],
             'servicedownaction': {
-                'id': 5,
                 'name': 'none'
             },
             'lb_method': 'least-conn',
@@ -126,7 +124,6 @@ class TestApiPool(TestCase):
             'default_port': 443,
             'environment': initial_data['id_env_of_pool'],
             'servicedownaction': {
-                'id': 5,
                 'name': 'none'
             },
             'lb_method': 'least-conn',
@@ -177,7 +174,6 @@ class TestApiPool(TestCase):
             'default_port': 443,
             'environment': initial_data['id_env_of_pool'],
             'servicedownaction': {
-                'id': 5,
                 'name': 'none'
             },
             'lb_method': 'least-conn',
@@ -228,7 +224,6 @@ class TestApiPool(TestCase):
             'default_port': 443,
             'environment': initial_data['id_env_of_pool'],
             'servicedownaction': {
-                'id': 5,
                 'name': 'none'
             },
             'lb_method': 'least-conn',
@@ -271,13 +266,279 @@ class TestApiPool(TestCase):
 
     def test_create_pool_with_three_reals_and_weight_balancing(self):
         """ Tries to create a pool with three reals and weight balancing """
+        initial_data = self.create_initial_data(qt_reals=range(3), weights=[1,2,1])
 
-        pass
+        pool_data = [{
+            'identifier': 'Pool-Test-Network-API-With-Real-And-HTTPS-Prot',
+            'default_port': 443,
+            'environment': initial_data['id_env_of_pool'],
+            'servicedownaction': {
+                'name': 'none'
+            },
+            'lb_method': 'least-conn',
+            'healthcheck': {
+                'identifier': 'Test-Network-API-Ident',
+                'healthcheck_type': 'HTTP',
+                'healthcheck_request': '',
+                'healthcheck_expect': '',
+                'destination': '*:*'
+            },
+            'default_limit': 0,
+            'server_pool_members': [
+                {
+                    'ip': {
+                        'id': initial_data['ipsv4_of_reals'][0]['id'],
+                        'ip_formated': initial_data['ipsv4_of_reals'][0]['ip_formated']
+                    },
+                    'ipv6': None,
+                    'priority': 0,
+                    'weight': initial_data['weights'][0],
+                    'limit': 0,
+                    'port_real': 1000,
+                    'member_status': 7,
+                    'last_status_update_formated': None,
+                    'equipment': {
+                        'id': initial_data['id_reals'][0]
+                    },
+
+                },
+                {
+                    'ip': {
+                        'id': initial_data['ipsv4_of_reals'][1]['id'],
+                        'ip_formated': initial_data['ipsv4_of_reals'][1]['ip_formated']
+                    },
+                    'ipv6': None,
+                    'priority': 0,
+                    'weight': initial_data['weights'][1],
+                    'limit': 0,
+                    'port_real': 1001,
+                    'member_status': 7,
+                    'last_status_update_formated': None,
+                    'equipment': {
+                        'id': initial_data['id_reals'][1]
+                    },
+
+                },
+                {
+                    'ip': {
+                        'id': initial_data['ipsv4_of_reals'][2]['id'],
+                        'ip_formated': initial_data['ipsv4_of_reals'][2]['ip_formated']
+                    },
+                    'ipv6': None,
+                    'priority': 0,
+                    'weight': initial_data['weights'][2],
+                    'limit': 0,
+                    'port_real': 1002,
+                    'member_status': 7,
+                    'last_status_update_formated': None,
+                    'equipment': {
+                        'id': initial_data['id_reals'][2]
+                    },
+
+                }
+            ],
+            'pool_created': False
+        }]
+
+        pool_id = self.api_pool.create(pool_data)[0]['id']
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
 
     def test_create_pool_with_three_reals_and_least_conn_balancing(self):
         """ Tries to create a pool with three reals and least-conn balancing """
 
-        pass
+        initial_data = self.create_initial_data(qt_reals=range(3), priorities=[1,2,1])
+
+        pool_data = [{
+            'identifier': 'Pool-Test-Network-API-With-Real-And-HTTPS-Prot',
+            'default_port': 443,
+            'environment': initial_data['id_env_of_pool'],
+            'servicedownaction': {
+                'name': 'none'
+            },
+            'lb_method': 'least-conn',
+            'healthcheck': {
+                'identifier': 'Test-Network-API-Ident',
+                'healthcheck_type': 'HTTP',
+                'healthcheck_request': '',
+                'healthcheck_expect': '',
+                'destination': '*:*'
+            },
+            'default_limit': 0,
+            'server_pool_members': [
+                {
+                    'ip': {
+                        'id': initial_data['ipsv4_of_reals'][0]['id'],
+                        'ip_formated': initial_data['ipsv4_of_reals'][0]['ip_formated']
+                    },
+                    'ipv6': None,
+                    'priority':initial_data['priorities'][0],
+                    'weight': 0,
+                    'limit': 0,
+                    'port_real': 1000,
+                    'member_status': 7,
+                    'last_status_update_formated': None,
+                    'equipment': {
+                        'id': initial_data['id_reals'][0]
+                    },
+
+                },
+                {
+                    'ip': {
+                        'id': initial_data['ipsv4_of_reals'][1]['id'],
+                        'ip_formated': initial_data['ipsv4_of_reals'][1]['ip_formated']
+                    },
+                    'ipv6': None,
+                    'priority': initial_data['priorities'][1],
+                    'weight': 0,
+                    'limit': 0,
+                    'port_real': 1001,
+                    'member_status': 7,
+                    'last_status_update_formated': None,
+                    'equipment': {
+                        'id': initial_data['id_reals'][1]
+                    },
+
+                },
+                {
+                    'ip': {
+                        'id': initial_data['ipsv4_of_reals'][2]['id'],
+                        'ip_formated': initial_data['ipsv4_of_reals'][2]['ip_formated']
+                    },
+                    'ipv6': None,
+                    'priority': initial_data['priorities'][2],
+                    'weight': 0,
+                    'limit': 0,
+                    'port_real': 1002,
+                    'member_status': 7,
+                    'last_status_update_formated': None,
+                    'equipment': {
+                        'id': initial_data['id_reals'][2]
+                    },
+
+                }
+            ],
+            'pool_created': False
+        }]
+
+        pool_id = self.api_pool.create(pool_data)[0]['id']
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        import ipdb; ipdb.set_trace()
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+    # put tests - no deploy
+    def test_update_pool_without_reals(self):
+        """ Tries to update pool without reals adding two reals to it """
+
+        initial_data = self.create_initial_data(qt_reals=range(2))
+
+        pool_data = [{
+            'identifier': 'Pool-Test-Network-API-Without-Reals-And-HTTP-Prot',
+            'default_port': 443,
+            'environment': initial_data['id_env_of_pool'],
+            'servicedownaction': {
+                'name': 'none'
+            },
+            'lb_method': 'least-conn',
+            'healthcheck': {
+                'identifier': 'Test-Network-API-Ident',
+                'healthcheck_type': 'HTTP',
+                'healthcheck_request': '',
+                'healthcheck_expect': '',
+                'destination': '*:*'
+            },
+            'default_limit': 0,
+            'server_pool_members': [
+            ],
+            'pool_created': False
+        }]
+
+        pool_id = self.api_pool.create(pool_data)[0]['id']
+
+        new_pool_data = {
+            'id': pool_id,
+            'identifier': 'Pool-Test-Network-API-With-Real-And-TCP-Prot',
+            'default_port': 443,
+            'environment': initial_data['id_env_of_pool'],
+            'servicedownaction': {
+                'name': 'drop'
+            },
+            'lb_method': 'least-conn',
+            'healthcheck': {
+                'identifier': 'Test-Network-API-Ident',
+                'healthcheck_type': 'TCP',
+                'healthcheck_request': '',
+                'healthcheck_expect': '',
+                'destination': '*:*'
+            },
+            'default_limit': 0,
+            'server_pool_members': [
+                {
+                    'id': None,
+                    'ip': {
+                        'id': initial_data['ipsv4_of_reals'][0]['id'],
+                        'ip_formated': initial_data['ipsv4_of_reals'][0]['ip_formated']
+                    },
+                    'ipv6': None,
+                    'priority': 0,
+                    'weight': 0,
+                    'limit': 0,
+                    'port_real': 1000,
+                    'member_status': 7,
+                    'last_status_update_formated': None,
+                    'equipment': {
+                        'id': initial_data['id_reals'][0]
+                    },
+
+                },
+                {
+                    'id': None,
+                    'ip': {
+                        'id': initial_data['ipsv4_of_reals'][1]['id'],
+                        'ip_formated': initial_data['ipsv4_of_reals'][1]['ip_formated']
+                    },
+                    'ipv6': None,
+                    'priority': 0,
+                    'weight': 0,
+                    'limit': 0,
+                    'port_real': 1001,
+                    'member_status': 7,
+                    'last_status_update_formated': None,
+                    'equipment': {
+                        'id': initial_data['id_reals'][1]
+                    },
+
+                }
+            ],
+            'pool_created': False
+        }
+
+        self.api_pool.update([new_pool_data])
+
+        pool = self.api_pool.get([pool_id])['server_pools'][0]
+
+        assert_equal(pool['identifier'], new_pool_data['identifier'])
+        assert_equal(pool['servicedownaction']['name'], new_pool_data['servicedownaction']['name'])
+        assert_equal(pool['healthcheck']['healthcheck_type'], new_pool_data['healthcheck']['healthcheck_type'])
+
+        import ipdb; ipdb.set_trace()
+
+        assert_equal(len(pool['server_pool_members']), 2)
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+
 
     def create_environment_vip(self, id_env):
         env_vip_data = [
@@ -456,7 +717,19 @@ class TestApiPool(TestCase):
         id_ip = self.api_ipv6.create(ip_data)[0]['id']
         return self.api_ipv6.get([id_ip], fields=['id', 'ip_formated'])['ips'][0]
 
-    def create_initial_data(self, qt_reals):
+    def create_initial_data(self, **kwargs):
+
+        weights = None
+        priorities = None
+
+        for key in kwargs:
+            if key == 'qt_reals':
+                qt_reals = kwargs[key]
+            elif key == 'weights':
+                weights = kwargs[key]
+            elif key == 'priorities':
+                priorities = kwargs[key]
+
 
         id_env_of_eqpt = self.create_environment_of_equipment()
         id_env_of_pool = self.create_environment_of_pool()
@@ -495,7 +768,9 @@ class TestApiPool(TestCase):
             'id_reals': id_reals,
             'id_load_balancer': id_load_balancer,
             'ipsv4_of_reals': ipsv4_of_reals,
-            'ipsv6_of_reals': ipsv6_of_reals
+            'ipsv6_of_reals': ipsv6_of_reals,
+            'weights': weights if weights is not None else None ,
+            'priorities': priorities if priorities is not None else None
         }
 
 
