@@ -28,6 +28,9 @@ class TestApiPool(TestCase):
         self.api_network_ipv6 = self.client.create_api_network_ipv6()
         self.api_ipv4 = self.client.create_api_ipv4()
         self.api_ipv6 = self.client.create_api_ipv6()
+        self.api_pool_deploy = self.client.create_api_pool_deploy()
+
+
 
     def tearDown(self):
         pass
@@ -37,7 +40,7 @@ class TestApiPool(TestCase):
     def test_create_pool_without_reals(self):
         """ Tries to create a pool without reals """
 
-        pool_data = self.build_pool(id_env_of_pool=1, server_pool_members=[])
+        pool_data = self.build_pool(id_env_of_pool=1)
 
         pool_id = self.api_pool.create([pool_data])[0]['id']
 
@@ -49,14 +52,15 @@ class TestApiPool(TestCase):
     def test_create_pool_with_one_real_and_https_protocol(self):
         """ Tries to create a pool with one real and HTTPS protocol in healthcheck """
 
-        initial_data = self.create_initial_data(qt_reals=range(1))
+        qt_reals = range(1)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
 
         server_pool_members = [
             self.build_server_pool_member(
                 ip__id=initial_data['ipsv4_of_reals'][i]['id'],
                 ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
                 port_real=1000 +
-                i) for i in range(1)]
+                i) for i in qt_reals]
 
         healthcheck_healthcheck_type = 'HTTPS'
 
@@ -81,14 +85,15 @@ class TestApiPool(TestCase):
     def test_create_pool_with_one_real_and_tcp_protocol(self):
         """ Tries to create a pool with one real and TCP protocol in healthcheck """
 
-        initial_data = self.create_initial_data(qt_reals=range(1))
+        qt_reals = range(1)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
 
         server_pool_members = [
             self.build_server_pool_member(
                 ip__id=initial_data['ipsv4_of_reals'][i]['id'],
                 ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
                 port_real=1000 +
-                i) for i in range(1)]
+                i) for i in qt_reals]
 
         healthcheck_healthcheck_type = 'TCP'
 
@@ -112,14 +117,15 @@ class TestApiPool(TestCase):
     def test_create_pool_with_one_real_and_udp_protocol(self):
         """ Tries to create a pool with one real and UDP protocol in healthcheck """
 
-        initial_data = self.create_initial_data(qt_reals=range(1))
+        qt_reals = range(1)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
 
         server_pool_members = [
             self.build_server_pool_member(
                 ip__id=initial_data['ipsv4_of_reals'][i]['id'],
                 ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
                 port_real=1000 +
-                i) for i in range(1)]
+                i) for i in qt_reals]
 
         healthcheck_healthcheck_type = 'UDP'
 
@@ -144,14 +150,15 @@ class TestApiPool(TestCase):
     def test_create_pool_with_one_real_and_http_protocol(self):
         """ Tries to create a pool with one real and HTTP protocol in healthcheck"""
 
-        initial_data = self.create_initial_data(qt_reals=range(1))
+        qt_reals = range(1)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
 
         server_pool_members = [
             self.build_server_pool_member(
                 ip__id=initial_data['ipsv4_of_reals'][i]['id'],
                 ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
                 port_real=1000 +
-                i) for i in range(1)]
+                i) for i in qt_reals]
 
         healthcheck_healthcheck_type = 'UDP'
 
@@ -237,6 +244,7 @@ class TestApiPool(TestCase):
         self.delete_initial_data(initial_data)
 
     # put tests - no deploy
+
     def test_update_pool_without_reals(self):
         """ Tries to update pool without reals adding two reals to it """
 
@@ -283,6 +291,7 @@ class TestApiPool(TestCase):
 
     def test_update_pool_with_reals_removing_them_after(self):
         """ Tries to update pool with reals removing them after """
+
         qt_reals = range(2)
 
         initial_data = self.create_initial_data(qt_reals=qt_reals)
@@ -388,7 +397,6 @@ class TestApiPool(TestCase):
             id_env_of_pool=initial_data['id_env_of_pool'],
             server_pool_members=server_pool_members)
 
-
         self.api_pool.update([new_pool_data])
 
         pool = self.api_pool.get([pool_id])['server_pools'][0]
@@ -414,7 +422,7 @@ class TestApiPool(TestCase):
             self.api_pool.get([pool_id])
 
     def test_delete_pool_with_reals(self):
-        """ Tries to delete pool with reals """
+        """ Tries to delete pool with five reals """
 
         qt_reals = range(5)
 
@@ -441,9 +449,473 @@ class TestApiPool(TestCase):
 
     # deploy tests
 
+    def test_deploy_pool_without_reals(self):
+        """ Tries to deploy a pool without reals """
+
+        pool_data = self.build_pool(id_env_of_pool=1)
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+    def test_deploy_pool_with_one_real_and_https_protocol(self):
+        """ Tries to deploy a pool with one real and HTTPS protocol in healthcheck """
+
+        qt_reals = range(1)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                          i) for i in qt_reals]
+
+        healthcheck_healthcheck_type = 'HTTPS'
+
+        pool_data = self.build_pool(
+            server_pool_members=server_pool_members,
+            healthcheck__healthcheck_type=healthcheck_healthcheck_type,
+            id_env_of_pool=initial_data['id_env_of_pool'])
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        assert_equal(
+            pool['server_pools'][0]['healthcheck']['healthcheck_type'],
+            healthcheck_healthcheck_type)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+    def test_deploy_pool_with_one_real_and_tcp_protocol(self):
+        """ Tries to deploy a pool with one real and TCP protocol in healthcheck """
+
+        qt_reals = range(1)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                          i) for i in qt_reals]
+
+        healthcheck_healthcheck_type = 'TCP'
+
+        pool_data = self.build_pool(
+            server_pool_members=server_pool_members,
+            healthcheck__healthcheck_type=healthcheck_healthcheck_type,
+            id_env_of_pool=initial_data['id_env_of_pool'])
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        assert_equal(
+            pool['server_pools'][0]['healthcheck']['healthcheck_type'],
+            healthcheck_healthcheck_type)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+    def test_deploy_pool_with_one_real_and_udp_protocol(self):
+        """ Tries to deploy a pool with one real and UDP protocol in healthcheck """
+
+        qt_reals = range(1)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                          i) for i in qt_reals]
+
+        healthcheck_healthcheck_type = 'UDP'
+
+        pool_data = self.build_pool(
+            server_pool_members=server_pool_members,
+            healthcheck__healthcheck_type=healthcheck_healthcheck_type,
+            id_env_of_pool=initial_data['id_env_of_pool'])
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        assert_equal(
+            pool['server_pools'][0]['healthcheck']['healthcheck_type'],
+            healthcheck_healthcheck_type)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+    def test_deploy_pool_with_one_real_and_http_protocol(self):
+        """ Tries to deploy a pool with one real and HTTP protocol in healthcheck """
+
+        qt_reals = range(1)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                          i) for i in qt_reals]
+
+        healthcheck_healthcheck_type = 'HTTP'
+
+        pool_data = self.build_pool(
+            server_pool_members=server_pool_members,
+            healthcheck__healthcheck_type=healthcheck_healthcheck_type,
+            id_env_of_pool=initial_data['id_env_of_pool'])
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        assert_equal(
+            pool['server_pools'][0]['healthcheck']['healthcheck_type'],
+            healthcheck_healthcheck_type)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+    def test_deploy_pool_with_three_reals_and_weight_balancing(self):
+        """ Tries to deploy a pool with three reals and weight balancing """
+
+        qt_reals = range(3)
+        initial_data = self.create_initial_data(
+            qt_reals=qt_reals,
+            weights=[
+                1,
+                2,
+                1])
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 + i,
+                weight=initial_data['weights'][i]) for i in qt_reals]
+
+        pool_data = self.build_pool(
+            server_pool_members=server_pool_members,
+            id_env_of_pool=initial_data['id_env_of_pool'])
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+    def test_deploy_pool_with_three_reals_and_least_conn_balancing(self):
+        """ Tries to deploy a pool with three reals and least-conn balancing """
+        qt_reals = range(3)
+
+        initial_data = self.create_initial_data(
+            qt_reals=qt_reals,
+            priorities=[
+                1,
+                2,
+                1])
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 + i,
+                priority=initial_data['priorities'][i]) for i in qt_reals]
+
+        pool_data = self.build_pool(
+            server_pool_members=server_pool_members,
+            id_env_of_pool=initial_data['id_env_of_pool'])
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
     # update deploy tests
 
+    def test_deploy_update_pool_without_reals(self):
+        """ Tries to update deployed pool without reals adding two reals to it """
+
+        qt_reals = range(2)
+
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        pool_data = self.build_pool(
+            id_env_of_pool=initial_data['id_env_of_pool'])
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        self.api_pool_deploy.create([pool_id])
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                i) for i in qt_reals]
+
+        new_pool_data = self.build_pool(
+            id=pool_id,
+            id_env_of_pool=initial_data['id_env_of_pool'],
+            identifier='Pool-New-Test',
+            servicedownaction__name='drop',
+            healthcheck__healthcheck_type='HTTPS',
+            server_pool_members=server_pool_members)
+
+        self.api_pool_deploy.update([new_pool_data])
+
+        pool = self.api_pool.get([pool_id])['server_pools'][0]
+
+        assert_equal(pool['identifier'], new_pool_data['identifier'])
+        assert_equal(
+            pool['servicedownaction']['name'],
+            new_pool_data['servicedownaction']['name'])
+        assert_equal(
+            pool['healthcheck']['healthcheck_type'],
+            new_pool_data['healthcheck']['healthcheck_type'])
+
+        assert_equal(len(pool['server_pool_members']), 2)
+
+        self.api_pool_deploy.delete([pool_id])
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+    def test_deploy_update_pool_with_reals_removing_them_after(self):
+        """ Tries to update deployed pool with reals removing them after """
+        qt_reals = range(2)
+
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                i) for i in qt_reals]
+
+        pool_data = self.build_pool(
+            id_env_of_pool=initial_data['id_env_of_pool'],
+            server_pool_members=server_pool_members)
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        self.api_pool_deploy.create([pool_id])
+
+        new_pool_data = self.build_pool(
+            id=pool_id,
+            id_env_of_pool=initial_data['id_env_of_pool'])
+
+        self.api_pool_deploy.update([new_pool_data])
+
+        pool = self.api_pool.get([pool_id])['server_pools'][0]
+
+        assert_equal(len(pool['server_pool_members']), 0)
+
+        self.api_pool_deploy.delete([pool_id])
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+    def test_deploy_update_pool_removing_half_of_reals(self):
+        """ Tries to remove half of the reals in a deployed server pool """
+
+        qt_reals = range(4)
+
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                i) for i in qt_reals]
+
+        pool_data = self.build_pool(
+            id_env_of_pool=initial_data['id_env_of_pool'],
+            server_pool_members=server_pool_members)
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        self.api_pool_deploy.create([pool_id])
+
+        half = range(2)
+        for i in half:
+            server_pool_members.pop()
+
+        new_pool_data = self.build_pool(
+            id=pool_id,
+            id_env_of_pool=initial_data['id_env_of_pool'],
+            server_pool_members=server_pool_members)
+
+        self.api_pool_deploy.update([new_pool_data])
+
+        pool = self.api_pool.get([pool_id])['server_pools'][0]
+
+        assert_equal(len(pool['server_pool_members']), 2)
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
+    def test_deploy_update_pool_removing_half_of_reals_and_adding_another(self):
+        """ Tries to remove half of the reals in a deployed server pool and at same time add a new real """
+
+        qt_reals = range(5)
+
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                i) for i in range(4)]
+
+        pool_data = self.build_pool(
+            id_env_of_pool=initial_data['id_env_of_pool'],
+            server_pool_members=server_pool_members)
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+        self.api_pool_deploy.create([pool_id])
+
+        half = range(2)
+        for i in half:
+            server_pool_members.pop()
+
+        server_pool_members += [self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                i) for i in range(4,5)]
+
+        new_pool_data = self.build_pool(
+            id=pool_id,
+            id_env_of_pool=initial_data['id_env_of_pool'],
+            server_pool_members=server_pool_members)
+
+
+        self.api_pool_deploy.update([new_pool_data])
+
+        pool = self.api_pool.get([pool_id])['server_pools'][0]
+
+        assert_equal(len(pool['server_pool_members']), 3)
+
+        self.api_pool_deploy.delete([pool_id])
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
+
     # delete deploy tests
+
+    def test_undeploy_pool_without_reals(self):
+        """ Tries to undeploy a pool without reals """
+
+        pool_data = self.build_pool(id_env_of_pool=1)
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+    def test_undeploy_pool_with_reals(self):
+        """ Tries to undeploy a pool with two reals """
+
+        qt_reals = range(2)
+        initial_data = self.create_initial_data(qt_reals=qt_reals)
+
+        server_pool_members = [
+            self.build_server_pool_member(
+                ip__id=initial_data['ipsv4_of_reals'][i]['id'],
+                ip__ip_formated=initial_data['ipsv4_of_reals'][i]['ip_formated'],
+                port_real=1000 +
+                          i) for i in qt_reals]
+
+        healthcheck_healthcheck_type = 'HTTP'
+
+        pool_data = self.build_pool(
+            server_pool_members=server_pool_members,
+            healthcheck__healthcheck_type=healthcheck_healthcheck_type,
+            id_env_of_pool=initial_data['id_env_of_pool'])
+
+        pool_id = self.api_pool.create([pool_data])[0]['id']
+
+        pool = self.api_pool.get([pool_id])
+
+        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        assert_equal(
+            pool['server_pools'][0]['healthcheck']['healthcheck_type'],
+            healthcheck_healthcheck_type)
+
+        self.api_pool_deploy.create([pool_id])
+
+        self.api_pool_deploy.delete([pool_id])
+
+        self.api_pool.delete([pool_id])
+
+        self.delete_initial_data(initial_data)
 
     def create_environment_vip(self, id_env):
         env_vip_data = [
@@ -776,8 +1248,6 @@ class TestApiPool(TestCase):
             'default_limit': 0,
             'server_pool_members': server_pool_members if server_pool_members is not None else [],
         }
-
-        # return self.api_pool.create([pool_data])[0]['id']
 
     def build_server_pool_member(self, **kwargs):
 
