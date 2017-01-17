@@ -38,7 +38,7 @@ class ApiPoolDeploy(ApiGenericClient):
         Method to undeploy pool's by their ids
 
         :param ids: Identifiers of deployed pool's
-        :return: None
+        :return: Empty Dict
         """
         url = build_uri_with_ids('api/v3/pool/deploy/%s/', ids)
 
@@ -49,7 +49,7 @@ class ApiPoolDeploy(ApiGenericClient):
         Method to update deployed pool's
 
         :param pools: List containing deployed pool's desired to updated
-        :return: None
+        :return: Empty Dict
         """
 
         data = {'server_pools': pools}
@@ -64,7 +64,7 @@ class ApiPoolDeploy(ApiGenericClient):
         Method to deploy pool's
 
         :param pools: Identifiers of pool's desired to be deployed
-        :return: None
+        :return: Empty Dict
         """
 
         url = build_uri_with_ids('api/v3/pool/deploy/%s/', ids)
