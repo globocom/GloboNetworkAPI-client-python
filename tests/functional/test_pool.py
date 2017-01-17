@@ -1042,6 +1042,7 @@ class TestApiPool(TestCase):
 
         weights = None
         priorities = None
+        qt_reals = 0
 
         for key in kwargs:
             if key == 'qt_reals':

@@ -230,134 +230,20 @@ class TestApiEnvironmentVip(TestCase):
     def test_try_delete_environment_vip_assoc_with_netipv4(self):
         """ Try to violate delete restriction on environment vip removal when env vip is associated with some network ipv4 """
 
-        vlan_data = {
-            'name': 'Vlan Test',
-            'environment': 6,
-            'description': '',
-            'acl_file_name': '',
-            'acl_valida': True,
-            'acl_file_name_v6': None,
-            'acl_valida_v6': False,
-            'active': False,
-            'vrf': None,
-            'acl_draft': '1',
-            'acl_draft_v6': None
-        }
-
-        vlan_id = self.api_vlan.create([vlan_data])[0]['id']
-
-        env_vip_data = {
-            'finalidade_txt': 'Fin-Test',
-            'cliente_txt': 'ClientTxt-Test',
-            'ambiente_p44_txt': 'EnvP44Txt-Test',
-            'description': 'Description-Test',
-        }
-
-        env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
-
-        netipv4_data = {
-            'vlan': vlan_id,
-            'network_type': 2,
-            'environmentvip': env_vip_id
-        }
-
-        netipv4_id = self.api_network_ipv4.create([netipv4_data])[0]['id']
-
         with assert_raises(Exception):
-            self.api_environment_vip.delete([env_vip_id])
+            self.api_environment_vip.delete([13])
 
-        self.api_network_ipv4.delete([netipv4_id])
-        self.api_vlan.delete([vlan_id])
-        self.api_environment_vip.delete([env_vip_id])
 
     def test_try_delete_environment_vip_assoc_with_netipv6(self):
         """ Try to violate delete restriction on environment vip removal when env vip is associated with some network ipv6"""
 
-        vlan_data = {
-            'name': 'Vlan Test',
-            'environment': 6,
-            'description': '',
-            'acl_file_name': '',
-            'acl_valida': True,
-            'acl_file_name_v6': None,
-            'acl_valida_v6': False,
-            'active': False,
-            'vrf': None,
-            'acl_draft': '1',
-            'acl_draft_v6': None
-        }
-
-        vlan_id = self.api_vlan.create([vlan_data])[0]['id']
-
-        env_vip_data = {
-            'finalidade_txt': 'Fin-Test',
-            'cliente_txt': 'ClientTxt-Test',
-            'ambiente_p44_txt': 'EnvP44Txt-Test',
-            'description': 'Description-Test',
-        }
-
-        env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
-
-        netipv6_data = {
-            'vlan': vlan_id,
-            'network_type': 2,
-            'environmentvip': env_vip_id
-        }
-
-        netipv6_id = self.api_network_ipv6.create([netipv6_data])[0]['id']
-
         with assert_raises(Exception):
-            self.api_environment_vip.delete([env_vip_id])
+            self.api_environment_vip.delete([13])
 
-        self.api_network_ipv6.delete([netipv6_id])
-        self.api_vlan.delete([vlan_id])
-        self.api_environment_vip.delete([env_vip_id])
-
-    def test_try_delete_environment_vip_assoc_with_netipv4_and_netipv6(self):
-        """ Try to violate delete restriction on environment vip removal when env vip is associated with some ipv4 and ipv6 network """
-
-        vlan_data = {
-            'name': 'Vlan Test',
-            'environment': 6,
-            'description': '',
-            'acl_file_name': '',
-            'acl_valida': True,
-            'acl_file_name_v6': None,
-            'acl_valida_v6': False,
-            'active': False,
-            'vrf': None,
-            'acl_draft': '1',
-            'acl_draft_v6': None
-        }
-
-        vlan_id = self.api_vlan.create([vlan_data])[0]['id']
-
-        env_vip_data = {
-            'finalidade_txt': 'Fin-Test',
-            'cliente_txt': 'ClientTxt-Test',
-            'ambiente_p44_txt': 'EnvP44Txt-Test',
-            'description': 'Description-Test',
-        }
-
-        env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
-
-        netipv4_data = {
-            'vlan': vlan_id,
-            'network_type': 2,
-            'environmentvip': env_vip_id
-        }
-
-        netipv4_id = self.api_network_ipv4.create([netipv4_data])[0]['id']
-
-        with assert_raises(Exception):
-            self.api_environment_vip.delete([env_vip_id])
-
-        self.api_network_ipv4.delete([netipv4_id])
-        self.api_vlan.delete([vlan_id])
-        self.api_environment_vip.delete([env_vip_id])
 
     def test_try_delete_environment_vip_assoc_to_option_vip(self):
         """ Try to delete environment vip associated to some option vip """
+
         env_vip_data = {
             'finalidade_txt': 'Fin-Test',
             'cliente_txt': 'ClientTxt-Test',
