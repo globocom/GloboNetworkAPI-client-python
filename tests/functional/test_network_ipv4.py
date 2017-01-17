@@ -30,7 +30,7 @@ class TestNetworkIPv4(TestCase):
         networks = self.api_net_ipv4.list()
 
         assert_is_instance(networks, list)
-        assert_equal(len(networks), 5)
+        assert_equal(len(networks), 7)
 
     def test_create_new_ipv4_network_dinamically_by_prefix(self):
         """ Create a new IPv4 network """
