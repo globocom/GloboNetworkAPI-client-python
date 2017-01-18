@@ -30,7 +30,6 @@ class TestApiequipment(TestCase):
     def tearDown(self):
         pass
 
-
     # get tests
 
     def test_get_an_equipment_by_id(self):
@@ -66,7 +65,7 @@ class TestApiequipment(TestCase):
     def test_search_a_list_of_equipments(self):
         """ Searches a list of equipment """
 
-        equipment_types = [2,3]
+        equipment_types = [2, 3]
 
         search_data = {
             'extends_search': [{
@@ -90,7 +89,6 @@ class TestApiequipment(TestCase):
         eqpts = self.api_equipment.search(search=search_data)
 
         assert_equal(eqpts['total'], 0)
-
 
     # post tests
 
@@ -132,7 +130,6 @@ class TestApiequipment(TestCase):
             assert_in(eqpt['id'], eqpts_ids)
         self.api_equipment.delete(eqpts_ids)
 
-
     # put tests
 
     def test_update_an_equipment(self):
@@ -171,7 +168,6 @@ class TestApiequipment(TestCase):
         with assert_raises(NetworkAPIClientError):
             self.api_equipment.update([eqpt_data])
 
-
     # delete tests
 
     def test_delete_equipment(self):
@@ -196,6 +192,3 @@ class TestApiequipment(TestCase):
 
         with assert_raises(NetworkAPIClientError):
             self.api_equipment.delete([self.non_existent_eqpt])
-
-
-

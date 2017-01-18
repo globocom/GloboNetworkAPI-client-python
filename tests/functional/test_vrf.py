@@ -207,12 +207,12 @@ class TestApiVrf(TestCase):
         self.api_environment.delete([env_id])
         self.api_vrf.delete([vrf_id])
 
-
     def test_try_delete_vrf_assoc_to_equipment(self):
         """ Try to delete vrf associated to equipment """
+        # TODO Need more things to continue
         pass
 
     def test_try_delete_vrf_assoc_to_vlan_eqpt(self):
         """ Try to violate delete restriction when Vrf is associated to vlan-eqpt """
+        # TODO Need more things to continue
         pass
-

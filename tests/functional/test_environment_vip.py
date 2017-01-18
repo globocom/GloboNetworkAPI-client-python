@@ -8,7 +8,7 @@ from nose.tools import assert_is_instance
 from nose.tools import assert_raises
 
 from networkapiclient.ClientFactory import ClientFactory
-from networkapiclient.exception import NetworkAPIClientError, EnvironmentVipNotFoundError
+from networkapiclient.exception import NetworkAPIClientError
 
 NETWORKAPI_URL = os.getenv('NETWORKAPI_URL', 'http://10.0.0.2:8000/')
 NETWORKAPI_USER = os.getenv('NETWORKAPI_USER', 'networkapi')
@@ -62,8 +62,12 @@ class TestApiEnvironmentVip(TestCase):
         envs_vip = self.api_environment_vip.search(search=search_data)
 
         assert_equal(envs_vip['total'], 1)
-        assert_equal(envs_vip['environments_vip'][0]['finalidade_txt'], finalidade_txt)
-        assert_equal(envs_vip['environments_vip'][0]['cliente_txt'], cliente_txt)
+        assert_equal(
+            envs_vip['environments_vip'][0]['finalidade_txt'],
+            finalidade_txt)
+        assert_equal(
+            envs_vip['environments_vip'][0]['cliente_txt'],
+            cliente_txt)
 
     def test_search_a_list_of_environment_vips(self):
         """ Search expecting list with two environment vips """
@@ -130,7 +134,8 @@ class TestApiEnvironmentVip(TestCase):
             'description': 'Description-2',
         }]
 
-        envs_vip_ids = [e['id'] for e in self.api_environment_vip.create(envs_vip_data)]
+        envs_vip_ids = self.api_environment_vip.create(envs_vip_data)
+        envs_vip_ids = [e['id'] for e in envs_vip_ids]
         envs_vip = self.api_environment_vip.get(envs_vip_ids)
 
         assert_equal(len(envs_vip['environments_vip']), 2)
@@ -151,14 +156,16 @@ class TestApiEnvironmentVip(TestCase):
         }
 
         env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
-        env_vip = self.api_environment_vip.get([env_vip_id])['environments_vip'][0]
+        env_vip = self.api_environment_vip.get(
+            [env_vip_id])['environments_vip'][0]
 
         assert_equal(env_vip['id'], env_vip_id)
 
         new_finality_txt = env_vip['finalidade_txt'] = 'Fin-Updated'
 
         self.api_environment_vip.update([env_vip])
-        env_vip = self.api_environment_vip.get([env_vip_id])['environments_vip'][0]
+        env_vip = self.api_environment_vip.get(
+            [env_vip_id])['environments_vip'][0]
 
         assert_equal(env_vip['finalidade_txt'], new_finality_txt)
         self.api_environment_vip.delete([env_vip_id])
@@ -212,7 +219,8 @@ class TestApiEnvironmentVip(TestCase):
             }
         ]
 
-        envs_vip_id = [e['id'] for e in self.api_environment_vip.create(envs_vip_data)]
+        envs_vip_id = [e['id']
+                       for e in self.api_environment_vip.create(envs_vip_data)]
         assert_is_instance(self.api_environment_vip.get(envs_vip_id), dict)
 
         self.api_environment_vip.delete(envs_vip_id)
@@ -228,18 +236,20 @@ class TestApiEnvironmentVip(TestCase):
             self.api_environment_vip.delete([self.non_existent_env_vip_id])
 
     def test_try_delete_environment_vip_assoc_with_netipv4(self):
-        """ Try to violate delete restriction on environment vip removal when env vip is associated with some network ipv4 """
+        """ Try to violate delete restriction on environment vip removal when
+            env vip is associated with some network ipv4
+        """
 
         with assert_raises(Exception):
             self.api_environment_vip.delete([13])
-
 
     def test_try_delete_environment_vip_assoc_with_netipv6(self):
-        """ Try to violate delete restriction on environment vip removal when env vip is associated with some network ipv6"""
+        """ Try to violate delete restriction on environment vip removal when
+            env vip is associated with some network ipv6
+        """
 
         with assert_raises(Exception):
             self.api_environment_vip.delete([13])
-
 
     def test_try_delete_environment_vip_assoc_to_option_vip(self):
         """ Try to delete environment vip associated to some option vip """
@@ -262,7 +272,6 @@ class TestApiEnvironmentVip(TestCase):
         with assert_raises(NetworkAPIClientError):
             self.api_environment_vip.get([env_vip_id])
 
-
     def test_try_delete_environment_vip_assoc_to_env(self):
         """ Try to delete environment vip associated to some environment """
 
@@ -284,9 +293,10 @@ class TestApiEnvironmentVip(TestCase):
         with assert_raises(NetworkAPIClientError):
             self.api_environment_vip.get([env_vip_id])
 
-
     def test_try_delete_environment_vip_assoc_to_options_vip_and_envs(self):
-        """ Try to delete environment vip associated to some options vip and environments """
+        """ Try to delete environment vip associated to some options vip
+            and environments
+        """
 
         env_vip_data = {
             'finalidade_txt': 'Fin-Test',
