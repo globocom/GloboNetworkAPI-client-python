@@ -59,8 +59,10 @@ class TestApiequipment(TestCase):
 
         eqpts = self.api_equipment.search(search=search_data)
 
-        assert_equal(eqpts['total'], 1)
-        assert_equal(eqpts['equipments'][0]['equipment_type'], equipment_type)
+        assert_equal(eqpts['total'], 6)
+
+        for eqpt in eqpts['equipments']:
+            assert_equal(eqpt['equipment_type'], equipment_type)
 
     def test_search_a_list_of_equipments(self):
         """ Searches a list of equipment """
@@ -74,7 +76,7 @@ class TestApiequipment(TestCase):
         }
         eqpts = self.api_equipment.search(search=search_data)
 
-        assert_equal(eqpts['total'], 4)
+        assert_equal(eqpts['total'], 9)
         for eqpt in eqpts['equipments']:
             assert_in(eqpt['equipment_type'], equipment_types)
 
