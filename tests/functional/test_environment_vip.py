@@ -176,7 +176,9 @@ class TestApiEnvironmentVip(TestCase):
         env_vip_data = {
             'id': self.non_existent_env_vip_id,
             'finalidade_txt': 'Green',
-            'cliente_txt': 'Red'
+            'cliente_txt': 'Red',
+            'description': 'Red',
+            'ambiente_p44_txt': 'Red',
         }
 
         with assert_raises(NetworkAPIClientError):
