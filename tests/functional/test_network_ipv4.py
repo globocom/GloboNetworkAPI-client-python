@@ -3,6 +3,8 @@ import os
 from unittest import TestCase
 
 from nose.tools import assert_equal
+from nose.tools import assert_greater
+from nose.tools import assert_in
 from nose.tools import assert_is_instance
 from nose.tools import assert_raises
 from nose.tools import assert_true
@@ -30,7 +32,7 @@ class TestNetworkIPv4(TestCase):
         networks = self.api_net_ipv4.list()
 
         assert_is_instance(networks, list)
-        assert_equal(len(networks), 7)
+        assert_greater(len(networks), 1)
 
     def test_create_new_ipv4_network_dinamically_by_prefix(self):
         """ Create a new IPv4 network """
@@ -148,3 +150,27 @@ class TestNetworkIPv4(TestCase):
 
         network = self.api_net_ipv4.get([data['id']])['networks'][0]
         assert_true(network['active'])
+
+    def test_create_network_on_an_environment_that_have_a_router(self):
+        """ Creates a network on an environment that have a router """
+
+        data = {
+            'vlan': 10,
+            'network_type': 2,
+        }
+        expected_equipament_id = 12  # This equipament is a router
+
+        network_id = self.api_net_ipv4.create([data])[0]['id']
+
+        api_ip = self.client.create_api_ipv4()
+        network = api_ip.search(
+            search={'networkipv4': network_id},
+            include=['equipments']
+        )
+        equipments_ids = []
+        for ip in network['ips']:
+            for equipment in ip['equipments']:
+                equipments_ids.append(equipment['id'])
+
+        assert_in(expected_equipament_id, equipments_ids)
+        self.api_net_ipv4.delete([network_id])
