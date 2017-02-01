@@ -174,3 +174,29 @@ class TestNetworkIPv4(TestCase):
 
         assert_in(expected_equipament_id, equipments_ids)
         self.api_net_ipv4.delete([network_id])
+
+    def test_create_network_on_an_environment_that_have_two_routers(self):
+        """ Creates a network on an environment that have two routers """
+        data = {
+            'vlan': 3,
+            'network_type': 2,
+        }
+        expected_equipaments_id = (26, 27)  # These equipaments are routers
+
+        network_id = self.api_net_ipv4.create([data])[0]['id']
+
+        api_ip = self.client.create_api_ipv4()
+        network = api_ip.search(
+            search={'networkipv4': network_id},
+            include=['equipments']
+        )
+
+        equipments_ids = []
+        for ip in network['ips']:
+            for equipment in ip['equipments']:
+                equipments_ids.append(equipment['id'])
+
+        assert_in(expected_equipaments_id[0], equipments_ids)
+        assert_in(expected_equipaments_id[1], equipments_ids)
+
+        self.api_net_ipv4.delete([network_id])
