@@ -69,6 +69,9 @@ from networkapiclient.Usuario import Usuario
 from networkapiclient.UsuarioGrupo import UsuarioGrupo
 from networkapiclient.Vip import Vip
 from networkapiclient.Vlan import Vlan
+from networkapiclient.ApiObjectType import ApiObjectType
+from networkapiclient.ApiObjectGroupPermission import ApiObjectGroupPermission
+from networkapiclient.ApiObjectGroupPermissionGeneral import ApiObjectGroupPermissionGeneral
 # from networkapiclient.ApiOptionPool import ApiOptionPool
 
 
@@ -214,6 +217,33 @@ class ClientFactory(object):
             self.password,
             self.user_ldap,
             self.log_level)
+
+    def create_api_object_type(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectType(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_object_group_permission(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectGroupPermission(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_object_group_permission_general(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectGroupPermissionGeneral(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
 
     def create_api_vlan(self):
         """Get an instance of Api Vlan services facade."""
