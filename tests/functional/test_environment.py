@@ -31,7 +31,7 @@ class TestApiEnvironment(TestCase):
         env_data = {
             'grupo_l3': 32,
             'ambiente_logico': 12,
-            'divisao_dc': 21,
+            'divisao_dc': 23,
             'default_vrf': 1,
         }
 
@@ -47,7 +47,7 @@ class TestApiEnvironment(TestCase):
         envs_data = [{
             'grupo_l3': 32,
             'ambiente_logico': 12,
-            'divisao_dc': 21,
+            'divisao_dc': 23,
             'default_vrf': 1,
         }, {
             'grupo_l3': 32,
@@ -83,7 +83,7 @@ class TestApiEnvironment(TestCase):
         env_data = {
             'grupo_l3': 32,
             'ambiente_logico': 12,
-            'divisao_dc': 21,
+            'divisao_dc': 23,
             'default_vrf': 1,
         }
 
