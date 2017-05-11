@@ -208,8 +208,7 @@ class Rack(GenericClient):
         """  
 
         if not is_valid_int_param(id_rack):
-            raise InvalidParameterError(
-                u'The identifier of Rack is invalid or was not informed.')
+            raise InvalidParameterError(u'The identifier of Rack is invalid or was not informed.')
 
         url = 'rack/gerar-configuracao/' + str(id_rack) + '/'
         code, xml = self.submit(None, 'POST', url)
@@ -221,8 +220,7 @@ class Rack(GenericClient):
         
 
         if not is_valid_int_param(id_rack):
-            raise InvalidParameterError(
-                u'The identifier of Rack is invalid or was not informed.')
+            raise InvalidParameterError(u'The identifier of Rack is invalid or was not informed.')
 
         url = 'rack/alocar-config/' + str(id_rack) + '/'
         code, xml = self.submit(None, 'POST', url)

@@ -14,7 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 from networkapiclient.ApiGenericClient import ApiGenericClient
+
+
+log = logging.getLogger(__name__)
 
 
 class ApiRack(ApiGenericClient):
@@ -27,30 +31,15 @@ class ApiRack(ApiGenericClient):
         """
         super(ApiRack,self).__init__( networkapi_url, user, password, user_ldap)
 
-    def insert_rack(
-            self,
-            number,
-            name,
-            mac_address_sw1,
-            mac_address_sw2,
-            mac_address_ilo,
-            id_sw1,
-            id_sw2,
-            id_ilo):
+    def insert_rack(self, rack):
 
         data = dict()
-        data['number'] = number
-        data['name'] = name
-        data['mac_address_sw1'] = mac_address_sw1
-        data['mac_address_sw2'] = mac_address_sw2
-        data['mac_address_ilo'] = mac_address_ilo
-        data['id_sw1'] = id_sw1
-        data['id_sw2'] = id_sw2
-        data['id_ilo'] = id_ilo
+        data['rack'] = list()
+        data['rack'] = rack
 
         uri = "api/rack/"
 
-        return self.post(uri, data=data)
+        return self.post(uri, data)
 
     def rack_deploy( self, rack_id):
 
@@ -58,3 +47,84 @@ class ApiRack(ApiGenericClient):
         uri = "api/rack/" + str(rack_id) + "/equipments/"
 
         return self.post(uri, data=data)
+
+    def next_rack_number(self):
+        """
+        Method to return the next available rack number
+        Param: None
+        Return interger
+        """
+
+        uri = "/api/rack/next/"
+
+        return self.get(uri)
+
+    def list(self):
+        """
+        :return: Dictionary with the following structure:
+
+        ::
+
+            {Rack: {rack_number: < rack_number >,
+            'sw1':< sw1 >,
+            'mac1':< mac1 >,
+            'sw2':< sw2 >,
+            'mac2':< mac2 >,
+            'ilo':< ilo >,
+            'mac_ilo':< mac_ilo > } }
+
+        :raise DataBaseError: Can't connect to networkapi database.
+        :raise XMLError: Failed to generate the XML response.
+        """
+
+        uri = '/api/rack/list/all/'
+
+        return self.get(uri)
+
+##########
+
+    def save_dc(self, dc):
+
+        data = dict()
+        data['dc'] = list()
+        data['dc'] = dc
+
+        uri = "api/dc/"
+
+        return self.post(uri, data)
+
+    def get_dc(self, dc_id=None, dcname=None, address=None):
+
+        data = dict()
+
+        if dc_id:
+            uri = "api/dc/%s/" % dc_id
+        elif dcname:
+            uri = "api/dc/%s/" % dcname
+        elif address:
+            uri = "api/dc/%s/" % address
+        else:
+            uri = "api/dc/"
+
+        return self.get(uri)
+
+    def save_fabric(self, dcroom):
+
+        log.info("Post Fabric")
+
+        data = dict()
+        data['dcrooms'] = list()
+        data['dcrooms'] = dcroom
+
+        uri = "api/dcrooms/"
+
+        return self.post(uri, data)
+
+    def edit_fabric(self, fabric_id, fabric):
+
+        data = dict()
+        data['fabric'] = fabric
+
+        uri = "api/dcrooms/%s/" % fabric_id
+
+        return self.put(uri, data)
