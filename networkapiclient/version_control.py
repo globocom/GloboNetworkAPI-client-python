@@ -1,1 +1,2 @@
-CLIENT_VERSION = '0.6.18'
+from networkapiclient import VERSION
+CLIENT_VERSION = VERSION

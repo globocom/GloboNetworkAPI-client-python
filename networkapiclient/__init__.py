@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -15,6 +15,6 @@
 # limitations under the License.
 
 MAJOR_VERSION = '0'
-MINOR_VERSION = '6'
-PATCH_VERSION = '25'
+MINOR_VERSION = '7'
+PATCH_VERSION = '0-rc1'
 VERSION = '.'.join((MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION,))

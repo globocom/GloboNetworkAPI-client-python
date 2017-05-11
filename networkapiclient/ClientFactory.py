@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,20 +13,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.Ambiente import Ambiente
 from networkapiclient.AmbienteLogico import AmbienteLogico
+from networkapiclient.ApiEnvironment import ApiEnvironment
 from networkapiclient.ApiEnvironmentVip import ApiEnvironmentVip
-# from networkapiclient.ApiEquipment import ApiEquipment
+from networkapiclient.ApiEquipment import ApiEquipment
 from networkapiclient.ApiInterface import ApiInterfaceRequest
 from networkapiclient.ApiNetworkIPv4 import ApiNetworkIPv4
 from networkapiclient.ApiNetworkIPv6 import ApiNetworkIPv6
-# from networkapiclient.ApiOptionPool import ApiOptionPool
+from networkapiclient.ApiIPv4 import ApiIPv4
+from networkapiclient.ApiIPv6 import ApiIPv6
 from networkapiclient.ApiOptionVip import ApiOptionVip
 from networkapiclient.ApiPool import ApiPool
+from networkapiclient.ApiPoolDeploy import ApiPoolDeploy
 from networkapiclient.ApiRack import ApiRack
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.ApiVlan import ApiVlan
+from networkapiclient.ApiVrf import ApiVrf
 from networkapiclient.BlockRule import BlockRule
 from networkapiclient.DireitoGrupoEquipamento import DireitoGrupoEquipamento
 from networkapiclient.DivisaoDc import DivisaoDc
@@ -46,7 +49,9 @@ from networkapiclient.Interface import Interface
 from networkapiclient.Ip import Ip
 from networkapiclient.Marca import Marca
 from networkapiclient.Modelo import Modelo
-from networkapiclient.Network import DHCPRelayIPv4, DHCPRelayIPv6, Network
+from networkapiclient.Network import DHCPRelayIPv4
+from networkapiclient.Network import DHCPRelayIPv6
+from networkapiclient.Network import Network
 from networkapiclient.OptionPool import OptionPool
 from networkapiclient.OptionVIP import OptionVIP
 from networkapiclient.PermissaoAdministrativa import PermissaoAdministrativa
@@ -64,13 +69,17 @@ from networkapiclient.Usuario import Usuario
 from networkapiclient.UsuarioGrupo import UsuarioGrupo
 from networkapiclient.Vip import Vip
 from networkapiclient.Vlan import Vlan
+from networkapiclient.ApiObjectType import ApiObjectType
+from networkapiclient.ApiObjectGroupPermission import ApiObjectGroupPermission
+from networkapiclient.ApiObjectGroupPermissionGeneral import ApiObjectGroupPermissionGeneral
+# from networkapiclient.ApiOptionPool import ApiOptionPool
 
 
 class ClientFactory(object):
 
     """Factory to create entities for NetworkAPI-Client."""
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, log_level='INFO'):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
@@ -80,6 +89,7 @@ class ClientFactory(object):
         self.user = user
         self.password = password
         self.user_ldap = user_ldap
+        self.log_level = log_level
 
     def create_ambiente(self):
         """Get an instance of ambiente services facade."""
@@ -105,10 +115,44 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
+    def create_api_environment(self):
+        """Get an instance of Api Environment services facade."""
+        return ApiEnvironment(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_equipment(self):
+        """Get an instance of Api Equipment services facade."""
+        return ApiEquipment(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
     def create_api_interface_request(self):
         """Get an instance of Api Vip Requests services facade."""
 
         return ApiInterfaceRequest(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_ipv4(self):
+        """Get an instance of Api IPv4 services facade."""
+
+        return ApiIPv4(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_ipv6(self):
+        """Get an instance of Api IPv6 services facade."""
+
+        return ApiIPv6(
             self.networkapi_url,
             self.user,
             self.password,
@@ -148,6 +192,14 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
+    def create_api_pool_deploy(self):
+        """Get an instance of Api Pool Deploy services facade."""
+        return ApiPoolDeploy(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
     def create_apirack(self):
         """Get an instance of Api Rack Variables services facade."""
         return ApiRack(
@@ -163,11 +215,47 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
+            self.user_ldap,
+            self.log_level)
+
+    def create_api_object_type(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectType(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_object_group_permission(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectGroupPermission(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_object_group_permission_general(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectGroupPermissionGeneral(
+            self.networkapi_url,
+            self.user,
+            self.password,
             self.user_ldap)
 
     def create_api_vlan(self):
         """Get an instance of Api Vlan services facade."""
         return ApiVlan(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_vrf(self):
+        """Get an instance of Api Vrf services facade."""
+        return ApiVrf(
             self.networkapi_url,
             self.user,
             self.password,

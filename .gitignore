@@ -17,3 +17,6 @@ dist
 build
 #PyCharm
 *.idea
+
+# Test project directory
+networkapi_test_project
