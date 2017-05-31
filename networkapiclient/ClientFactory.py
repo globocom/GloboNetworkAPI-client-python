@@ -21,8 +21,11 @@ from networkapiclient.ApiEquipment import ApiEquipment
 from networkapiclient.ApiInterface import ApiInterfaceRequest
 from networkapiclient.ApiNetworkIPv4 import ApiNetworkIPv4
 from networkapiclient.ApiNetworkIPv6 import ApiNetworkIPv6
+from networkapiclient.ApiIPv4 import ApiIPv4
+from networkapiclient.ApiIPv6 import ApiIPv6
 from networkapiclient.ApiOptionVip import ApiOptionVip
 from networkapiclient.ApiPool import ApiPool
+from networkapiclient.ApiPoolDeploy import ApiPoolDeploy
 from networkapiclient.ApiRack import ApiRack
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.ApiVlan import ApiVlan
@@ -66,6 +69,9 @@ from networkapiclient.Usuario import Usuario
 from networkapiclient.UsuarioGrupo import UsuarioGrupo
 from networkapiclient.Vip import Vip
 from networkapiclient.Vlan import Vlan
+from networkapiclient.ApiObjectType import ApiObjectType
+from networkapiclient.ApiObjectGroupPermission import ApiObjectGroupPermission
+from networkapiclient.ApiObjectGroupPermissionGeneral import ApiObjectGroupPermissionGeneral
 # from networkapiclient.ApiOptionPool import ApiOptionPool
 
 
@@ -134,6 +140,24 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
+    def create_api_ipv4(self):
+        """Get an instance of Api IPv4 services facade."""
+
+        return ApiIPv4(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_ipv6(self):
+        """Get an instance of Api IPv6 services facade."""
+
+        return ApiIPv6(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
     def create_api_network_ipv4(self):
         """Get an instance of Api Networkv4 services facade."""
 
@@ -168,6 +192,14 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
+    def create_api_pool_deploy(self):
+        """Get an instance of Api Pool Deploy services facade."""
+        return ApiPoolDeploy(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
     def create_apirack(self):
         """Get an instance of Api Rack Variables services facade."""
         return ApiRack(
@@ -185,6 +217,33 @@ class ClientFactory(object):
             self.password,
             self.user_ldap,
             self.log_level)
+
+    def create_api_object_type(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectType(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_object_group_permission(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectGroupPermission(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_object_group_permission_general(self):
+        """Get an instance of Api Vip Requests services facade."""
+
+        return ApiObjectGroupPermissionGeneral(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
 
     def create_api_vlan(self):
         """Get an instance of Api Vlan services facade."""

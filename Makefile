@@ -5,7 +5,7 @@ VERSION=$(shell python -c 'import networkapiclient; print networkapiclient.VERSI
 PIP := $(shell which pip)
 
 # GloboNetworkAPI project URL
-GNETAPIURL := git@github.com:/globocom/GloboNetworkAPI
+GNETAPIURL := https://github.com/globocom/GloboNetworkAPI.git
 
 # Local path to GloboNetworkAPI used in tests
 GNETAPI_PATH := networkapi_test_project
@@ -44,6 +44,24 @@ test:
 	@echo "Starting tests..."
 	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
 		--cover-package=networkapiclient --where tests
+
+unit:
+	@make clean
+	@echo "Starting tests..."
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
+		--cover-package=networkapiclient --where tests/unit
+
+integration:
+	@make clean
+	@echo "Starting tests..."
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
+		--cover-package=networkapiclient --where tests/integration
+
+functional:
+	@make clean
+	@echo "Starting tests..."
+	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
+		--cover-package=networkapiclient --where tests/functional
 
 setup: requirements.txt
 	$(PIP) install -r $^

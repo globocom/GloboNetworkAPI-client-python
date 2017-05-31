@@ -17,7 +17,7 @@ from networkapiclient.ApiGenericClient import ApiGenericClient
 from networkapiclient.utils import build_uri_with_ids
 
 
-class ApiIpv6(ApiGenericClient):
+class ApiObjectGroupPermissionGeneral(ApiGenericClient):
 
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
@@ -26,7 +26,7 @@ class ApiIpv6(ApiGenericClient):
         :param password: Password for authentication.
         """
 
-        super(ApiIpv6, self).__init__(
+        super(ApiObjectGroupPermissionGeneral, self).__init__(
             networkapi_url,
             user,
             password,
@@ -35,64 +35,64 @@ class ApiIpv6(ApiGenericClient):
 
     def search(self, **kwargs):
         """
-        Method to search ipv6's based on extends search.
+        Method to search object group permissions general based on extends search.
 
-        :param search: Dict containing QuerySets to find ipv6's.
+        :param search: Dict containing QuerySets to find object group permissions general.
         :param include: Array containing fields to include on response.
         :param exclude: Array containing fields to exclude on response.
         :param fields:  Array containing fields to override default fields.
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
-        :return: Dict containing ipv6's
+        :return: Dict containing object group permissions general
         """
 
-        return super(ApiIpv6, self).get(self.prepare_url('api/v3/ipv6/',
-                                                         kwargs))
+        return super(ApiObjectGroupPermissionGeneral, self).get(self.prepare_url('api/v3/object-group-perm-general/',
+                                                                                 kwargs))
 
     def get(self, ids, **kwargs):
         """
-        Method to get ipv6's by their ids
+        Method to get object group permissions general by their ids
 
-        :param ids: List containing identifiers of ipv6's
+        :param ids: List containing identifiers of object group permissions general
         :param include: Array containing fields to include on response.
         :param exclude: Array containing fields to exclude on response.
         :param fields: Array containing fields to override default fields.
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
-        :return: Dict containing ipv6's
+        :return: Dict containing object group permissions general
         """
-        url = build_uri_with_ids('api/v3/ipv6/%s/', ids)
-        return super(ApiIpv6, self).get(self.prepare_url(url, kwargs))
+        url = build_uri_with_ids('api/v3/object-group-perm-general/%s/', ids)
+        return super(ApiObjectGroupPermissionGeneral, self).get(self.prepare_url(url, kwargs))
 
     def delete(self, ids):
         """
-        Method to delete ipv6's by their ids
+        Method to delete object group permissions general by their ids
 
-        :param ids: Identifiers of ipv6's
+        :param ids: Identifiers of object group permissions general
         :return: None
         """
-        url = build_uri_with_ids('api/v3/ipv6/%s/', ids)
-        return super(ApiIpv6, self).delete(url)
+        url = build_uri_with_ids('api/v3/object-group-perm-general/%s/', ids)
+        return super(ApiObjectGroupPermissionGeneral, self).delete(url)
 
-    def update(self, ipv6s):
+    def update(self, ogpgs):
         """
-        Method to update ipv6's
+        Method to update object group permissions general
 
-        :param ipv6s: List containing ipv6's desired to updated
-        :return: None
-        """
-
-        data = {'ips': ipv6s}
-        ipv6s_ids = [str(ipv6.get('id')) for ipv6 in ipv6s]
-
-        return super(ApiIpv6, self).put('api/v3/ipv6/%s/' %
-                                        ';'.join(ipv6s_ids), data)
-
-    def create(self, ipv6s):
-        """
-        Method to create ipv6's
-
-        :param ipv6s: List containing vrf desired to be created on database
+        :param ogpgs: List containing object group permissions general desired to updated
         :return: None
         """
 
-        data = {'ips': ipv6s}
-        return super(ApiIpv6, self).post('api/v3/ipv6/', data)
+        data = {'ogpgs': ogpgs}
+        ogpgs_ids = [str(ogpg.get('id')) for ogpg in ogpgs]
+
+        return super(ApiObjectGroupPermissionGeneral, self).put('api/v3/object-group-perm-general/%s/' %
+                                                                ';'.join(ogpgs_ids), data)
+
+    def create(self, ogpgs):
+        """
+        Method to create object group permissions general
+
+        :param ogpgs: List containing vrf desired to be created on database
+        :return: None
+        """
+
+        data = {'ogpgs': ogpgs}
+        return super(ApiObjectGroupPermissionGeneral, self).post('api/v3/object-group-perm-general/', data)
