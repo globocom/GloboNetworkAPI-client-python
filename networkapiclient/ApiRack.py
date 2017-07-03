@@ -153,7 +153,7 @@ class ApiRack(ApiGenericClient):
         return self.post(uri, data)
 
 
-    def edit_fabric(self, fabric_id, fabric):
+    def put_fabric(self, fabric_id, fabric):
 
         data = dict()
         data['fabric'] = fabric
@@ -201,3 +201,19 @@ class ApiRack(ApiGenericClient):
             uri = "api/rack/list/all/"
 
         return self.get(uri)
+
+
+    def rackenvironments( self, rack_id):
+
+        data = dict()
+        uri = "api/rack/environmentvlan/" + str(rack_id) + "/"
+
+        return self.post(uri, data=data)
+
+
+    def rackfiles( self, rack_id):
+
+        data = dict()
+        uri = "api/rack/config/" + str(rack_id) + "/"
+
+        return self.post(uri, data=data)
