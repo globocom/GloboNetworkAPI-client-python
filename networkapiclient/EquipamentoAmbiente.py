@@ -35,12 +35,13 @@ class EquipamentoAmbiente(GenericClient):
             password,
             user_ldap)
 
-    def inserir(self, id_equipment, id_environment, is_router=0):
+    def inserir(self, id_equipment, id_environment, is_router=0, is_controller=0):
         """Inserts a new Related Equipment with Environment and returns its identifier
 
         :param id_equipment: Identifier of the Equipment. Integer value and greater than zero.
         :param id_environment: Identifier of the Environment. Integer value and greater than zero.
         :param is_router: Identifier of the Environment. Boolean value.
+        :param is_controller: Identifier of the Environment. Boolean value.
 
         :return: Dictionary with the following structure:
 
@@ -59,6 +60,7 @@ class EquipamentoAmbiente(GenericClient):
         equipment_environment_map['id_equipamento'] = id_equipment
         equipment_environment_map['id_ambiente'] = id_environment
         equipment_environment_map['is_router'] = is_router
+        equipment_environment_map['is_controller'] = is_controller
 
         code, xml = self.submit(
             {'equipamento_ambiente': equipment_environment_map}, 'POST', 'equipamentoambiente/')
@@ -96,12 +98,13 @@ class EquipamentoAmbiente(GenericClient):
 
         return self.response(code, xml)
 
-    def update(self, id_equipment, id_environment, is_router):
+    def update(self, id_equipment, id_environment, is_router, is_controller=0):
         """Remove Related Equipment with Environment from by the identifier.
 
         :param id_equipment: Identifier of the Equipment. Integer value and greater than zero.
         :param id_environment: Identifier of the Environment. Integer value and greater than zero.
         :param is_router: Identifier of the Environment. Boolean value.
+        :param is_controller: Identifier of the Environment. Boolean value.
 
         :return: None
 
@@ -125,6 +128,7 @@ class EquipamentoAmbiente(GenericClient):
         equipment_environment_map['id_equipamento'] = id_equipment
         equipment_environment_map['id_ambiente'] = id_environment
         equipment_environment_map['is_router'] = is_router
+        equipment_environment_map['is_controller'] = is_controller
 
         code, xml = self.submit(
             {'equipamento_ambiente': equipment_environment_map}, 'PUT', 'equipamentoambiente/update/')
