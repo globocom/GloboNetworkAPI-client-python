@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import os.path
-
 from setuptools import find_packages
 from setuptools import setup
 
@@ -17,7 +15,7 @@ setup(
     url='https://github.com/globocom/GloboNetworkAPI-client-python',
     license='LICENSE.txt',
     install_requires=[
-        'requests==2.4.3',
+        'requests==2.10.0',
     ],
     packages=find_packages(),
 )
