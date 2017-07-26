@@ -75,7 +75,7 @@ class ApiGenericClient(object):
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s', request.status_code)
+            self.logger.info('Status Code: %s', request.status_code if request else "")
             self.logger.info('X-Request-Id: %s',
                              request.headers.get('x-request-id'))
             self.logger.info('X-Request-Context: %s',
@@ -111,7 +111,7 @@ class ApiGenericClient(object):
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s', request.status_code)
+            self.logger.info('Status Code: %s', request.status_code if request else "")
             self.logger.info('X-Request-Id: %s',
                              request.headers.get('x-request-id'))
             self.logger.info('X-Request-Context: %s',
@@ -146,7 +146,7 @@ class ApiGenericClient(object):
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s', request.status_code)
+            self.logger.info('Status Code: %s', request.status_code if request else "")
             self.logger.info('X-Request-Id: %s',
                              request.headers.get('x-request-id'))
             self.logger.info('X-Request-Context: %s',
@@ -180,7 +180,7 @@ class ApiGenericClient(object):
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s', request.status_code)
+            self.logger.info('Status Code: %s', request.status_code if request else "")
             self.logger.info('X-Request-Id: %s',
                              request.headers.get('x-request-id'))
             self.logger.info('X-Request-Context: %s',
