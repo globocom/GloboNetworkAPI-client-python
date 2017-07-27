@@ -217,3 +217,11 @@ class ApiRack(ApiGenericClient):
         uri = "api/rack/config/" + str(rack_id) + "/"
 
         return self.post(uri, data=data)
+
+
+    def delete_rack( self, rack_id):
+
+        data = dict()
+        uri = "api/rack/" + str(rack_id)
+
+        return self.delete(uri, data=data)
