@@ -195,12 +195,22 @@ class ApiRack(ApiGenericClient):
 
         if fabric_id:
             uri = "api/rack/fabric/%s/" % fabric_id
-        #elif rack_id:
-         #   uri = "api/dcrooms/name/%s/" % name
+        elif rack_id:
+            uri = "api/rack/%s/" % rack_id
         else:
             uri = "api/rack/list/all/"
 
         return self.get(uri)
+
+
+    def put_rack(self, rack_id, rack):
+
+        data = dict()
+        data['rack'] = rack
+
+        uri = "api/rack/%s/" % rack_id
+
+        return self.put(uri, data)
 
 
     def rackenvironments( self, rack_id):
