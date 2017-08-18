@@ -19,14 +19,18 @@ from networkapiclient.ApiEnvironment import ApiEnvironment
 from networkapiclient.ApiEnvironmentVip import ApiEnvironmentVip
 from networkapiclient.ApiEquipment import ApiEquipment
 from networkapiclient.ApiInterface import ApiInterfaceRequest
+from networkapiclient.ApiIPv4 import ApiIPv4
 from networkapiclient.ApiNetworkIPv4 import ApiNetworkIPv4
 from networkapiclient.ApiNetworkIPv6 import ApiNetworkIPv6
-from networkapiclient.ApiIPv4 import ApiIPv4
-from networkapiclient.ApiIPv6 import ApiIPv6
+from networkapiclient.ApiObjectGroupPermission import ApiObjectGroupPermission
+from networkapiclient.ApiObjectGroupPermissionGeneral import ApiObjectGroupPermissionGeneral
+from networkapiclient.ApiObjectType import ApiObjectType
 from networkapiclient.ApiOptionVip import ApiOptionVip
 from networkapiclient.ApiPool import ApiPool
 from networkapiclient.ApiPoolDeploy import ApiPoolDeploy
 from networkapiclient.ApiRack import ApiRack
+from networkapiclient.ApiV4IPv4 import ApiV4IPv4
+from networkapiclient.ApiV4IPv6 import ApiV4IPv6
 from networkapiclient.ApiVipRequest import ApiVipRequest
 from networkapiclient.ApiVlan import ApiVlan
 from networkapiclient.ApiVrf import ApiVrf
@@ -69,9 +73,6 @@ from networkapiclient.Usuario import Usuario
 from networkapiclient.UsuarioGrupo import UsuarioGrupo
 from networkapiclient.Vip import Vip
 from networkapiclient.Vlan import Vlan
-from networkapiclient.ApiObjectType import ApiObjectType
-from networkapiclient.ApiObjectGroupPermission import ApiObjectGroupPermission
-from networkapiclient.ApiObjectGroupPermissionGeneral import ApiObjectGroupPermissionGeneral
 # from networkapiclient.ApiOptionPool import ApiOptionPool
 
 
@@ -153,6 +154,24 @@ class ClientFactory(object):
         """Get an instance of Api IPv6 services facade."""
 
         return ApiIPv6(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_v4_ipv4(self):
+        """Get an instance of Api V4 IPv4 services facade."""
+
+        return ApiV4IPv4(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_v4_ipv6(self):
+        """Get an instance of Api V4 IPv6 services facade."""
+
+        return ApiV4IPv6(
             self.networkapi_url,
             self.user,
             self.password,

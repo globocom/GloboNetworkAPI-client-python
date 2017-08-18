@@ -87,9 +87,11 @@ build:
 dist: clean
 	@python setup.py sdist
 
-publish: clean
-	@echo 'Ready to release version ${VERSION}? (ctrl+c to abort)' && read
-	@python setup.py sdist upload
-	@git tag ${VERSION}
-	@git push --tags
+update:
+	@twine upload dist/*
 
+publish: clean dist
+	@echo 'Ready to release version ${VERSION}? (ctrl+c to abort)' && read
+	@twine upload dist/*
+	#@git tag ${VERSION}
+	#@git push --tags
