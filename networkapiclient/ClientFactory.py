@@ -29,6 +29,7 @@ from networkapiclient.ApiOptionVip import ApiOptionVip
 from networkapiclient.ApiPool import ApiPool
 from networkapiclient.ApiPoolDeploy import ApiPoolDeploy
 from networkapiclient.ApiRack import ApiRack
+from networkapiclient.ApiV4Equipment import ApiV4Equipment
 from networkapiclient.ApiV4IPv4 import ApiV4IPv4
 from networkapiclient.ApiV4IPv6 import ApiV4IPv6
 from networkapiclient.ApiVipRequest import ApiVipRequest
@@ -127,6 +128,14 @@ class ClientFactory(object):
     def create_api_equipment(self):
         """Get an instance of Api Equipment services facade."""
         return ApiEquipment(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_v4_api_equipment(self):
+        """Get an instance of Api Equipment services facade."""
+        return ApiV4Equipment(
             self.networkapi_url,
             self.user,
             self.password,
