@@ -93,5 +93,5 @@ update:
 publish: clean dist
 	@echo 'Ready to release version ${VERSION}? (ctrl+c to abort)' && read
 	@twine upload dist/*
-	#@git tag ${VERSION}
-	#@git push --tags
+	@git tag ${VERSION}
+	@git push --tags
