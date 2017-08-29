@@ -133,7 +133,7 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
-    def create_v4_api_equipment(self):
+    def create_api_v4_equipment(self):
         """Get an instance of Api Equipment services facade."""
         return ApiV4Equipment(
             self.networkapi_url,
