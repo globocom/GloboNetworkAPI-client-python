@@ -20,6 +20,7 @@ from networkapiclient.ApiEnvironmentVip import ApiEnvironmentVip
 from networkapiclient.ApiEquipment import ApiEquipment
 from networkapiclient.ApiInterface import ApiInterfaceRequest
 from networkapiclient.ApiIPv4 import ApiIPv4
+from networkapiclient.ApiIPv6 import ApiIPv6
 from networkapiclient.ApiNetworkIPv4 import ApiNetworkIPv4
 from networkapiclient.ApiNetworkIPv6 import ApiNetworkIPv6
 from networkapiclient.ApiObjectGroupPermission import ApiObjectGroupPermission
