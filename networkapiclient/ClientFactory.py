@@ -31,6 +31,9 @@ from networkapiclient.ApiPool import ApiPool
 from networkapiclient.ApiPoolDeploy import ApiPoolDeploy
 from networkapiclient.ApiRack import ApiRack
 from networkapiclient.ApiV4Equipment import ApiV4Equipment
+from networkapiclient.ApiV4As import ApiV4As
+from networkapiclient.ApiV4VirtualInterface import ApiV4VirtualInterface
+from networkapiclient.ApiV4Neighbor import ApiV4Neighbor
 from networkapiclient.ApiV4IPv4 import ApiV4IPv4
 from networkapiclient.ApiV4IPv6 import ApiV4IPv6
 from networkapiclient.ApiVipRequest import ApiVipRequest
@@ -137,6 +140,30 @@ class ClientFactory(object):
     def create_api_v4_equipment(self):
         """Get an instance of Api Equipment services facade."""
         return ApiV4Equipment(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_v4_as(self):
+        """Get an instance of Api As services facade."""
+        return ApiV4As(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_v4_virtual_interface(self):
+        """Get an instance of Api Virtual Interface services facade."""
+        return ApiV4VirtualInterface(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_v4_neighbor(self):
+        """Get an instance of Api Neighbor services facade."""
+        return ApiV4Neighbor(
             self.networkapi_url,
             self.user,
             self.password,
