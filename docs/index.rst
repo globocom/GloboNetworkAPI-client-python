@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to Globo NetworkAPI Python Client's documentation!
-===============================
+==========================================================
 
 Contents:
 
@@ -12,7 +12,9 @@ Contents:
    :maxdepth: 4
 
    networkapiclient
-
+   client-factory
+   client-v3
+   client-v4
 
 Indices and tables
 ==================
