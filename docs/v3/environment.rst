@@ -37,6 +37,7 @@ The List of fields available at Environment module is:
     * configs
     * routers
     * equipments
+    * sdn_controllers
 
 Obtain List of Environments through id's
 ========================================
