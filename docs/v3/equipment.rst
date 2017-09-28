@@ -165,6 +165,24 @@ Example:
 PUT
 ***
 
+The List of fields available for update an Equipment is:
+
+    * id - **Mandatory**
+    * environments
+        * id
+        * is_router
+        * is_controller
+    * equipment_type - **Mandatory**
+    * groups
+        * "id":
+    * ipv4
+        * id
+    * ipv6
+        * id
+    * maintenance - **Mandatory**
+    * model - **Mandatory**
+    * name - **Mandatory**
+
 Update List of Equipments
 =========================
 
@@ -191,7 +209,7 @@ Example:
                     "is_controller": False
                 }
             ],
-            "ipv4": [1, 2]
+            "ipv4": [3, 5, 7]
 
         },
         {
@@ -213,7 +231,6 @@ Example:
     ]
 
     eqpt_module.update(equipments=eqpts_to_update)
-
 
 DELETE
 ******

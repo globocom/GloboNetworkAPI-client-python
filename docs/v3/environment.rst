@@ -146,6 +146,17 @@ Example:
             "grupo_l3": 1,
             "ambiente_logico": 2,
             "divisao_dc": 3,
+            "filter": 1,
+            "min_num_vlan_1": 1,
+            "max_num_vlan_1": 500,
+            "min_num_vlan_2": 1,
+            "max_num_vlan_2": 500,
+            "ipv4_template": "templatev4",
+            "ipv6_template": "templatev6",
+            "link": "http://environment",
+            "acl_path": "path_to_acl",
+            "vrf": "Test-Vrf",
+            "father_environment": 1,
             "default_vrf": 1
         },
         {
@@ -176,6 +187,31 @@ Example:
 PUT
 ***
 
+The List of fields available for update an Environment is:
+
+    * id - **Mandatory**
+    * grupo_l3 - **Mandatory**
+    * ambiente_logico - **Mandatory**
+    * divisao_dc - **Mandatory**
+    * filter
+    * min_num_vlan_1
+    * max_num_vlan_1
+    * min_num_vlan_2
+    * max_num_vlan_2
+    * ipv4_template
+    * ipv6_template
+    * link
+    * acl_path
+    * vrf
+    * father_environment
+    * default_vrf - **Mandatory**
+    * configs
+        * id
+        * grupo_l3
+        * ambiente_logico
+        * divisao_dc
+        * default_vrf
+
 Update List of Environments
 ===========================
 
@@ -204,6 +240,7 @@ Example:
             "default_vrf": 1,
             "configs": [
                 {
+                    'id': 1,
                     'subnet': 'febe:bebe:bebe:8200:0:0:0:0/57',
                     'new_prefix': '64',
                     'type': 'v6',

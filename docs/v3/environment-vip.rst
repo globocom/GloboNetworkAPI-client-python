@@ -120,7 +120,8 @@ Example:
         {
             "finalidade_txt": "FIN-TEST-1",
             "cliente_txt": "CLIENT-TEST-1",
-            "ambiente_p44_txt": "AMBP44-TEST-1"
+            "ambiente_p44_txt": "AMBP44-TEST-1",
+            "conf": "anyconf"
         },
         {
             "finalidade_txt": "FIN-TEST-2",
@@ -150,6 +151,19 @@ Example:
 
 PUT
 ***
+
+The List of fields available for update an Environment Vip is:
+
+    * id - **Mandatory**
+    * finalidade_txt - **Mandatory**
+    * cliente_txt - **Mandatory**
+    * ambiente_p44_txt - **Mandatory**
+    * description - **Mandatory**
+    * conf
+    * optionsvip
+        * option
+    * environments
+        * environment
 
 Update List of Environment Vips
 ===============================
