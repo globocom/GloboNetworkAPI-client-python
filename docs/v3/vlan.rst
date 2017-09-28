@@ -162,6 +162,22 @@ Example:
 PUT
 ***
 
+The List of fields available for update a Vlan is:
+
+    * id - **Mandatory**
+    * name - **Mandatory**
+    * num_vlan - **Mandatory**
+    * environment - **Mandatory**
+    * description - **Mandatory**
+    * acl_file_name - **Mandatory**
+    * acl_valida - **Mandatory**
+    * acl_file_name_v6 - **Mandatory**
+    * acl_valida_v6 - **Mandatory**
+    * active - **Mandatory**
+    * vrf - **Mandatory**
+    * acl_draft - **Mandatory**
+    * acl_draft_v6 - **Mandatory**
+
 Update List of Vlans
 ====================
 
@@ -186,7 +202,7 @@ Example:
             "acl_file_name_v6": "",
             "acl_valida_v6": false,
             "active": false,
-            "vrf": 'VrfBorda',
+            "vrf": 'VrfTest',
             "acl_draft": "",
             "acl_draft_v6": ""
         },
@@ -201,14 +217,13 @@ Example:
             "acl_file_name_v6": "",
             "acl_valida_v6": false,
             "active": false,
-            "vrf": 'VrfBorda',
+            "vrf": 'VrfTest',
             "acl_draft": "",
             "acl_draft_v6": ""
         }
     ]
 
     vlan_module.update(vlans=vlans_to_update)
-
 
 DELETE
 ******
