@@ -133,6 +133,11 @@ Example:
                     "id": 1,
                     "is_router": True,
                     "is_controller": False
+                },
+                {
+                    "id": 2,
+                    "is_router": False,
+                    "is_controller": False
                 }
             ],
             "ipv4": [1, 2]
@@ -175,11 +180,35 @@ Example:
     eqpts_to_update = [
         {
             "id": 1,
+            "name": "Eqpt-1-Updated",
+            "maintenance": False,
+            "equipment_type": 2,
+            "model": 2,
+            "environments": [
+                {
+                    "id": 2,
+                    "is_router": True,
+                    "is_controller": False
+                }
+            ],
+            "ipv4": [1, 2]
 
         },
         {
             "id": 2,
-
+            "name": "Eqpt-2-Updated",
+            "maintenance": False,
+            "equipment_type": 7,
+            "model": 2,
+            "ipv6": [1, 2],
+            "groups": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                }
+            ]
         }
     ]
 
