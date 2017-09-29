@@ -101,7 +101,7 @@ The List of fields available for create an Equipment is:
         * is_controller
     * equipment_type - **Mandatory**
     * groups
-        * "id":
+        * id
     * ipv4
         * id
     * ipv6
@@ -174,7 +174,7 @@ The List of fields available for update an Equipment is:
         * is_controller
     * equipment_type - **Mandatory**
     * groups
-        * "id":
+        * id
     * ipv4
         * id
     * ipv6
