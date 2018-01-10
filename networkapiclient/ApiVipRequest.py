@@ -413,3 +413,39 @@ class ApiVipRequest(ApiGenericClient):
 
         data = {'vips': vips}
         return super(ApiVipRequest, self).post('api/v3/vip-request/', data)
+
+    def deploy(self, vips):
+        """
+        Method to deploy vip's
+
+        :param vips: List containing vip's desired to be deployed on equipment
+        :return: None
+        """
+        url = build_uri_with_ids('api/v3/vip-request/deploy/%s/', ids)
+
+        return super(ApiVipRequest, self).post(url)
+
+    def undeploy(self, vips):
+        """
+        Method to undeploy vip's
+
+        :param vips: List containing vip's desired to be undeployed on equipment
+        :return: None
+        """
+        url = build_uri_with_ids('api/v3/vip-request/deploy/%s/', ids)
+
+        return super(ApiVipRequest, self).delete(url)
+
+    def redeploy(self, vips):
+        """
+        Method to redeploy vip's
+
+        :param vips: List containing vip's desired to updated on equipment
+        :return: None
+        """
+
+        data = {'vips': vips}
+        vips_ids = [str(vip.get('id')) for vip in vips]
+
+        return super(ApiVipRequest, self).put('api/v3/vip-request/deploy/%s/' %
+                                              ';'.join(vips_ids), data)
