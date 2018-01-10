@@ -315,7 +315,7 @@ class ApiVipRequest(ApiGenericClient):
 
     def create_vip(self, vip_request_ids):
         """
-        Method to delete vip request
+        Method to create vip request
 
         param vip_request_ids: vip_request ids
         """
