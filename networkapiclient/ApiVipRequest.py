@@ -414,7 +414,7 @@ class ApiVipRequest(ApiGenericClient):
         data = {'vips': vips}
         return super(ApiVipRequest, self).post('api/v3/vip-request/', data)
 
-    def deploy(self, vips):
+    def deploy(self, ids):
         """
         Method to deploy vip's
 
@@ -425,7 +425,7 @@ class ApiVipRequest(ApiGenericClient):
 
         return super(ApiVipRequest, self).post(url)
 
-    def undeploy(self, vips, clean_up=0):
+    def undeploy(self, ids, clean_up=0):
         """
         Method to undeploy vip's
 
