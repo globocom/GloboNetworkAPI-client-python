@@ -88,28 +88,6 @@ class Vip(GenericClient):
 
         return self.response(code, xml)
 
-    def validate(self, id_vip):
-        """Validates vip request by its identifier.
-
-        :param id_vip: Vip request identifier.
-
-        :return: None
-
-        :raise RequisicaoVipNaoExisteError: Vip request does not exist.
-        :raise InvalidParameterError: Vip request identifier is none or invalid.
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
-        """
-        if not is_valid_int_param(id_vip):
-            raise InvalidParameterError(
-                u'Vip request identifier is invalid or was not informed.')
-
-        url = 'vip/validate/' + str(id_vip) + '/'
-
-        code, xml = self.submit(None, 'GET', url)
-
-        return self.response(code, xml)
-
     def alterar(
             self,
             id_vip,
@@ -426,50 +404,6 @@ class Vip(GenericClient):
         vip_map['all_prop'] = all_prop
 
         code, xml = self.submit({'vip': vip_map}, 'POST', url)
-
-        return self.response(code, xml)
-
-    def valid_real_server(
-            self,
-            ip,
-            name_equipment,
-            id_environment_vip,
-            valid=True):
-        """Valid Real Server
-
-        :param ip: IPv4 or Ipv6. 'xxx.xxx.xxx.xxx or xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx'
-        :param name_equipment: Equipment Name.
-        :param id_environment_vip: Identifier of the Environment VIP. Integer value and greater than zero.
-
-        :return: Dictionary with the following structure:
-
-        ::
-
-            {'real': { 'ip': {'oct4': < oct4 >, 'oct2': < oct2 >, 'oct3': < oct3 >, 'oct1': '< oct1 >, 'version': < version >, 'networkipv4': < networkipv4 >, 'id': < id >, 'descricao': < descricao >,}
-            'environmentvip': {'cliente_txt': < cliente_txt >, 'id': < id >, 'finalidade_txt': < finalidade_txt >, 'ambiente_p44_txt': < ambiente_p44_txt >},
-            'equipment': {'grupos': < grupos >, 'tipo_equipamento': < equipamento >, 'modelo': < modelo >, 'id': < id >, 'nome': < nome >}}
-            or 'ip': {'block0': < block0 >, 'block1': < block1 >, 'block2: < block2 >, 'block3': < block3 >, 'block4': < block4 >, 'block5': < block5 >, 'block6': < block6 >, 'block7': < block7 >,, 'version': < version >, 'networkipv6': < networkipv6 >, 'id': < id >, 'descricao': < descricao >},
-            'environmentvip': {'cliente_txt': < cliente_txt >, 'id': < id >, 'finalidade_txt': < finalidade_txt >, 'ambiente_p44_txt': < ambiente_p44_txt >},
-            'equipment': {'grupos': < grupos >, 'tipo_equipamento': < equipamento >, 'modelo': < modelo >, 'id': < id >, 'nome': < nome > }}
-
-        :raise InvalidParameterError: The value of id_environment_vip, ip or equip is invalid.
-        :raise EnvironmentVipNotFoundError: Environment VIP not registered.
-        :raise IpNotFoundError: IP not registered or IP is not related equipment and Environment Vip.
-        :raise EquipamentoNotFoundError:  Equipment not registered.
-        :raise UserNotAuthorizedError: User dont have permition.
-        :raise DataBaseError: Networkapi failed to access the database.
-        :raise XMLError: Networkapi failed to generate the XML response.
-        """
-
-        real_map = dict()
-        real_map['ip'] = ip
-        real_map['name_equipment'] = name_equipment
-        real_map['id_environment_vip'] = id_environment_vip
-        real_map['valid'] = valid
-
-        url = "vip/real/valid/"
-
-        code, xml = self.submit({'real': real_map}, 'POST', url)
 
         return self.response(code, xml)
 
