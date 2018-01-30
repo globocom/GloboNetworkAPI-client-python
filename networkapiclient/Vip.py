@@ -377,36 +377,6 @@ class Vip(GenericClient):
 
         return self.response(code, xml, ['vips'])
 
-    def get_by_ipv6(self, ipv6, all_prop=0):
-        """Get VIPs related to ipv6
-
-        :param ipv6: The IPv6 to find all VIPs related
-        :param all_prop: (Optional) Gets all properties, not only ids. (0 or 1)
-
-        :return: Dictionary with the following structure:
-
-        ::
-
-            {'ips': [ {'vips': '[< id >, < id >]', 'block4': < block4 >, 'block2': < block2 >,
-            'block3': < block3 >, 'block1': < block1 >, 'block5': < block5 >,
-            'block6': < block6 >, 'block7': < block7 >, 'block8': < block8 >,
-            'networkipv6': < networkipv6 >, 'id': <id >, 'descricao': < descricao >}, ... ] }
-
-        :raise VipNaoExisteError: No request for registered VIP.
-        :raise DataBaseError: Can't connect to networkapi database.
-        :raise XMLError: Failed to generate the XML response.
-        """
-
-        url = 'vip/ipv6/all/'
-
-        vip_map = dict()
-        vip_map['ipv6'] = ipv6
-        vip_map['all_prop'] = all_prop
-
-        code, xml = self.submit({'vip': vip_map}, 'POST', url)
-
-        return self.response(code, xml)
-
     def add_block(self, id_vip, id_block, override):
         """ Add block in vip rule
 
