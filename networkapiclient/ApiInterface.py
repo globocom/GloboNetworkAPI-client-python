@@ -15,6 +15,8 @@
 # limitations under the License.
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
+from networkapiclient.utils import build_uri_with_ids
+
 
 class ApiInterfaceRequest(ApiGenericClient):
 	def __init__(self, networkapi_url, user, password, user_ldap=None):
@@ -57,3 +59,35 @@ class ApiInterfaceRequest(ApiGenericClient):
 		uri = "api/interface/disconnect/%s/%s/" % (interface1, interface2)
 
 		return self.delete(uri)
+
+
+	def search(self, **kwargs):
+		"""
+		Method to search interfaces based on extends search.
+
+		:param search: Dict containing QuerySets to find interfaces.
+		:param include: Array containing fields to include on response.
+		:param exclude: Array containing fields to exclude on response.
+		:param fields:  Array containing fields to override default fields.
+		:param kind: Determine if result will be detailed ('details') or basic ('basic').
+		:return: Dict containing equipments
+		"""
+
+		return super(ApiInterfaceRequest, self).get(self.prepare_url('api/v3/interface/', kwargs))
+
+
+	def get(self, ids, **kwargs):
+		"""
+		Method to get environments by their ids
+
+		:param ids: List containing identifiers of environments
+		:param include: Array containing fields to include on response.
+		:param exclude: Array containing fields to exclude on response.
+		:param fields: Array containing fields to override default fields.
+		:param kind: Determine if result will be detailed ('detail') or basic ('basic').
+		:return: Dict containing environments
+		"""
+
+		url = build_uri_with_ids('api/v3/interface/%s/', ids)
+
+		return super(ApiInterfaceRequest, self).get(self.prepare_url(url, kwargs))
