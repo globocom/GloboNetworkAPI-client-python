@@ -20,3 +20,5 @@ build
 
 # Test project directory
 networkapi_test_project
+Pipfile
+Pipfile.lock
