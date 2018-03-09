@@ -13,9 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiPool(ApiGenericClient):
@@ -41,7 +40,7 @@ class ApiPool(ApiGenericClient):
         Return list object pool
         """
 
-        uri = "api/v3/pool/environment-vip/%s/" % environment_vip_id
+        uri = 'api/v3/pool/environment-vip/%s/' % environment_vip_id
 
         return super(ApiPool, self).get(uri)
 
@@ -52,7 +51,7 @@ class ApiPool(ApiGenericClient):
         Returns object pool
         """
 
-        uri = "api/v3/pool/%s/" % pool_id
+        uri = 'api/v3/pool/%s/' % pool_id
 
         return super(ApiPool, self).get(uri)
 
@@ -63,10 +62,10 @@ class ApiPool(ApiGenericClient):
         Returns object pool
         """
 
-        uri = "api/v3/pool/details/%s/" % pool_id
+        uri = 'api/v3/pool/details/%s/' % pool_id
 
         return super(ApiPool, self).get(uri)
-    
+
     def search(self, **kwargs):
         """
         Method to search pool's based on extends search.
@@ -80,7 +79,7 @@ class ApiPool(ApiGenericClient):
         """
 
         return super(ApiPool, self).get(self.prepare_url('api/v3/pool/',
-                                                                kwargs))
+                                                         kwargs))
 
     def get(self, ids, **kwargs):
         """
@@ -118,10 +117,10 @@ class ApiPool(ApiGenericClient):
 
         data = {'server_pools': pools}
         pools_ids = [str(pool.get('id'))
-                            for pool in pools]
+                     for pool in pools]
 
         return super(ApiPool, self).put('api/v3/pool/%s/' %
-                                               ';'.join(pools_ids), data)
+                                        ';'.join(pools_ids), data)
 
     def create(self, pools):
         """
@@ -133,4 +132,3 @@ class ApiPool(ApiGenericClient):
 
         data = {'server_pools': pools}
         return super(ApiPool, self).post('api/v3/pool/', data)
-

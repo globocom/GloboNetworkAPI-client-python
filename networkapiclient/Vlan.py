@@ -13,12 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from networkapiclient.GenericClient import GenericClient
+from networkapiclient.Config import IP_VERSION
 from networkapiclient.exception import InvalidParameterError
-from networkapiclient.utils import is_valid_int_param, get_list_map
+from networkapiclient.GenericClient import GenericClient
 from networkapiclient.Pagination import Pagination
-from Config import IP_VERSION
+from networkapiclient.utils import get_list_map
+from networkapiclient.utils import is_valid_int_param
 
 
 class Vlan(GenericClient):
@@ -137,31 +137,31 @@ class Vlan(GenericClient):
 
         vlan_map = dict()
 
-        vlan_map["start_record"] = pagination.start_record
-        vlan_map["end_record"] = pagination.end_record
-        vlan_map["asorting_cols"] = pagination.asorting_cols
-        vlan_map["searchable_columns"] = pagination.searchable_columns
-        vlan_map["custom_search"] = pagination.custom_search
+        vlan_map['start_record'] = pagination.start_record
+        vlan_map['end_record'] = pagination.end_record
+        vlan_map['asorting_cols'] = pagination.asorting_cols
+        vlan_map['searchable_columns'] = pagination.searchable_columns
+        vlan_map['custom_search'] = pagination.custom_search
 
-        vlan_map["numero"] = number
-        vlan_map["nome"] = name
-        vlan_map["exato"] = iexact
-        vlan_map["ambiente"] = environment
-        vlan_map["tipo_rede"] = net_type
-        vlan_map["rede"] = network
-        vlan_map["versao"] = ip_version
-        vlan_map["subrede"] = subnet
-        vlan_map["acl"] = acl
+        vlan_map['numero'] = number
+        vlan_map['nome'] = name
+        vlan_map['exato'] = iexact
+        vlan_map['ambiente'] = environment
+        vlan_map['tipo_rede'] = net_type
+        vlan_map['rede'] = network
+        vlan_map['versao'] = ip_version
+        vlan_map['subrede'] = subnet
+        vlan_map['acl'] = acl
 
-        url = "vlan/find/"
+        url = 'vlan/find/'
 
-        code, xml = self.submit({"vlan": vlan_map}, "POST", url)
+        code, xml = self.submit({'vlan': vlan_map}, 'POST', url)
 
-        key = "vlan"
+        key = 'vlan'
         return get_list_map(
             self.response(
                 code, xml, [
-                    key, "redeipv4", "redeipv6", "equipamentos"]), key)
+                    key, 'redeipv4', 'redeipv6', 'equipamentos']), key)
 
     def list_all(self):
         """
@@ -934,7 +934,7 @@ class Vlan(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Vlan is invalid or was not informed.')
 
-        url = 'vlan/' + str(id_vlan) + '/validate/' + IP_VERSION.IPv4[0] + "/"
+        url = 'vlan/' + str(id_vlan) + '/validate/' + IP_VERSION.IPv4[0] + '/'
 
         code, xml = self.submit(None, 'PUT', url)
 
@@ -959,7 +959,7 @@ class Vlan(GenericClient):
             raise InvalidParameterError(
                 u'The identifier of Vlan is invalid or was not informed.')
 
-        url = 'vlan/' + str(id_vlan) + '/validate/' + IP_VERSION.IPv6[0] + "/"
+        url = 'vlan/' + str(id_vlan) + '/validate/' + IP_VERSION.IPv6[0] + '/'
 
         code, xml = self.submit(None, 'PUT', url)
 

@@ -13,12 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from networkapiclient.GenericClient import GenericClient
 from networkapiclient.exception import InvalidParameterError
-from networkapiclient.utils import is_valid_int_param, get_list_map
-from networkapiclient.Pagination import Pagination
-from Config import IP_VERSION
+from networkapiclient.GenericClient import GenericClient
+from networkapiclient.utils import get_list_map
+from networkapiclient.utils import is_valid_int_param
+
 
 class Rack(GenericClient):
 
@@ -53,11 +52,11 @@ class Rack(GenericClient):
           {'rack': {'id': < id_rack >,
           'num_rack': < num_rack >,
           'name_rack': < name_rack >,
-          'mac_sw1': < mac_sw1 >, 
-          'mac_sw2': < mac_sw2 >, 
-          'mac_ilo': < mac_ilo >, 
+          'mac_sw1': < mac_sw1 >,
+          'mac_sw2': < mac_sw2 >,
+          'mac_ilo': < mac_ilo >,
           'id_sw1': < id_sw1 >,
-          'id_sw2': < id_sw2 >, 
+          'id_sw2': < id_sw2 >,
           'id_ilo': < id_ilo >, } }
         :raise RacksError: Rack already registered with informed.
         :raise NumeroRackDuplicadoError: There is already a registered Rack with the value of number.
@@ -104,7 +103,7 @@ class Rack(GenericClient):
         url = 'rack/find/'
         code, xml = self.submit(None, 'GET', url)
 
-        key = "rack"
+        key = 'rack'
         return get_list_map(self.response(code, xml, [key]), key)
 
     def list(self):
@@ -129,28 +128,27 @@ class Rack(GenericClient):
         url = 'rack/list/'
         code, xml = self.submit(None, 'GET', url)
 
-        key = "rack"
+        key = 'rack'
         return get_list_map(self.response(code, xml, [key]), key)
 
     def get_rack(self, name):
 
-
         url = 'rack/find/' + str(name) + '/'
         code, xml = self.submit(None, 'GET', url)
 
-        key = "rack"
+        key = 'rack'
         return get_list_map(self.response(code, xml, [key]), key)
 
     def edit_rack(self,
-            id_rack, 
-            number, 
-            name, 
-            mac_sw1, 
-            mac_sw2, 
-            mac_ilo, 
-            id_sw1, 
-            id_sw2, 
-            id_ilo):
+                  id_rack,
+                  number,
+                  name,
+                  mac_sw1,
+                  mac_sw2,
+                  mac_ilo,
+                  id_sw1,
+                  id_sw2,
+                  id_ilo):
 
         rack_map = dict()
         rack_map['id_rack'] = id_rack
@@ -166,7 +164,6 @@ class Rack(GenericClient):
         code, xml = self.submit({'rack': rack_map}, 'POST', 'rack/edit/')
 
         return self.response(code, xml)
-
 
     def remover(self, id_rack):
         """Remove Rack by the identifier.
@@ -191,11 +188,10 @@ class Rack(GenericClient):
 
         return self.response(code, xml)
 
-   
-    def gerar_arq_config (self, id_rack):
-        """Create the configuration file of each equipment on the Rack and create 
+    def gerar_arq_config(self, id_rack):
+        """Create the configuration file of each equipment on the Rack and create
         all racks vlan and environments.
- 
+
         :param id_rack: Identifier of the Rack. Integer value and greater than zero.
 
         :return: None
@@ -205,22 +201,22 @@ class Rack(GenericClient):
         :raise RackError: Rack is associated with a script.
         :raise DataBaseError: Networkapi failed to access the database.
         :raise XMLError: Networkapi failed to generate the XML response.
-        """  
+        """
 
         if not is_valid_int_param(id_rack):
-            raise InvalidParameterError(u'The identifier of Rack is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of Rack is invalid or was not informed.')
 
         url = 'rack/gerar-configuracao/' + str(id_rack) + '/'
         code, xml = self.submit(None, 'POST', url)
 
         return self.response(code, xml)
 
-
     def alocar_configuracao(self, id_rack):
-        
 
         if not is_valid_int_param(id_rack):
-            raise InvalidParameterError(u'The identifier of Rack is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'The identifier of Rack is invalid or was not informed.')
 
         url = 'rack/alocar-config/' + str(id_rack) + '/'
         code, xml = self.submit(None, 'POST', url)
@@ -234,7 +230,6 @@ class Rack(GenericClient):
 
         key = 'ambiente'
         return get_list_map(self.response(code, xml, [key]), key)
-
 
     def get_rack_by_equip_id(self, equip_id):
 

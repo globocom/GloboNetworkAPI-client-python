@@ -13,12 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from networkapiclient.GenericClient import GenericClient
-from networkapiclient.utils import get_list_map, is_valid_int_param
-from networkapiclient.exception import InvalidParameterError
 import urllib
-from utils import is_valid_0_1
+
+from networkapiclient.exception import InvalidParameterError
+from networkapiclient.GenericClient import GenericClient
+from networkapiclient.utils import get_list_map
+from networkapiclient.utils import is_valid_0_1
+from networkapiclient.utils import is_valid_int_param
 
 
 class Interface(GenericClient):
@@ -183,7 +184,8 @@ class Interface(GenericClient):
         interface_map['tipo'] = tipo
         interface_map['vlan'] = vlan
 
-        code, xml = self.submit({'interface': interface_map}, 'POST', 'interface/')
+        code, xml = self.submit(
+            {'interface': interface_map}, 'POST', 'interface/')
         return self.response(code, xml)
 
     def alterar(
@@ -277,14 +279,14 @@ class Interface(GenericClient):
         if not is_valid_0_1(back_or_front):
             raise InvalidParameterError(
                 msg_err %
-                ("back_or_front", back_or_front))
+                ('back_or_front', back_or_front))
 
         if not is_valid_int_param(id_interface):
             raise InvalidParameterError(
                 msg_err %
-                ("id_interface", id_interface))
+                ('id_interface', id_interface))
 
-        url = "interface/%s/%s/" % (str(id_interface), str(back_or_front))
+        url = 'interface/%s/%s/' % (str(id_interface), str(back_or_front))
 
         code, xml = self.submit(None, 'DELETE', url)
 
@@ -322,7 +324,8 @@ class Interface(GenericClient):
             raise InvalidParameterError(u'Interface name was not informed.')
 
         url = 'interface/' + \
-            urllib.quote(nome_interface) + '/equipamento/' + str(id_equipamento) + '/'
+            urllib.quote(nome_interface) + '/equipamento/' + \
+            str(id_equipamento) + '/'
 
         code, map = self.submit(None, 'GET', url)
 
@@ -369,13 +372,13 @@ class Interface(GenericClient):
         nome_interface = nome_interface.replace('/', 's2it_replace')
 
         url = 'interface/' + \
-            urllib.quote(nome_interface) + '/equipment/' + str(id_equipamento) + '/'
+            urllib.quote(nome_interface) + '/equipment/' + \
+            str(id_equipamento) + '/'
 
         code, map = self.submit(None, 'GET', url)
 
         key = 'interfaces'
         return get_list_map(self.response(code, map, [key]), key)
-
 
     def listar_switch_router(self, id_equipamento):
 
@@ -384,7 +387,6 @@ class Interface(GenericClient):
 
         key = 'interfaces'
         return get_list_map(self.response(code, xml, [key]), key)
-
 
     def list_all_interface_types(self):
 
@@ -410,13 +412,14 @@ class Interface(GenericClient):
         interface_map = dict()
         interface_map['interface'] = interface
 
-        code, xml = self.submit({'interface': interface_map}, 'DELETE', 'int/associar-ambiente/')
+        code, xml = self.submit(
+            {'interface': interface_map}, 'DELETE', 'int/associar-ambiente/')
 
         return self.response(code, xml)
 
-    def inserir_channel (self, interfaces, nome, lacp, int_type, vlan, envs):
+    def inserir_channel(self, interfaces, nome, lacp, int_type, vlan, envs):
 
-        channel_map = dict ()
+        channel_map = dict()
         channel_map['interfaces'] = interfaces
         channel_map['nome'] = nome
         channel_map['lacp'] = lacp
@@ -424,14 +427,16 @@ class Interface(GenericClient):
         channel_map['vlan'] = vlan
         channel_map['envs'] = envs
 
-        code, xml = self.submit({'channel': channel_map}, 'POST', 'channel/inserir/')
+        code, xml = self.submit(
+            {'channel': channel_map}, 'POST', 'channel/inserir/')
 
         return self.response(code, xml)
 
     def get_env_by_id(self, id_interface):
 
         if not is_valid_int_param(id_interface):
-            raise InvalidParameterError(u'Interface id is invalid or was not informed.')
+            raise InvalidParameterError(
+                u'Interface id is invalid or was not informed.')
 
         url = 'int/get-env-by-interface/' + str(id_interface)
 
@@ -449,15 +454,16 @@ class Interface(GenericClient):
 
     def get_interface_by_channel(self, channel_name, equip_name):
 
-        url = 'interface/get-by-channel/' + str(channel_name) + '/' + str(equip_name) + '/'
+        url = 'interface/get-by-channel/' + \
+            str(channel_name) + '/' + str(equip_name) + '/'
 
         code, map = self.submit(None, 'GET', url)
 
         return self.response(code, map)
 
-    def editar_channel (self, id_channel, nome, lacp, int_type, vlan, envs, ids_interface):
+    def editar_channel(self, id_channel, nome, lacp, int_type, vlan, envs, ids_interface):
 
-        channel_map = dict ()
+        channel_map = dict()
         channel_map['id_channel'] = id_channel
         channel_map['nome'] = nome
         channel_map['lacp'] = lacp
@@ -466,7 +472,8 @@ class Interface(GenericClient):
         channel_map['envs'] = envs
         channel_map['ids_interface'] = ids_interface
 
-        code, xml = self.submit({'channel': channel_map}, 'PUT', 'channel/editar/')
+        code, xml = self.submit(
+            {'channel': channel_map}, 'PUT', 'channel/editar/')
 
         return self.response(code, xml)
 

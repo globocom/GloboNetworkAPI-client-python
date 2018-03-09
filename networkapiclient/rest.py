@@ -13,12 +13,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import logging
-from urllib2 import *
-from httplib import *
-from urlparse import urlparse
-from networkapiclient.xml_utils import dumps_networkapi, loads
+
+from networkapiclient.xml_utils import dumps_networkapi
+from networkapiclient.xml_utils import loads
+try:
+    from urlparse import urlparse
+except:
+    from urllib.parse import urlparse
+try:
+    from urllib2 import *
+except:
+    from urllib.request import *
 
 LOG = logging.getLogger('networkapiclient.rest')
 
@@ -85,8 +91,8 @@ class Rest:
             if auth_map is not None:
                 for key in auth_map.iterkeys():
                     request.add_header(key, auth_map[key])
-                #request.add_header('NETWORKAPI_PASSWORD', auth_map['NETWORKAPI_PASSWORD'])
-                #request.add_header('NETWORKAPI_USERNAME', auth_map['NETWORKAPI_USERNAME'])
+                # request.add_header('NETWORKAPI_PASSWORD', auth_map['NETWORKAPI_PASSWORD'])
+                # request.add_header('NETWORKAPI_USERNAME', auth_map['NETWORKAPI_USERNAME'])
             content = urlopen(request).read()
             response_code = 200
             LOG.debug('GET %s returns %s\n%s', url, response_code, content)
@@ -128,7 +134,7 @@ class Rest:
         :raise RestError: Falha no acesso à networkAPI.
         """
         try:
-            LOG.debug("POST %s\n%s", url, request_data)
+            LOG.debug('POST %s\n%s', url, request_data)
             request = Request(url)
             request.add_data(request_data)
             # print request_data
@@ -137,8 +143,8 @@ class Rest:
                 for key in auth_map.iterkeys():
                     request.add_header(key, auth_map[key])
 
-                #request.add_header('NETWORKAPI_PASSWORD', auth_map['NETWORKAPI_PASSWORD'])
-                #request.add_header('NETWORKAPI_USERNAME', auth_map['NETWORKAPI_USERNAME'])
+                # request.add_header('NETWORKAPI_PASSWORD', auth_map['NETWORKAPI_PASSWORD'])
+                # request.add_header('NETWORKAPI_USERNAME', auth_map['NETWORKAPI_USERNAME'])
             if content_type is not None:
                 request.add_header('Content-Type', content_type)
             content = urlopen(request).read()
@@ -179,7 +185,7 @@ class Rest:
         :raise RestError: Falha no acesso à networkAPI.
         """
         try:
-            LOG.debug("DELETE %s", url)
+            LOG.debug('DELETE %s', url)
             parsed_url = urlparse(url)
             if parsed_url.scheme == 'https':
                 connection = HTTPSConnection(
@@ -199,7 +205,7 @@ class Rest:
                     headers_map['Content-Type'] = content_type
 
                 connection.request(
-                    "DELETE",
+                    'DELETE',
                     self.get_full_url(parsed_url),
                     request_data,
                     headers_map)
@@ -244,7 +250,7 @@ class Rest:
         :raise RestError: Falha no acesso à networkAPI.
         """
         try:
-            LOG.debug("PUT %s\n%s", url, request_data)
+            LOG.debug('PUT %s\n%s', url, request_data)
             parsed_url = urlparse(url)
             if parsed_url.scheme == 'https':
                 connection = HTTPSConnection(
@@ -264,7 +270,7 @@ class Rest:
                     headers_map['Content-Type'] = content_type
 
                 connection.request(
-                    "PUT",
+                    'PUT',
                     parsed_url.path,
                     request_data,
                     headers_map)
@@ -359,7 +365,7 @@ class Rest:
         """ Returns url path with querystring """
         full_path = parsed_url.path
         if parsed_url.query:
-            full_path = "%s?%s" % (full_path, parsed_url.query)
+            full_path = '%s?%s' % (full_path, parsed_url.query)
         return full_path
 
 

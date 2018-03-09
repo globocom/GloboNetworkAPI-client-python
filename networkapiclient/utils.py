@@ -15,7 +15,7 @@
 # limitations under the License.
 import re
 
-from Config import IP_VERSION
+from networkapiclient.Config import IP_VERSION
 
 
 def is_valid_int_param(param):

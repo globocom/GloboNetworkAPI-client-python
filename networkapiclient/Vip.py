@@ -13,12 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from networkapiclient.GenericClient import GenericClient
-from networkapiclient.exception import InvalidParameterError
-from networkapiclient.utils import is_valid_int_param, get_list_map
 from networkapiclient.Config import IP_VERSION
-from networkapiclient.Pagination import Pagination
+from networkapiclient.exception import InvalidParameterError
+from networkapiclient.GenericClient import GenericClient
+from networkapiclient.utils import get_list_map
+from networkapiclient.utils import is_valid_int_param
 
 
 class Vip(GenericClient):
@@ -773,7 +772,7 @@ class Vip(GenericClient):
         if keep_ip:
             # since there is no standard way to pass parameters to DELETE
             # I prefer to use querystring because all library support use it
-            url = "%s?keep_ip=1" % url
+            url = '%s?keep_ip=1' % url
 
         code, xml = self.submit(None, 'DELETE', url)
 
@@ -1063,11 +1062,11 @@ class Vip(GenericClient):
 
         vip_map = dict()
 
-        vip_map["start_record"] = pagination.start_record
-        vip_map["end_record"] = pagination.end_record
-        vip_map["asorting_cols"] = pagination.asorting_cols
-        vip_map["searchable_columns"] = pagination.searchable_columns
-        vip_map["custom_search"] = pagination.custom_search
+        vip_map['start_record'] = pagination.start_record
+        vip_map['end_record'] = pagination.end_record
+        vip_map['asorting_cols'] = pagination.asorting_cols
+        vip_map['searchable_columns'] = pagination.searchable_columns
+        vip_map['custom_search'] = pagination.custom_search
 
         vip_map['id_vip'] = id_vip
         vip_map['ip'] = ip
@@ -1075,11 +1074,11 @@ class Vip(GenericClient):
 
         code, xml = self.submit({'vip': vip_map}, 'POST', url)
 
-        key = "vip"
+        key = 'vip'
         return get_list_map(
             self.response(
                 code, xml, [
-                    "equipments", "environments", "ips"]), key)
+                    'equipments', 'environments', 'ips']), key)
 
     def get_by_id(self, id_vip):
         """Get VIPs by id.
@@ -1110,11 +1109,11 @@ class Vip(GenericClient):
 
         code, xml = self.submit(None, 'GET', url)
 
-        key = "vip"
+        key = 'vip'
         return get_list_map(
             self.response(
                 code, xml, [
-                    "equipamento", "ips"]), key)
+                    'equipamento', 'ips']), key)
 
     def get_all(self):
         """Get all VIPs.
@@ -1521,7 +1520,7 @@ class Vip(GenericClient):
         real_map['id_environment_vip'] = id_environment_vip
         real_map['valid'] = valid
 
-        url = "vip/real/valid/"
+        url = 'vip/real/valid/'
 
         code, xml = self.submit({'real': real_map}, 'POST', url)
 
@@ -1661,8 +1660,3 @@ class Vip(GenericClient):
         code, xml = self.submit(None, 'GET', url)
 
         return self.response(code, xml)
-
-
-if __name__ == '__main__':
-    vip_cli = Vip('http://127.0.0.1:8080/', 'henrique', '12345678')
-    print vip_cli.buscar(6628)

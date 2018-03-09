@@ -13,12 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from networkapiclient.ApiGenericClient import ApiGenericClient
-from utils import build_uri_with_ids
+from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiPoolDeploy(ApiGenericClient):
+
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
@@ -57,7 +57,7 @@ class ApiPoolDeploy(ApiGenericClient):
                      for pool in pools]
 
         return super(ApiPoolDeploy, self).put('api/v3/pool/deploy/%s/' %
-                                        ';'.join(pools_ids), data)
+                                              ';'.join(pools_ids), data)
 
     def create(self, ids):
         """
@@ -69,4 +69,3 @@ class ApiPoolDeploy(ApiGenericClient):
 
         url = build_uri_with_ids('api/v3/pool/deploy/%s/', ids)
         return super(ApiPoolDeploy, self).post(url)
-

@@ -13,11 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from networkapiclient.ApiGenericClient import ApiGenericClient
+from networkapiclient.exception import InvalidParameterError
 from networkapiclient.GenericClient import GenericClient
 from networkapiclient.utils import is_valid_int_param
-from networkapiclient.exception import InvalidParameterError
-from networkapiclient.ApiGenericClient import ApiGenericClient
 
 
 class Network(GenericClient):
@@ -536,7 +535,8 @@ class DHCPRelayIPv4(ApiGenericClient):
         :param user: User for authentication.
         :param password: Password for authentication.
         """
-        super(DHCPRelayIPv4, self).__init__(networkapi_url, user, password, user_ldap)
+        super(DHCPRelayIPv4, self).__init__(
+            networkapi_url, user, password, user_ldap)
 
     def add(self, networkipv4_id, ipv4_id):
         """List all DHCPRelayIPv4.
@@ -563,11 +563,10 @@ class DHCPRelayIPv4(ApiGenericClient):
 
         data = dict()
 
-        data["networkipv4"] = networkipv4_id
-        data["ipv4"] = dict()
-        data["ipv4"]["id"] = ipv4_id
-        print data
-        uri = "api/dhcprelayv4/"
+        data['networkipv4'] = networkipv4_id
+        data['ipv4'] = dict()
+        data['ipv4']['id'] = ipv4_id
+        uri = 'api/dhcprelayv4/'
         return self.post(uri, data=data)
 
     def get_by_pk(self, dhcprelayv4_id):
@@ -593,7 +592,7 @@ class DHCPRelayIPv4(ApiGenericClient):
         :raise NetworkAPIException: Falha ao acessar fonte de dados
         """
 
-        uri = "api/dhcprelayv4/%s" % dhcprelayv4_id
+        uri = 'api/dhcprelayv4/%s' % dhcprelayv4_id
         return self.get(uri)
 
     def list(self, networkipv4=None, ipv4=None):
@@ -623,11 +622,11 @@ class DHCPRelayIPv4(ApiGenericClient):
         :raise NetworkAPIException: Falha ao acessar fonte de dados
         """
 
-        uri = "api/dhcprelayv4/?"
+        uri = 'api/dhcprelayv4/?'
         if networkipv4:
-            uri += "networkipv4=%s&" % networkipv4
+            uri += 'networkipv4=%s&' % networkipv4
         if ipv4:
-            uri += "ipv4=%s" % ipv4
+            uri += 'ipv4=%s' % ipv4
 
         return self.get(uri)
 
@@ -640,7 +639,7 @@ class DHCPRelayIPv4(ApiGenericClient):
 
         :raise NetworkAPIException: Falha ao acessar fonte de dados
         """
-        uri = "api/dhcprelayv4/%s" % dhcprelayv4_id
+        uri = 'api/dhcprelayv4/%s' % dhcprelayv4_id
         return self.delete(uri)
 
 
@@ -652,7 +651,8 @@ class DHCPRelayIPv6(ApiGenericClient):
         :param user: User for authentication.
         :param password: Password for authentication.
         """
-        super(DHCPRelayIPv6, self).__init__(networkapi_url, user, password, user_ldap)
+        super(DHCPRelayIPv6, self).__init__(
+            networkapi_url, user, password, user_ldap)
 
     def add(self, networkipv6_id, ipv6_id):
         """List all DHCPRelayIPv4.
@@ -683,10 +683,10 @@ class DHCPRelayIPv6(ApiGenericClient):
 
         data = dict()
 
-        data["networkipv6"] = networkipv6_id
-        data["ipv6"] = dict()
-        data["ipv6"]["id"] = ipv6_id
-        uri = "api/dhcprelayv6/"
+        data['networkipv6'] = networkipv6_id
+        data['ipv6'] = dict()
+        data['ipv6']['id'] = ipv6_id
+        uri = 'api/dhcprelayv6/'
         return self.post(uri, data=data)
 
     def get_by_pk(self, dhcprelayv6_id):
@@ -716,7 +716,7 @@ class DHCPRelayIPv6(ApiGenericClient):
         :raise NetworkAPIException: Falha ao acessar fonte de dados
         """
 
-        uri = "api/dhcprelayv6/%s" % dhcprelayv6_id
+        uri = 'api/dhcprelayv6/%s' % dhcprelayv6_id
         return self.get(uri)
 
     def list(self, networkipv6=None, ipv6=None):
@@ -750,11 +750,11 @@ class DHCPRelayIPv6(ApiGenericClient):
         :raise NetworkAPIException: Falha ao acessar fonte de dados
         """
 
-        uri = "api/dhcprelayv6/?"
+        uri = 'api/dhcprelayv6/?'
         if networkipv6:
-            uri += "networkipv6=%s&" % networkipv6
+            uri += 'networkipv6=%s&' % networkipv6
         if ipv6:
-            uri += "ipv6=%s" % ipv6
+            uri += 'ipv6=%s' % ipv6
 
         return self.get(uri)
 
@@ -767,5 +767,5 @@ class DHCPRelayIPv6(ApiGenericClient):
 
         :raise NetworkAPIException: Falha ao acessar fonte de dados
         """
-        uri = "api/dhcprelayv6/%s" % dhcprelayv6_id
+        uri = 'api/dhcprelayv6/%s' % dhcprelayv6_id
         return self.delete(uri)
