@@ -20,10 +20,6 @@ class NetworkAPIClientError(Exception):
     def __init__(self, error):
         self.error = error
 
-    def __str__(self):
-        msg = u'%s' % (self.error)
-        return msg.encode('utf-8', 'replace')
-
 
 class DataBaseError(NetworkAPIClientError):
 
@@ -252,25 +248,30 @@ class NomeTipoRoteiroDuplicadoError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+
 class NumeroRackDuplicadoError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
+
 
 class NomeRackDuplicadoError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+
 class RackConfiguracaoError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+
 class RackAplicarError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
+
 
 class TipoRoteiroNaoExisteError(NetworkAPIClientError):
 
@@ -313,25 +314,30 @@ class MarcaNaoExisteError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+
 class RackNaoExisteError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
+
 
 class MarcarError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+
 class RacksError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
 
+
 class RackAllreadyConfigError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
+
 
 class ModeloEquipamentoError(NetworkAPIClientError):
 
@@ -535,6 +541,7 @@ class NomeMarcaDuplicadoError(NetworkAPIClientError):
 
     def __init__(self, error):
         NetworkAPIClientError.__init__(self, error)
+
 
 class NomeMarcaModeloDuplicadoError(NetworkAPIClientError):
 
@@ -1093,7 +1100,7 @@ class ErrorHandler(object):
               382: RackConfiguracaoError,
               383: RackAplicarError,
               407: VariableError
-    }
+              }
 
     @classmethod
     def handle(cls, code, description):

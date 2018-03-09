@@ -15,6 +15,11 @@
 # limitations under the License.
 import json
 import logging
+
+try:
+    from urllib.parse import urlencode
+except:
+    from urllib import urlencode
 import urllib
 from io import BytesIO
 
@@ -67,15 +72,16 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return self._parse(request.text)
+            return request.json()
 
         except HTTPError:
-            error = self._parse(request.text)
+            error = request.json()
             self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s', request.status_code if request else "")
+            self.logger.info('Status Code: %s',
+                             request.status_code if request else '')
             self.logger.info('X-Request-Id: %s',
                              request.headers.get('x-request-id'))
             self.logger.info('X-Request-Context: %s',
@@ -103,15 +109,16 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return self._parse(request.text)
+            return request.json()
 
         except HTTPError:
-            error = self._parse(request.text)
+            error = request.json()
             self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s', request.status_code if request else "")
+            self.logger.info('Status Code: %s',
+                             request.status_code if request else '')
             self.logger.info('X-Request-Id: %s',
                              request.headers.get('x-request-id'))
             self.logger.info('X-Request-Context: %s',
@@ -138,15 +145,16 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return self._parse(request.text)
+            return request.json()
 
         except HTTPError:
-            error = self._parse(request.text)
+            error = request.json()
             self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s', request.status_code if request else "")
+            self.logger.info('Status Code: %s',
+                             request.status_code if request else '')
             self.logger.info('X-Request-Id: %s',
                              request.headers.get('x-request-id'))
             self.logger.info('X-Request-Context: %s',
@@ -172,15 +180,16 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return self._parse(request.text)
+            return request.json()
 
         except HTTPError:
-            error = self._parse(request.text)
+            error = request.json()
             self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s', request.status_code if request else "")
+            self.logger.info('Status Code: %s',
+                             request.status_code if request else '')
             self.logger.info('X-Request-Id: %s',
                              request.headers.get('x-request-id'))
             self.logger.info('X-Request-Context: %s',
@@ -238,7 +247,7 @@ class ApiGenericClient(object):
                 })
 
         if params:
-            params = urllib.urlencode(params)
+            params = urlencode(params)
             uri = '%s?%s' % (uri, params)
 
         return uri
