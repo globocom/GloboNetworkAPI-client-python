@@ -1,5 +1,5 @@
 # Makefile for globonetworkapi-client-python
-VERSION=$(shell python -c 'import networkapiclient; print networkapiclient.VERSION')
+VERSION=$(shell python -c 'import networkapiclient; print(networkapiclient.VERSION)')
 
 # Pip executable path
 PIP := $(shell which pip)
