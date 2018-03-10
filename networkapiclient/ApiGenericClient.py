@@ -52,7 +52,7 @@ class ApiGenericClient(object):
         logging.basicConfig(level=self.log_level, format='%(message)s')
         self.logger = logging.getLogger('networkapiclient')
 
-    def get(self, uri, verify=False):
+    def get(self, uri):
         """
             Sends a GET request.
 
@@ -66,8 +66,7 @@ class ApiGenericClient(object):
             request = requests.get(
                 self._url(uri),
                 auth=self._auth_basic(),
-                headers=self._header(),
-                verify=verify
+                headers=self._header()
             )
 
             request.raise_for_status()
@@ -87,7 +86,7 @@ class ApiGenericClient(object):
             self.logger.info('X-Request-Context: %s',
                              request.headers.get('x-request-context'))
 
-    def post(self, uri, data=None, files=None, verify=False):
+    def post(self, uri, data=None, files=None):
         """
             Sends a POST request.
 
@@ -103,8 +102,7 @@ class ApiGenericClient(object):
                 data=json.dumps(data),
                 files=files,
                 auth=self._auth_basic(),
-                headers=self._header(),
-                verify=verify
+                headers=self._header()
             )
 
             request.raise_for_status()
@@ -124,7 +122,7 @@ class ApiGenericClient(object):
             self.logger.info('X-Request-Context: %s',
                              request.headers.get('x-request-context'))
 
-    def put(self, uri, data=None, verify=False):
+    def put(self, uri, data=None):
         """
             Sends a PUT request.
 
@@ -139,8 +137,7 @@ class ApiGenericClient(object):
                 self._url(uri),
                 data=json.dumps(data),
                 auth=self._auth_basic(),
-                headers=self._header(),
-                verify=verify
+                headers=self._header()
             )
 
             request.raise_for_status()
@@ -160,7 +157,7 @@ class ApiGenericClient(object):
             self.logger.info('X-Request-Context: %s',
                              request.headers.get('x-request-context'))
 
-    def delete(self, uri, data=None, verify=False):
+    def delete(self, uri, data=None):
         """
             Sends a DELETE request.
 
@@ -174,8 +171,7 @@ class ApiGenericClient(object):
                 self._url(uri),
                 data=json.dumps(data),
                 auth=self._auth_basic(),
-                headers=self._header(),
-                verify=False
+                headers=self._header()
             )
 
             request.raise_for_status()
