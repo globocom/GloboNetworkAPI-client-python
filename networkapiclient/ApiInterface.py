@@ -19,75 +19,71 @@ from networkapiclient.utils import build_uri_with_ids
 
 
 class ApiInterfaceRequest(ApiGenericClient):
-	def __init__(self, networkapi_url, user, password, user_ldap=None):
-		"""Class constructor receives parameters to connect to the networkAPI.
-		:param networkapi_url: URL to access the network API.
-		:param user: User for authentication.
-		:param password: Password for authentication.
-		"""
+    def __init__(self, networkapi_url, user, password, user_ldap=None):
+        """Class constructor receives parameters to connect to the networkAPI.
+        :param networkapi_url: URL to access the network API.
+        :param user: User for authentication.
+        :param password: Password for authentication.
+        """
 
-		super(ApiInterfaceRequest, self).__init__(
-			networkapi_url,
-			user,
-			password,
-			user_ldap
-		)
+        super(ApiInterfaceRequest, self).__init__(
+            networkapi_url,
+            user,
+            password,
+            user_ldap
+        )
 
-	def deploy_interface_config_sync(self, interface_id):
-		"""
-		"""
+    def deploy_interface_config_sync(self, interface_id):
+        """
+        """
 
-		uri = "api/interface/%s/deploy_config_sync/" % (interface_id)
+        uri = "api/interface/%s/deploy_config_sync/" % interface_id
 
-		data = dict()
+        data = dict()
 
-		return self.put(uri, data)
+        return self.put(uri, data)
 
-	def deploy_channel_config_sync(self, channel_id):
-		"""
-		"""
+    def deploy_channel_config_sync(self, channel_id):
+        """
+        """
 
-		uri = "api/interface/channel/%s/deploy_config_sync/" % (channel_id)
+        uri = "api/interface/channel/%s/deploy_config_sync/" % channel_id
 
-		data = dict()
+        data = dict()
 
-		return self.put(uri, data)
+        return self.put(uri, data)
 
-	def remove_connection(self, interface1, interface2):
-		"""Remove a connection between two interfaces"""
+    def remove_connection(self, interface1, interface2):
+        """Remove a connection between two interfaces"""
 
-		uri = "api/interface/disconnect/%s/%s/" % (interface1, interface2)
+        uri = "api/interface/disconnect/%s/%s/" % (interface1, interface2)
 
-		return self.delete(uri)
+        return self.delete(uri)
 
+    def search(self, **kwargs):
+        """
+        Method to search interfaces based on extends search.
+        :return: Dict containing interfaces.
+        """
 
-	def search(self, **kwargs):
-		"""
-		Method to search interfaces based on extends search.
+        return super(ApiInterfaceRequest, self).get(self.prepare_url('api/v3/interface/', kwargs))
 
-		:param search: Dict containing QuerySets to find interfaces.
-		:param include: Array containing fields to include on response.
-		:param exclude: Array containing fields to exclude on response.
-		:param fields:  Array containing fields to override default fields.
-		:param kind: Determine if result will be detailed ('details') or basic ('basic').
-		:return: Dict containing equipments
-		"""
+    def get(self, ids, **kwargs):
+        """
+        Method to get interfaces by their ids.
+        :param ids: List containing identifiers of interfaces.
+        :return: Dict containing interfaces.
+        """
 
-		return super(ApiInterfaceRequest, self).get(self.prepare_url('api/v3/interface/', kwargs))
+        url = build_uri_with_ids('api/v3/interface/%s/', ids)
 
+        return super(ApiInterfaceRequest, self).get(self.prepare_url(url, kwargs))
 
-	def get(self, ids, **kwargs):
-		"""
-		Method to get environments by their ids
+    def remove(self, ids, **kwargs):
+        """
+        Method to delete interface by id.
+        :param ids: List containing identifiers of interfaces.
+        """
+        url = build_uri_with_ids('api/v3/interface/%s/', ids)
 
-		:param ids: List containing identifiers of environments
-		:param include: Array containing fields to include on response.
-		:param exclude: Array containing fields to exclude on response.
-		:param fields: Array containing fields to override default fields.
-		:param kind: Determine if result will be detailed ('detail') or basic ('basic').
-		:return: Dict containing environments
-		"""
-
-		url = build_uri_with_ids('api/v3/interface/%s/', ids)
-
-		return super(ApiInterfaceRequest, self).get(self.prepare_url(url, kwargs))
+        return super(ApiInterfaceRequest, self).delete(self.prepare_url(url, kwargs))
