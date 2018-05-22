@@ -87,3 +87,27 @@ class ApiInterfaceRequest(ApiGenericClient):
         url = build_uri_with_ids('api/v3/interface/%s/', ids)
 
         return super(ApiInterfaceRequest, self).delete(self.prepare_url(url, kwargs))
+
+    def create(self, interface):
+        """
+        Method to add an interface.
+        :param interface: List containing interface's desired to be created on database.
+        :return: Id.
+        """
+
+        data = {'interfaces': interface}
+        return super(ApiInterfaceRequest, self).post('api/v3/interface/', data)
+
+    def get_interface_type(self, ids=None, **kwargs):
+        """
+        Method to get interfaces by their ids.
+        :param ids: List containing identifiers of interfaces.
+        :return: Dict containing interfaces.git 
+        """
+
+        url = 'api/v3/interfacetype/'
+
+        if ids:
+            url = build_uri_with_ids(url, ids)
+
+        return super(ApiInterfaceRequest, self).get(self.prepare_url(url, kwargs))
