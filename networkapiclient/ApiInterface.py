@@ -102,7 +102,7 @@ class ApiInterfaceRequest(ApiGenericClient):
         """
         Method to get interfaces by their ids.
         :param ids: List containing identifiers of interfaces.
-        :return: Dict containing interfaces.git 
+        :return: Dict containing interfaces.git
         """
 
         url = 'api/v3/interfacetype/'
@@ -111,3 +111,14 @@ class ApiInterfaceRequest(ApiGenericClient):
             url = build_uri_with_ids(url, ids)
 
         return super(ApiInterfaceRequest, self).get(self.prepare_url(url, kwargs))
+
+    def update(self, interfaces=None):
+        """
+        Method to update interface.
+        :param ids: List containing interface's desired to be updated on database.
+        :return: None.
+        """
+
+        data = {'interfaces': interfaces}
+
+        return super(ApiInterfaceRequest, self).put('api/v3/interface/', data)
