@@ -17,14 +17,21 @@ import logging
 
 from networkapiclient.xml_utils import dumps_networkapi
 from networkapiclient.xml_utils import loads
-try:
-    from urlparse import urlparse
-except:
-    from urllib.parse import urlparse
+
 try:
     from urllib2 import *
 except:
     from urllib.request import *
+
+try:
+    from urlparse import urlparse
+except:
+    from urllib.parse import urlparse
+
+try:
+    from httplib import *
+except:
+    from http.client import *
 
 LOG = logging.getLogger('networkapiclient.rest')
 
