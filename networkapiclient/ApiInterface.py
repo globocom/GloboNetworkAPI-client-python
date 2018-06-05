@@ -115,10 +115,34 @@ class ApiInterfaceRequest(ApiGenericClient):
     def update(self, interfaces=None):
         """
         Method to update interface.
-        :param ids: List containing interface's desired to be updated on database.
+        :param interfaces: List containing interface's desired to be updated on database.
         :return: None.
         """
 
         data = {'interfaces': interfaces}
 
         return super(ApiInterfaceRequest, self).put('api/v3/interface/', data)
+
+    def get_interface_environments(self, ids=None, **kwargs):
+        """
+        Method to get interfaces by their ids.
+        :param ids: List containing identifiers of interfaces.
+        :return: Dict containing interfaces.git
+        """
+
+        url = 'api/v3/interface/environments/'
+
+        if ids:
+            url = build_uri_with_ids(url, ids)
+
+        return super(ApiInterfaceRequest, self).get(self.prepare_url(url, kwargs))
+
+    def associate_interface_environments(self, int_env_map):
+        """
+        Method to add an interface.
+        :param int_env_map: List containing interfaces and environments ids desired to be associates.
+        :return: Id.
+        """
+
+        data = {'interface_environments': int_env_map}
+        return super(ApiInterfaceRequest, self).post('api/v3/interface/environments/', data)
