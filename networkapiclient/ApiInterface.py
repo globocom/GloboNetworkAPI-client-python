@@ -146,3 +146,14 @@ class ApiInterfaceRequest(ApiGenericClient):
 
         data = {'interface_environments': int_env_map}
         return super(ApiInterfaceRequest, self).post('api/v3/interface/environments/', data)
+
+    def disassociate_interface_environments(self, ids=None, **kwargs):
+        """
+        Method to add an interface.
+        :param ids: List containing interfaces and environments ids desired to be associates.
+        :return: None.
+        """
+
+        url = build_uri_with_ids('api/v3/interface/environments/%s/', ids)
+
+        return super(ApiInterfaceRequest, self).delete(self.prepare_url(url, kwargs))
