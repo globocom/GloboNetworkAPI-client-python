@@ -182,17 +182,18 @@ class ApiGenericClient(object):
             return request.json()
 
         except HTTPError:
-            error = request.json()
+            error = request.json() if request else ""
             self.logger.error(error)
             raise NetworkAPIClientError(error.get('detail', ''))
         finally:
-            self.logger.info('URI: %s', uri)
-            self.logger.info('Status Code: %s',
-                             request.status_code if request else '')
-            self.logger.info('X-Request-Id: %s',
-                             request.headers.get('x-request-id'))
-            self.logger.info('X-Request-Context: %s',
-                             request.headers.get('x-request-context'))
+            if request:
+                self.logger.info('URI: %s', uri)
+                self.logger.info('Status Code: %s',
+                                 request.status_code if request else '')
+                self.logger.info('X-Request-Id: %s',
+                                 request.headers.get('x-request-id'))
+                self.logger.info('X-Request-Context: %s',
+                                 request.headers.get('x-request-context'))
 
     def _parse(self, content):
         """
