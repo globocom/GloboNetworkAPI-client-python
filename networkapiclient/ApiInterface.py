@@ -157,3 +157,27 @@ class ApiInterfaceRequest(ApiGenericClient):
         url = build_uri_with_ids('api/v3/interface/environments/%s/', ids)
 
         return super(ApiInterfaceRequest, self).delete(self.prepare_url(url, kwargs))
+
+    def connecting_interfaces(self, interfaces):
+        """
+        Method to connecting interfaces.
+        :param interfaces: List containing a dictionary with the interfaces ids and front or back.
+        :return: 200 OK.
+        """
+
+        data = {'interfaces': interfaces}
+
+        url = 'api/v3/connections/' + str(interfaces[0].get('id')) + '/' + str(interfaces[1].get('id')) + '/'
+
+        return super(ApiInterfaceRequest, self).post(url, data)
+
+    def disconnecting_interfaces(self, interfaces, **kwargs):
+        """
+        Method to remove the link between interfaces.
+        :param interfaces: List of ids.
+        :return: 200 OK.
+        """
+
+        url = 'api/v3/connections/' + str(interfaces[0]) + '/' + str(interfaces[1]) + '/'
+
+        return super(ApiInterfaceRequest, self).delete(self.prepare_url(url, kwargs))
