@@ -47,7 +47,7 @@ class ApiInterfaceRequest(ApiGenericClient):
         """
         """
 
-        uri = "api/interface/channel/%s/deploy_config_sync/" % channel_id
+        uri = "api/v3/interface/channel/%s/deploy/" % channel_id
 
         data = dict()
 
