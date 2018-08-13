@@ -183,7 +183,7 @@ class ApiGenericClient(object):
         except HTTPError:
             error = request if request else ""
             self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            raise NetworkAPIClientError("Error while removing object.")
         finally:
             if request:
                 self.logger.info('URI: %s', uri)
