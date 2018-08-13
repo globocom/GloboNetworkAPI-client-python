@@ -109,12 +109,15 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return request.json()
+            try:
+                return request.json()
+            except:
+                return request
 
         except HTTPError:
-            error = request.json()
+            error = request
             self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            raise NetworkAPIClientError(str(error))
         finally:
             self.logger.info('URI: %s', uri)
             self.logger.info('Status Code: %s',
@@ -144,12 +147,15 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return request.json()
+            try:
+                return request.json()
+            except:
+                return request
 
         except HTTPError:
             error = request.json()
             self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            raise NetworkAPIClientError(str(error))
         finally:
             self.logger.info('URI: %s', uri)
             self.logger.info('Status Code: %s',
@@ -178,12 +184,15 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return request
+            try:
+                return request.json()
+            except:
+                return request
 
         except HTTPError:
             error = request if request else ""
             self.logger.error(error)
-            raise NetworkAPIClientError("Error while removing object.")
+            raise NetworkAPIClientError(str(error))
         finally:
             if request:
                 self.logger.info('URI: %s', uri)
