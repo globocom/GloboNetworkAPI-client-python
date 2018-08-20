@@ -181,3 +181,24 @@ class ApiInterfaceRequest(ApiGenericClient):
         url = 'api/v3/connections/' + str(interfaces[0]) + '/' + str(interfaces[1]) + '/'
 
         return super(ApiInterfaceRequest, self).delete(self.prepare_url(url, kwargs))
+
+    # channels
+
+    def create_channel(self, channel):
+        """
+        Method to create a channel.
+        :param channel: List containing channel's desired to be created on database.
+        :return: Id.
+        """
+
+        data = {'channels': channel}
+        return super(ApiInterfaceRequest, self).post('api/v3/channel/', data)
+
+    def remove_channel(self, ids, **kwargs):
+        """
+        Method to delete channel by id.
+        :param ids: List containing identifiers of channels.
+        """
+        url = build_uri_with_ids('api/v3/channel/%s/', ids)
+
+        return super(ApiInterfaceRequest, self).delete(self.prepare_url(url, kwargs))
