@@ -72,12 +72,15 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return request.json()
+            try:
+                return request.json()
+            except:
+                return request
 
         except HTTPError:
-            error = request.json()
+            error = request
             self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            raise NetworkAPIClientError(str(error))
         finally:
             self.logger.info('URI: %s', uri)
             if request:
