@@ -194,6 +194,16 @@ class ApiInterfaceRequest(ApiGenericClient):
         data = {'channels': channel}
         return super(ApiInterfaceRequest, self).post('api/v3/channel/', data)
 
+    def update_channel(self, channel):
+        """
+        Method to update a channel.
+        :param channel: List containing channel's desired to be created on database.
+        :return: Id.
+        """
+
+        data = {'channels': channel}
+        return super(ApiInterfaceRequest, self).put('api/v3/channel/', data)
+
     def remove_channel(self, ids, **kwargs):
         """
         Method to delete channel by id.
