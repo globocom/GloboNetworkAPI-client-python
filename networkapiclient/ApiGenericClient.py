@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -72,15 +73,12 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            try:
-                return request.json()
-            except:
-                return request
+            return request.json()
 
         except HTTPError:
-            error = request
+            error = request.json()
             self.logger.error(error)
-            raise NetworkAPIClientError(str(error))
+            raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
             if request:
@@ -112,15 +110,16 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            try:
-                return request.json()
-            except:
-                return request
+            return request.json()
 
         except HTTPError:
-            error = request
+            error = request.json()
             self.logger.error(error)
-            raise NetworkAPIClientError(str(error))
+            raise NetworkAPIClientError(error.get('detail', ''))
+        except Exception:
+            error = request.json()
+            self.logger.error(error)
+            raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
             self.logger.info('Status Code: %s',
@@ -150,15 +149,12 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            try:
-                return request.json()
-            except:
-                return request
+            return request.json()
 
         except HTTPError:
             error = request.json()
             self.logger.error(error)
-            raise NetworkAPIClientError(str(error))
+            raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             self.logger.info('URI: %s', uri)
             self.logger.info('Status Code: %s',
@@ -187,15 +183,12 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            try:
-                return request.json()
-            except:
-                return request
+            return request.json()
 
         except HTTPError:
-            error = request if request else ""
+            error = request.json() if request else ""
             self.logger.error(error)
-            raise NetworkAPIClientError(str(error))
+            raise NetworkAPIClientError(error.get('detail', ''))
         finally:
             if request:
                 self.logger.info('URI: %s', uri)
