@@ -20,7 +20,6 @@ try:
     from urllib.parse import urlencode
 except:
     from urllib import urlencode
-import urllib
 from io import BytesIO
 
 import requests
@@ -76,9 +75,13 @@ class ApiGenericClient(object):
             return request.json()
 
         except HTTPError:
-            error = request.json()
-            self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            try:
+                error = request.json()
+                self.logger.error(error)
+                err = error.get('detail', '')
+            except:
+                err = request
+            raise NetworkAPIClientError(err)
         finally:
             self.logger.info('URI: %s', uri)
             if request:
@@ -113,13 +116,21 @@ class ApiGenericClient(object):
             return request.json()
 
         except HTTPError:
-            error = request.json()
-            self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            try:
+                error = request.json()
+                self.logger.error(error)
+                err = error.get('detail', '')
+            except:
+                err = request
+            raise NetworkAPIClientError(err)
         except Exception:
-            error = request.json()
-            self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            try:
+                error = request.json()
+                self.logger.error(error)
+                err = error.get('detail', '')
+            except:
+                err = request
+            raise NetworkAPIClientError(err)
         finally:
             self.logger.info('URI: %s', uri)
             self.logger.info('Status Code: %s',
@@ -152,9 +163,13 @@ class ApiGenericClient(object):
             return request.json()
 
         except HTTPError:
-            error = request.json()
-            self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            try:
+                error = request.json()
+                self.logger.error(error)
+                err = error.get('detail', '')
+            except:
+                err = request
+            raise NetworkAPIClientError(err)
         finally:
             self.logger.info('URI: %s', uri)
             self.logger.info('Status Code: %s',
@@ -186,9 +201,13 @@ class ApiGenericClient(object):
             return request.json()
 
         except HTTPError:
-            error = request.json() if request else ""
-            self.logger.error(error)
-            raise NetworkAPIClientError(error.get('detail', ''))
+            try:
+                error = request.json()
+                self.logger.error(error)
+                err = error.get('detail', '')
+            except:
+                err = request
+            raise NetworkAPIClientError(err)
         finally:
             if request:
                 self.logger.info('URI: %s', uri)

@@ -20,6 +20,9 @@ class NetworkAPIClientError(Exception):
     def __init__(self, error):
         self.error = error
 
+    def __str__(self):
+        msg = u'%s' % (self.error)
+        return msg.encode('utf-8', 'replace')
 
 class DataBaseError(NetworkAPIClientError):
 
