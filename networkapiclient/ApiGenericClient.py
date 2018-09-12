@@ -72,7 +72,10 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return request.json()
+            try:
+                return request.json()
+            except Exception:
+                return request
 
         except HTTPError:
             try:
@@ -113,7 +116,10 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return request.json()
+            try:
+                return request.json()
+            except Exception:
+                return request
 
         except HTTPError:
             try:
@@ -160,7 +166,10 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return request.json()
+            try:
+                return request.json()
+            except Exception:
+                return request
 
         except HTTPError:
             try:
@@ -198,7 +207,10 @@ class ApiGenericClient(object):
 
             request.raise_for_status()
 
-            return request.json()
+            try:
+                return request.json()
+            except Exception:
+                return request
 
         except HTTPError:
             try:
