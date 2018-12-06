@@ -1,5 +1,7 @@
 # GloboNetworkAPI python client
 
+[![Documentation Status](https://readthedocs.org/projects/globonetworkapi-client-python/badge/?version=latest)](https://globonetworkapi-client-python.readthedocs.io/en/latest/?badge=latest)
+
 This project is the python implementation of a [GloboNetworkAPI](https://github.com/globocom/GloboNetworkAPI) client library.
 
 ### Installation
