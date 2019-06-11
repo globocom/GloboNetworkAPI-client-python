@@ -17,7 +17,7 @@ from networkapiclient.ApiGenericClient import ApiGenericClient
 from networkapiclient.utils import build_uri_with_ids
 
 
-class ApiDCEnvironment(ApiGenericClient):
+class ApiL3Environment(ApiGenericClient):
 
     def __init__(self, networkapi_url, user, password, user_ldap=None):
         """Class constructor receives parameters to connect to the networkAPI.
@@ -26,7 +26,7 @@ class ApiDCEnvironment(ApiGenericClient):
         :param password: Password for authentication.
         """
 
-        super(ApiDCEnvironment, self).__init__(
+        super(ApiL3Environment, self).__init__(
             networkapi_url,
             user,
             password,
@@ -44,8 +44,8 @@ class ApiDCEnvironment(ApiGenericClient):
         :param kind: Determine if result will be detailed ('detail') or basic ('basic').
         :return: Dict containing environments
         """
-        url = build_uri_with_ids('api/v3/environment/dc/', ids)
-        return super(ApiDCEnvironment, self).get(self.prepare_url(url, kwargs))
+        url = build_uri_with_ids('api/v3/environment/l3/', ids)
+        return super(ApiL3Environment, self).get(self.prepare_url(url, kwargs))
 
     def search(self, **kwargs):
         """
@@ -59,4 +59,4 @@ class ApiDCEnvironment(ApiGenericClient):
         :return: Dict containing environments
         """
 
-        return super(ApiDCEnvironment, self).get(self.prepare_url('api/v3/environment/dc/', kwargs))
+        return super(ApiL3Environment, self).get(self.prepare_url('api/v3/environment/l3/', kwargs))
