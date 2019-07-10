@@ -60,3 +60,14 @@ class ApiL3Environment(ApiGenericClient):
         """
 
         return super(ApiL3Environment, self).get(self.prepare_url('api/v3/environment/l3/', kwargs))
+
+    def create(self, environments):
+        """
+        Method to create environments
+
+        :param environments: Dict containing environments desired to be created on database
+        :return: None
+        """
+
+        data = dict(l3=environments)
+        return super(ApiL3Environment, self).post('api/v3/environment/l3/', data)

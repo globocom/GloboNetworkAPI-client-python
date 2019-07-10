@@ -60,3 +60,14 @@ class ApiLogicEnvironment(ApiGenericClient):
         """
 
         return super(ApiLogicEnvironment, self).get(self.prepare_url('api/v3/environment/logic/', kwargs))
+
+    def create(self, environments):
+        """
+        Method to create environments
+
+        :param environments: Dict containing environments desired to be created on database
+        :return: None
+        """
+
+        data = dict(logic=environments)
+        return super(ApiLogicEnvironment, self).post('api/v3/environment/logic/', data)
