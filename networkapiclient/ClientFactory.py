@@ -16,6 +16,7 @@
 from networkapiclient.Ambiente import Ambiente
 from networkapiclient.AmbienteLogico import AmbienteLogico
 from networkapiclient.ApiEnvironment import ApiEnvironment
+from networkapiclient.ApiCIDREnvironment import ApiCIDREnvironment
 from networkapiclient.ApiEnvironmentDC import ApiDCEnvironment
 from networkapiclient.ApiEnvironmentL3 import ApiL3Environment
 from networkapiclient.ApiEnvironmentLogic import ApiLogicEnvironment
@@ -81,7 +82,6 @@ from networkapiclient.Usuario import Usuario
 from networkapiclient.UsuarioGrupo import UsuarioGrupo
 from networkapiclient.Vip import Vip
 from networkapiclient.Vlan import Vlan
-# from networkapiclient.ApiOptionPool import ApiOptionPool
 
 
 class ClientFactory(object):
@@ -127,6 +127,14 @@ class ClientFactory(object):
     def create_api_environment(self):
         """Get an instance of Api Environment services facade."""
         return ApiEnvironment(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
+
+    def create_api_environment_cidr(self):
+        """Get an instance of Api Environment services facade."""
+        return ApiCIDREnvironment(
             self.networkapi_url,
             self.user,
             self.password,
