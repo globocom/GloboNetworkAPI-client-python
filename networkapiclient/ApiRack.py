@@ -113,8 +113,6 @@ class ApiRack(ApiGenericClient):
 
     def get_dc(self, dc_id=None, dcname=None, address=None):
 
-        data = dict()
-
         if dc_id:
             uri = "api/dc/id/%s/" % dc_id
         elif dcname:
@@ -130,9 +128,13 @@ class ApiRack(ApiGenericClient):
         uri = "api/dc/"
         return self.get(uri)
 
-    def save_fabric(self, dcroom):
+    def delete_datacenter(self, dc_id):
+        data = dict()
+        uri = "api/dc/" + str(dc_id)
 
-        log.info("Post Fabric")
+        return self.delete(uri, data=data)
+
+    def save_fabric(self, dcroom):
 
         data = dict()
         data['dcrooms'] = list()
@@ -162,8 +164,6 @@ class ApiRack(ApiGenericClient):
 
     def get_fabric(self, dc_id=None, name=None, fabric_id=None):
 
-        data = dict()
-
         if fabric_id:
             uri = "api/dcrooms/id/%s/" % fabric_id
         elif name:
@@ -175,9 +175,14 @@ class ApiRack(ApiGenericClient):
 
         return self.get(uri)
 
-    def get_rack(self, fabric_id=None, rack_id=None):
+    def delete_fabric(self, fabric_id):
 
         data = dict()
+        uri = "api/dcrooms/" + str(fabric_id)
+
+        return self.delete(uri, data=data)
+
+    def get_rack(self, fabric_id=None, rack_id=None):
 
         if fabric_id:
             uri = "api/rack/fabric/%s/" % fabric_id
@@ -211,14 +216,14 @@ class ApiRack(ApiGenericClient):
 
         return self.delete(uri, data=data)
 
-    def rackfiles( self, rack_id):
+    def rackfiles(self, rack_id):
 
         data = dict()
         uri = "api/rack/config/" + str(rack_id) + "/"
 
         return self.post(uri, data=data)
 
-    def delete_rack( self, rack_id):
+    def delete_rack(self, rack_id):
 
         data = dict()
         uri = "api/rack/" + str(rack_id)
