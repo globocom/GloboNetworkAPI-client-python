@@ -61,6 +61,12 @@ class ApiRack(ApiGenericClient):
         uri = "api/rack/" + str(rack_id) + "/equipments/"
         return self.post(uri, data=data)
 
+    def rack_foreman( self, rack_id):
+
+        data = dict()
+        uri = "api/rack/foreman/" + str(rack_id) + "/"
+        return self.post(uri, data=data)
+
     def rack_delete( self, rack_id):
 
         data = dict()
