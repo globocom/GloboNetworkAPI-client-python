@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+
 from networkapiclient.Ambiente import Ambiente
 from networkapiclient.AmbienteLogico import AmbienteLogico
 from networkapiclient.ApiEnvironment import ApiEnvironment
@@ -45,7 +47,7 @@ from networkapiclient.ApiVlan import ApiVlan
 from networkapiclient.ApiVrf import ApiVrf
 from networkapiclient.BlockRule import BlockRule
 from networkapiclient.DireitoGrupoEquipamento import DireitoGrupoEquipamento
-from networkapiclient.DivisaoDc import DivisaoDc
+# from networkapiclient.DivisaoDc import DivisaoDc
 from networkapiclient.EnvironmentVIP import EnvironmentVIP
 from networkapiclient.Equipamento import Equipamento
 from networkapiclient.EquipamentoAcesso import EquipamentoAcesso
@@ -368,13 +370,13 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
-    def create_divisao_dc(self):
-        """Get an instance of divisao_dc services facade."""
-        return DivisaoDc(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
+    # def create_divisao_dc(self):
+    #     """Get an instance of divisao_dc services facade."""
+    #     return DivisaoDc(
+    #         self.networkapi_url,
+    #         self.user,
+    #         self.password,
+    #         self.user_ldap)
 
     def create_environment_vip(self):
         """Get an instance of environment_vip services facade."""
