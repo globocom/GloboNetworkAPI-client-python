@@ -16,7 +16,7 @@
 
 
 from networkapiclient.Ambiente import Ambiente
-from networkapiclient.AmbienteLogico import AmbienteLogico
+# from networkapiclient.AmbienteLogico import AmbienteLogico
 from networkapiclient.ApiEnvironment import ApiEnvironment
 from networkapiclient.ApiCIDREnvironment import ApiCIDREnvironment
 from networkapiclient.ApiEnvironmentDC import ApiDCEnvironment
@@ -56,7 +56,7 @@ from networkapiclient.EquipamentoRoteiro import EquipamentoRoteiro
 from networkapiclient.EventLog import EventLog
 from networkapiclient.Filter import Filter
 from networkapiclient.GrupoEquipamento import GrupoEquipamento
-from networkapiclient.GrupoL3 import GrupoL3
+# from networkapiclient.GrupoL3 import GrupoL3
 from networkapiclient.GrupoUsuario import GrupoUsuario
 from networkapiclient.GrupoVirtual import GrupoVirtual
 from networkapiclient.Healthcheck import Healthcheck
@@ -110,13 +110,13 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
-    def create_ambiente_logico(self):
-        """Get an instance of ambiente_logico services facade."""
-        return AmbienteLogico(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
+    # def create_ambiente_logico(self):
+    #     """Get an instance of ambiente_logico services facade."""
+    #     return AmbienteLogico(
+    #         self.networkapi_url,
+    #         self.user,
+    #         self.password,
+    #         self.user_ldap)
 
     def create_api_environment_vip(self):
         """Get an instance of Api Environment Vip services facade."""
@@ -442,13 +442,13 @@ class ClientFactory(object):
             self.password,
             self.user_ldap)
 
-    def create_grupo_l3(self):
-        """Get an instance of grupo_l3 services facade."""
-        return GrupoL3(
-            self.networkapi_url,
-            self.user,
-            self.password,
-            self.user_ldap)
+    # def create_grupo_l3(self):
+    #     """Get an instance of grupo_l3 services facade."""
+    #     return GrupoL3(
+    #         self.networkapi_url,
+    #         self.user,
+    #         self.password,
+    #         self.user_ldap)
 
     def create_grupo_usuario(self):
         """Get an instance of grupo_usuario services facade."""
