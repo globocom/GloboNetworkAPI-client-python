@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-# from networkapiclient.Ambiente import Ambiente
+from networkapiclient.Ambiente import Ambiente
 # from networkapiclient.AmbienteLogico import AmbienteLogico
 from networkapiclient.ApiEnvironment import ApiEnvironment
 from networkapiclient.ApiCIDREnvironment import ApiCIDREnvironment
@@ -102,13 +102,13 @@ class ClientFactory(object):
         self.user_ldap = user_ldap
         self.log_level = log_level
 
-    # def create_ambiente(self):
-    #     """Get an instance of ambiente services facade."""
-    #     return Ambiente(
-    #         self.networkapi_url,
-    #         self.user,
-    #         self.password,
-    #         self.user_ldap)
+    def create_ambiente(self):
+        """Get an instance of ambiente services facade."""
+        return Ambiente(
+            self.networkapi_url,
+            self.user,
+            self.password,
+            self.user_ldap)
 
     # def create_ambiente_logico(self):
     #     """Get an instance of ambiente_logico services facade."""
