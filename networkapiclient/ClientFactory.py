@@ -88,7 +88,7 @@ class ClientFactory(object):
 
     """Factory to create entities for NetworkAPI-Client."""
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None, log_level='INFO'):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, request_context=None, log_level='INFO'):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
@@ -98,6 +98,7 @@ class ClientFactory(object):
         self.user = user
         self.password = password
         self.user_ldap = user_ldap
+        self.request_context = request_context
         self.log_level = log_level
 
     def create_ambiente(self):
@@ -342,7 +343,8 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap)
+            self.user_ldap,
+            self.request_context)
 
     def create_api_vrf(self):
         """Get an instance of Api Vrf services facade."""

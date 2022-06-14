@@ -36,7 +36,7 @@ class ApiGenericClient(object):
         who implements access methods to new pattern rest networkAPI.
     """
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None, log_level='INFO'):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, request_context=None, log_level='INFO'):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
@@ -47,6 +47,7 @@ class ApiGenericClient(object):
         self.password = password
         self.user_ldap = user_ldap
         self.log_level = log_level
+        self.request_context = request_context
 
         logging.basicConfig(level=self.log_level, format='%(message)s')
         self.logger = logging.getLogger('networkapiclient')
@@ -263,6 +264,7 @@ class ApiGenericClient(object):
 
         headers = {
             'content-type': 'application/json',
+            'X_REQUEST_CONTEXT': self.request_context
         }
 
         return headers
