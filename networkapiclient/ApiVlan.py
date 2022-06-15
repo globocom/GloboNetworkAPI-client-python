@@ -19,7 +19,7 @@ from networkapiclient.utils import build_uri_with_ids
 
 class ApiVlan(ApiGenericClient):
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, request_context=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
@@ -30,7 +30,8 @@ class ApiVlan(ApiGenericClient):
             networkapi_url,
             user,
             password,
-            user_ldap
+            user_ldap,
+            request_context
         )
 
     def acl_remove_draft(self, id_vlan, type_acl):
