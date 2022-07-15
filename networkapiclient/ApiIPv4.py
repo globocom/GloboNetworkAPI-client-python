@@ -19,7 +19,7 @@ from networkapiclient.utils import build_uri_with_ids
 
 class ApiIPv4(ApiGenericClient):
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, request_context=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
@@ -30,7 +30,8 @@ class ApiIPv4(ApiGenericClient):
             networkapi_url,
             user,
             password,
-            user_ldap
+            user_ldap,
+            request_context
         )
 
     def search(self, **kwargs):

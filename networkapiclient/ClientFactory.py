@@ -171,7 +171,9 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap)
+            self.user_ldap,
+            self.request_context
+        )
 
     def create_api_v4_equipment(self):
         """Get an instance of Api Equipment services facade."""
@@ -221,7 +223,9 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap)
+            self.user_ldap,
+            self.request_context
+        )
 
     def create_api_ipv6(self):
         """Get an instance of Api IPv6 services facade."""
@@ -257,7 +261,9 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap)
+            self.user_ldap,
+            self.request_context
+        )
 
     def create_api_network_ipv6(self):
         """Get an instance of Api Networkv6 services facade."""
@@ -392,7 +398,9 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap)
+            self.user_ldap,
+            self.request_context
+        )
 
     def create_equipamento_acesso(self):
         """Get an instance of equipamento_acesso services facade."""
@@ -489,7 +497,9 @@ class ClientFactory(object):
             self.networkapi_url,
             self.user,
             self.password,
-            self.user_ldap)
+            self.user_ldap,
+            self.request_context
+        )
 
     def create_marca(self):
         """Get an instance of marca services facade."""

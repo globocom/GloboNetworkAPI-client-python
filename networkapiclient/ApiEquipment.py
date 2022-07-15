@@ -19,7 +19,7 @@ from networkapiclient.utils import build_uri_with_ids
 
 class ApiEquipment(ApiGenericClient):
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None, log_level='INFO'):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, log_level='INFO', request_context=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
@@ -30,7 +30,8 @@ class ApiEquipment(ApiGenericClient):
             networkapi_url,
             user,
             password,
-            user_ldap
+            user_ldap,
+            request_context
         )
 
     def get_equipment(self, **kwargs):
