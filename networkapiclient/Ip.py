@@ -21,13 +21,13 @@ from networkapiclient.utils import is_valid_int_param, is_valid_ip, get_list_map
 
 class Ip(GenericClient):
 
-    def __init__(self, networkapi_url, user, password, user_ldap=None):
+    def __init__(self, networkapi_url, user, password, user_ldap=None, request_context=None):
         """Class constructor receives parameters to connect to the networkAPI.
         :param networkapi_url: URL to access the network API.
         :param user: User for authentication.
         :param password: Password for authentication.
         """
-        super(Ip, self).__init__(networkapi_url, user, password, user_ldap)
+        super(Ip, self).__init__(networkapi_url, user, password, user_ldap, request_context)
 
     def get_ipv4(self, id_ip):
         """Get IPv4 by id.

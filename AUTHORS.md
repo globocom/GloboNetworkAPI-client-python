@@ -13,3 +13,4 @@
 - Mateus Constanzo
 - [Silvano Buback](https://github.com/snbuback)
 - [Ederson Brilhante](https://github.com/edersonbrilhante)
+- [Renan Lopes](https://github.com/renanlopes97s)
