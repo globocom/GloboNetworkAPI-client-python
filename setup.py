@@ -15,7 +15,7 @@ setup(
     url='https://github.com/globocom/GloboNetworkAPI-client-python',
     license='LICENSE.txt',
     install_requires=[
-        'requests==2.10.0',
+        'requests==2.20.0',
     ],
     packages=find_packages(),
 )
