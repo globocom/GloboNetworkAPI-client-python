@@ -98,7 +98,7 @@ class TipoRoteiro(GenericClient):
         """
         if not is_valid_int_param(id_script_type):
             raise InvalidParameterError(
-                u'The identifier of Script Type is invalid or was not informed.')
+                'The identifier of Script Type is invalid or was not informed.')
 
         script_type_map = dict()
         script_type_map['type'] = type
@@ -125,7 +125,7 @@ class TipoRoteiro(GenericClient):
         """
         if not is_valid_int_param(id_script_type):
             raise InvalidParameterError(
-                u'The identifier of Script Type is invalid or was not informed.')
+                'The identifier of Script Type is invalid or was not informed.')
 
         url = 'scripttype/' + str(id_script_type) + '/'
 

@@ -138,7 +138,7 @@ class EnvironmentVIP(GenericClient):
 
         if not is_valid_int_param(id_environment_vip):
             raise InvalidParameterError(
-                u'The identifier of Environment VIP is invalid or was not informed.')
+                'The identifier of Environment VIP is invalid or was not informed.')
 
         environmentvip_map = dict()
         environmentvip_map['finalidade_txt'] = finalidade_txt
@@ -169,7 +169,7 @@ class EnvironmentVIP(GenericClient):
 
         if not is_valid_int_param(id_environment_vip):
             raise InvalidParameterError(
-                u'The identifier of Environment VIP is invalid or was not informed.')
+                'The identifier of Environment VIP is invalid or was not informed.')
 
         url = 'environmentvip/' + str(id_environment_vip) + '/'
 
@@ -260,7 +260,7 @@ class EnvironmentVIP(GenericClient):
 
         if not is_valid_int_param(id_environment_vip):
             raise InvalidParameterError(
-                u'The identifier of Environment VIP is invalid or was not informed.')
+                'The identifier of Environment VIP is invalid or was not informed.')
 
         url = 'environmentvip/' + str(id_environment_vip) + '/vip/all'
 

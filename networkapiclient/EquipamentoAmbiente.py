@@ -83,11 +83,11 @@ class EquipamentoAmbiente(GenericClient):
 
         if not is_valid_int_param(id_equipment):
             raise InvalidParameterError(
-                u'The identifier of Equipment is invalid or was not informed.')
+                'The identifier of Equipment is invalid or was not informed.')
 
         if not is_valid_int_param(id_environment):
             raise InvalidParameterError(
-                u'The identifier of Environment is invalid or was not informed.')
+                'The identifier of Environment is invalid or was not informed.')
 
         url = 'equipment/' + \
             str(id_equipment) + '/environment/' + str(id_environment) + '/'
@@ -115,11 +115,11 @@ class EquipamentoAmbiente(GenericClient):
 
         if not is_valid_int_param(id_equipment):
             raise InvalidParameterError(
-                u'The identifier of Equipment is invalid or was not informed.')
+                'The identifier of Equipment is invalid or was not informed.')
 
         if not is_valid_int_param(id_environment):
             raise InvalidParameterError(
-                u'The identifier of Environment is invalid or was not informed.')
+                'The identifier of Environment is invalid or was not informed.')
 
         equipment_environment_map = dict()
         equipment_environment_map['id_equipamento'] = id_equipment

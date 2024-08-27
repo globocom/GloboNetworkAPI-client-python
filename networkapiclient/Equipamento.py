@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from networkapiclient.GenericClient import GenericClient
 from networkapiclient.exception import InvalidParameterError
 from networkapiclient.utils import is_valid_int_param, get_list_map
@@ -111,7 +111,7 @@ class Equipamento(GenericClient):
 
         if not isinstance(pagination, Pagination):
             raise InvalidParameterError(
-                u"Invalid parameter: pagination must be a class of type 'Pagination'.")
+                "Invalid parameter: pagination must be a class of type 'Pagination'.")
 
         equip_map = dict()
 
@@ -358,11 +358,11 @@ class Equipamento(GenericClient):
 
         if not is_valid_int_param(id_equipamento):
             raise InvalidParameterError(
-                u'O identificador do equipamento é inválido ou não foi informado.')
+                'O identificador do equipamento é inválido ou não foi informado.')
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'O identificador do ip é inválido ou não foi informado.')
+                'O identificador do ip é inválido ou não foi informado.')
 
         url = 'ip/' + str(id_ip) + '/equipamento/' + str(id_equipamento) + '/'
 
@@ -389,11 +389,11 @@ class Equipamento(GenericClient):
 
         if not is_valid_int_param(id_equipamento):
             raise InvalidParameterError(
-                u'O identificador do equipamento é inválido ou não foi informado.')
+                'O identificador do equipamento é inválido ou não foi informado.')
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'O identificador do ip é inválido ou não foi informado.')
+                'O identificador do ip é inválido ou não foi informado.')
 
         url = 'ip/' + str(id_ip) + '/equipamento/' + str(id_equipamento) + '/'
 
@@ -420,11 +420,11 @@ class Equipamento(GenericClient):
 
         if not is_valid_int_param(id_equip):
             raise InvalidParameterError(
-                u'The identifier of equipment is invalid or was not informed.')
+                'The identifier of equipment is invalid or was not informed.')
 
         if not is_valid_int_param(id_ipv6):
             raise InvalidParameterError(
-                u'The identifier of ip is invalid or was not informed.')
+                'The identifier of ip is invalid or was not informed.')
 
         url = 'ipv6/' + str(id_ipv6) + '/equipment/' + str(id_equip) + '/'
 
@@ -450,11 +450,11 @@ class Equipamento(GenericClient):
 
         if not is_valid_int_param(id_equip):
             raise InvalidParameterError(
-                u'The identifier of equipment is invalid or was not informed.')
+                'The identifier of equipment is invalid or was not informed.')
 
         if not is_valid_int_param(id_ipv6):
             raise InvalidParameterError(
-                u'The identifier of ip is invalid or was not informed.')
+                'The identifier of ip is invalid or was not informed.')
 
         url = 'ipv6/' + str(id_ipv6) + '/equipment/' + \
             str(id_equip) + '/remove/'
@@ -490,11 +490,11 @@ class Equipamento(GenericClient):
 
         if not is_valid_int_param(id_tipo_equipamento):
             raise InvalidParameterError(
-                u'O identificador do tipo do equipamento é inválido ou não foi informado.')
+                'O identificador do tipo do equipamento é inválido ou não foi informado.')
 
         if not is_valid_int_param(id_ambiente):
             raise InvalidParameterError(
-                u'O identificador do ambiente é inválido ou não foi informado.')
+                'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'equipamento/tipoequipamento/' + \
             str(id_tipo_equipamento) + '/ambiente/' + str(id_ambiente) + '/'
@@ -531,9 +531,9 @@ class Equipamento(GenericClient):
 
         if nome == '' or nome is None:
             raise InvalidParameterError(
-                u'O nome do equipamento não foi informado.')
+                'O nome do equipamento não foi informado.')
 
-        url = 'equipamento/nome/' + urllib.quote(nome) + '/'
+        url = 'equipamento/nome/' + urllib.parse.quote(nome) + '/'
 
         code, xml = self.submit(None, 'GET', url)
 
@@ -566,9 +566,9 @@ class Equipamento(GenericClient):
 
         if id is None:
             raise InvalidParameterError(
-                u'O id do equipamento não foi informado.')
+                'O id do equipamento não foi informado.')
 
-        url = 'equipamento/id/' + urllib.quote(id) + '/'
+        url = 'equipamento/id/' + urllib.parse.quote(id) + '/'
 
         code, xml = self.submit(None, 'GET', url)
 
@@ -634,7 +634,7 @@ class Equipamento(GenericClient):
         """
         if not is_valid_int_param(id_equipamento):
             raise InvalidParameterError(
-                u'O identificador do equipamento é inválido ou não foi informado.')
+                'O identificador do equipamento é inválido ou não foi informado.')
 
         url = 'equipamento/' + str(id_equipamento) + '/'
 
@@ -686,11 +686,11 @@ class Equipamento(GenericClient):
 
         if not is_valid_int_param(id_equipamento):
             raise InvalidParameterError(
-                u'O identificador do equipamento é inválido ou não foi informado.')
+                'O identificador do equipamento é inválido ou não foi informado.')
 
         if not is_valid_int_param(id_grupo):
             raise InvalidParameterError(
-                u'O identificador do grupo é inválido ou não foi informado.')
+                'O identificador do grupo é inválido ou não foi informado.')
 
         url = 'equipamentogrupo/equipamento/' + \
             str(id_equipamento) + '/egrupo/' + str(id_grupo) + '/'
@@ -724,7 +724,7 @@ class Equipamento(GenericClient):
 
         if id_egroup is None:
             raise InvalidParameterError(
-                u'The identifier of Group Equipament is invalid or was not informed.')
+                'The identifier of Group Equipament is invalid or was not informed.')
 
         url = 'equipment/group/' + str(id_egroup) + '/'
 
@@ -757,7 +757,7 @@ class Equipamento(GenericClient):
 
         if id_ambiente is None:
             raise InvalidParameterError(
-                u'The environment id is invalid or was not informed.')
+                'The environment id is invalid or was not informed.')
 
         url = 'equipment/getipsbyambiente/' + str(equip_nome) + '/' + str(id_ambiente)
 

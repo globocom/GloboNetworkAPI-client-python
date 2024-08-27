@@ -50,7 +50,7 @@ class Modelo(GenericClient):
 
         if not is_valid_int_param(id_brand):
             raise InvalidParameterError(
-                u'The identifier of Brand is invalid or was not informed.')
+                'The identifier of Brand is invalid or was not informed.')
 
         url = 'model/brand/' + str(id_brand) + '/'
 
@@ -63,7 +63,7 @@ class Modelo(GenericClient):
 
         if not is_valid_int_param(script_id):
             raise InvalidParameterError(
-                u'The identifier of Script is invalid or was not informed.')
+                'The identifier of Script is invalid or was not informed.')
 
         url = 'model/script/' + str(script_id) + '/'
 
@@ -137,7 +137,7 @@ class Modelo(GenericClient):
 
         if not is_valid_int_param(id_model):
             raise InvalidParameterError(
-                u'The identifier of Model is invalid or was not informed.')
+                'The identifier of Model is invalid or was not informed.')
 
         model_map = dict()
         model_map['name'] = name
@@ -165,7 +165,7 @@ class Modelo(GenericClient):
 
         if not is_valid_int_param(id_model):
             raise InvalidParameterError(
-                u'The identifier of Model is invalid or was not informed.')
+                'The identifier of Model is invalid or was not informed.')
 
         url = 'model/' + str(id_model) + '/'
 

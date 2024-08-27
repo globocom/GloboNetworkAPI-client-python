@@ -87,7 +87,7 @@ class Marca(GenericClient):
 
         if not is_valid_int_param(id_brand):
             raise InvalidParameterError(
-                u'The identifier of Brand is invalid or was not informed.')
+                'The identifier of Brand is invalid or was not informed.')
 
         url = 'brand/' + str(id_brand) + '/'
 
@@ -114,7 +114,7 @@ class Marca(GenericClient):
 
         if not is_valid_int_param(id_brand):
             raise InvalidParameterError(
-                u'The identifier of Brand is invalid or was not informed.')
+                'The identifier of Brand is invalid or was not informed.')
 
         url = 'brand/' + str(id_brand) + '/'
 

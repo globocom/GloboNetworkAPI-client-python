@@ -87,7 +87,7 @@ class DireitoGrupoEquipamento(GenericClient):
         """
         if not is_valid_int_param(id_grupo_usuario):
             raise InvalidParameterError(
-                u'O identificador do grupo de usuário é inválido ou não foi informado.')
+                'O identificador do grupo de usuário é inválido ou não foi informado.')
 
         url = 'direitosgrupoequipamento/ugrupo/' + str(id_grupo_usuario) + '/'
 
@@ -122,7 +122,7 @@ class DireitoGrupoEquipamento(GenericClient):
         """
         if not is_valid_int_param(id_grupo_equipamento):
             raise InvalidParameterError(
-                u'O identificador do grupo de equipamento é inválido ou não foi informado.')
+                'O identificador do grupo de equipamento é inválido ou não foi informado.')
 
         url = 'direitosgrupoequipamento/egrupo/' + \
             str(id_grupo_equipamento) + '/'
@@ -159,7 +159,7 @@ class DireitoGrupoEquipamento(GenericClient):
         """
         if not is_valid_int_param(id_direito):
             raise InvalidParameterError(
-                u'O identificador do direito grupo equipamento é inválido ou não foi informado.')
+                'O identificador do direito grupo equipamento é inválido ou não foi informado.')
 
         url = 'direitosgrupoequipamento/' + str(id_direito) + '/'
 
@@ -227,7 +227,7 @@ class DireitoGrupoEquipamento(GenericClient):
         """
         if not is_valid_int_param(id_direito):
             raise InvalidParameterError(
-                u'O identificador do direito grupo equipamento é inválido ou não foi informado.')
+                'O identificador do direito grupo equipamento é inválido ou não foi informado.')
 
         url = 'direitosgrupoequipamento/' + str(id_direito) + '/'
 
@@ -256,7 +256,7 @@ class DireitoGrupoEquipamento(GenericClient):
         """
         if not is_valid_int_param(id_direito):
             raise InvalidParameterError(
-                u'O identificador do direito grupo equipamento é inválido ou não foi informado.')
+                'O identificador do direito grupo equipamento é inválido ou não foi informado.')
 
         url = 'direitosgrupoequipamento/' + str(id_direito) + '/'
 

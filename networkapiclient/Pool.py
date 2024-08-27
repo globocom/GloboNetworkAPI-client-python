@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
 
@@ -505,7 +505,7 @@ class Pool(ApiGenericClient):
 
     def list_pool(self, search):
 
-        uri = "api/v3/pool/?%s" % urllib.urlencode({"search": search})
+        uri = "api/v3/pool/?%s" % urllib.parse.urlencode({"search": search})
         return self.get(uri)
 
     def save_pool(self, pool):

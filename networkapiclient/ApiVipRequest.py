@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from networkapiclient.ApiGenericClient import ApiGenericClient
 from networkapiclient.utils import build_uri_with_ids
@@ -75,7 +75,7 @@ class ApiVipRequest(ApiGenericClient):
 
         param search: search
         """
-        uri = 'api/v3/vip-request/details/?%s' % urllib.urlencode(
+        uri = 'api/v3/vip-request/details/?%s' % urllib.parse.urlencode(
             {'search': search})
 
         return super(ApiVipRequest, self).get(uri)
@@ -96,7 +96,7 @@ class ApiVipRequest(ApiGenericClient):
 
         param search: search
         """
-        uri = 'api/v3/vip-request/?%s' % urllib.urlencode({'search': search})
+        uri = 'api/v3/vip-request/?%s' % urllib.parse.urlencode({'search': search})
 
         return super(ApiVipRequest, self).get(uri)
 

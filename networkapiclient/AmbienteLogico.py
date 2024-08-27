@@ -97,7 +97,7 @@ class AmbienteLogico(GenericClient):
 
         if not is_valid_int_param(id_logicalenvironment):
             raise InvalidParameterError(
-                u'The identifier of Logical Environment is invalid or was not informed.')
+                'The identifier of Logical Environment is invalid or was not informed.')
 
         url = 'logicalenvironment/' + str(id_logicalenvironment) + '/'
 
@@ -124,7 +124,7 @@ class AmbienteLogico(GenericClient):
 
         if not is_valid_int_param(id_logicalenvironment):
             raise InvalidParameterError(
-                u'The identifier of Logical Environment is invalid or was not informed.')
+                'The identifier of Logical Environment is invalid or was not informed.')
 
         url = 'logicalenvironment/' + str(id_logicalenvironment) + '/'
 

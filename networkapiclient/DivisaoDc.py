@@ -97,7 +97,7 @@ class DivisaoDc(GenericClient):
 
         if not is_valid_int_param(id_divisiondc):
             raise InvalidParameterError(
-                u'The identifier of Division Dc is invalid or was not informed.')
+                'The identifier of Division Dc is invalid or was not informed.')
 
         url = 'divisiondc/' + str(id_divisiondc) + '/'
 
@@ -123,7 +123,7 @@ class DivisaoDc(GenericClient):
 
         if not is_valid_int_param(id_divisiondc):
             raise InvalidParameterError(
-                u'The identifier of Division Dc is invalid or was not informed.')
+                'The identifier of Division Dc is invalid or was not informed.')
 
         url = 'divisiondc/' + str(id_divisiondc) + '/'
 

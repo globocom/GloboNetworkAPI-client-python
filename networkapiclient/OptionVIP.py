@@ -78,7 +78,7 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_option_vip):
             raise InvalidParameterError(
-                u'The identifier of Option VIP is invalid or was not informed.')
+                'The identifier of Option VIP is invalid or was not informed.')
 
         optionvip_map = dict()
         optionvip_map['tipo_opcao'] = tipo_opcao
@@ -106,7 +106,7 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_option_vip):
             raise InvalidParameterError(
-                u'The identifier of Option VIP is invalid or was not informed.')
+                'The identifier of Option VIP is invalid or was not informed.')
 
         url = 'optionvip/' + str(id_option_vip) + '/'
 
@@ -135,7 +135,7 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_option_vip):
             raise InvalidParameterError(
-                u'The identifier of Option VIP is invalid or was not informed.')
+                'The identifier of Option VIP is invalid or was not informed.')
 
         url = 'optionvip/' + str(id_option_vip) + '/'
 
@@ -210,11 +210,11 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_option_vip):
             raise InvalidParameterError(
-                u'The identifier of Option VIP is invalid or was not informed.')
+                'The identifier of Option VIP is invalid or was not informed.')
 
         if not is_valid_int_param(id_environment_vip):
             raise InvalidParameterError(
-                u'The identifier of Environment VIP is invalid or was not informed.')
+                'The identifier of Environment VIP is invalid or was not informed.')
 
         url = 'optionvip/' + \
             str(id_option_vip) + '/environmentvip/' + str(id_environment_vip) + '/'
@@ -242,11 +242,11 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_option_vip):
             raise InvalidParameterError(
-                u'The identifier of Option VIP is invalid or was not informed.')
+                'The identifier of Option VIP is invalid or was not informed.')
 
         if not is_valid_int_param(id_environment_vip):
             raise InvalidParameterError(
-                u'The identifier of Environment VIP is invalid or was not informed.')
+                'The identifier of Environment VIP is invalid or was not informed.')
 
         url = 'optionvip/' + \
             str(id_option_vip) + '/environmentvip/' + str(id_environment_vip) + '/'
@@ -272,7 +272,7 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_ambiente_vip):
             raise InvalidParameterError(
-                u'The identifier of environment-vip is invalid or was not informed.')
+                'The identifier of environment-vip is invalid or was not informed.')
 
         url = 'environment-vip/get/timeout/' + str(id_ambiente_vip) + '/'
 
@@ -301,7 +301,7 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_ambiente_vip):
             raise InvalidParameterError(
-                u'The identifier of environment-vip is invalid or was not informed.')
+                'The identifier of environment-vip is invalid or was not informed.')
 
         url = 'environment-vip/get/grupo-cache/' + str(id_ambiente_vip) + '/'
 
@@ -327,7 +327,7 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_ambiente_vip):
             raise InvalidParameterError(
-                u'The identifier of environment-vip is invalid or was not informed.')
+                'The identifier of environment-vip is invalid or was not informed.')
 
         url = 'environment-vip/get/balanceamento/' + str(id_ambiente_vip) + '/'
 
@@ -353,7 +353,7 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_ambiente_vip):
             raise InvalidParameterError(
-                u'The identifier of environment-vip is invalid or was not informed.')
+                'The identifier of environment-vip is invalid or was not informed.')
 
         url = 'environment-vip/get/persistencia/' + str(id_ambiente_vip) + '/'
 
@@ -425,7 +425,7 @@ class OptionVIP(GenericClient):
 
         if not is_valid_int_param(id_ambiente_vip):
             raise InvalidParameterError(
-                u'The identifier of environment-vip is invalid or was not informed.')
+                'The identifier of environment-vip is invalid or was not informed.')
 
         url = 'environment-vip/get/trafficreturn/' + str(id_ambiente_vip) + '/'
 

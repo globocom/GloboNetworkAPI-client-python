@@ -89,7 +89,7 @@ class TipoAcesso(GenericClient):
         """
         if not is_valid_int_param(id_tipo_acesso):
             raise InvalidParameterError(
-                u'Access type id is invalid or was not informed.')
+                'Access type id is invalid or was not informed.')
 
         tipo_acesso_map = dict()
         tipo_acesso_map['protocolo'] = protocolo
@@ -115,7 +115,7 @@ class TipoAcesso(GenericClient):
         """
         if not is_valid_int_param(id_tipo_acesso):
             raise InvalidParameterError(
-                u'Access type id is invalid or was not informed.')
+                'Access type id is invalid or was not informed.')
 
         url = 'tipoacesso/' + str(id_tipo_acesso) + '/'
 

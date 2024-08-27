@@ -2,7 +2,7 @@
 import logging
 import os
 import sys
-from itertools import izip
+
 from time import time
 from unittest import TestCase
 
@@ -589,7 +589,7 @@ class ApiNetworksTestCase(TestCase):
 
         # Environment A
         # [1, 2, 3]
-        nums_vlan = range(1, 4)
+        nums_vlan = list(range(1, 4))
         # Creates Vlans
         id_vlans = self.create_vlans_with_number(nums_vlan, id_env_a)
         ids = [id_vlan['id'] for id_vlan in id_vlans]
@@ -600,7 +600,7 @@ class ApiNetworksTestCase(TestCase):
 
         # Environment B
         # [4, 5, 6, 7, 8, 9]
-        nums_vlan = range(4, 10)
+        nums_vlan = list(range(4, 10))
         # Creates Vlans
         id_vlans = self.create_vlans_with_number(nums_vlan, id_env_b)
         ids = [id_vlan['id'] for id_vlan in id_vlans]
@@ -611,7 +611,7 @@ class ApiNetworksTestCase(TestCase):
 
         # Environment C
         # [10, 11]
-        nums_vlan = range(10, 12)
+        nums_vlan = list(range(10, 12))
         # Creates Vlans
         id_vlans = self.create_vlans_with_number(nums_vlan, id_env_c)
         ids = [id_vlan['id'] for id_vlan in id_vlans]
@@ -621,7 +621,7 @@ class ApiNetworksTestCase(TestCase):
         self.verify_num_vlan(vlans, nums_vlan)
 
     def verify_num_vlan(self, objs, nums_vlan):
-        for obj, num_vlan in izip(objs, nums_vlan):
+        for obj, num_vlan in zip(objs, nums_vlan):
             self.assertEqual(
                 num_vlan,
                 obj.get('num_vlan'),
@@ -897,7 +897,7 @@ class ApiNetworksTestCase(TestCase):
             'mask_oct3',
             'mask_oct4',
         ]
-        for network_send, expected_network in izip(networks, expected_networks):
+        for network_send, expected_network in zip(networks, expected_networks):
 
             # Get all vlans of environment
             ids_vlans = self.search_all_vlans([network_send.get('env')])
@@ -1261,7 +1261,7 @@ class ApiNetworksTestCase(TestCase):
             'mask7',
             'mask8'
         ]
-        for network_send, expected_network in izip(networks, expected_networks):
+        for network_send, expected_network in zip(networks, expected_networks):
 
             # Get all vlans of environment
             ids_vlans = self.search_all_vlans([network_send.get('env')])

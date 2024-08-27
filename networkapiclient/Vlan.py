@@ -48,7 +48,7 @@ class Vlan(GenericClient):
 
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'The identifier of Vlan is invalid or was not informed.')
+                'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/%s/invalidate/%s/' % (str(id_vlan), IP_VERSION.IPv4[0])
 
@@ -73,7 +73,7 @@ class Vlan(GenericClient):
 
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'The identifier of Vlan is invalid or was not informed.')
+                'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/%s/invalidate/%s/' % (str(id_vlan), IP_VERSION.IPv6[0])
 
@@ -133,7 +133,7 @@ class Vlan(GenericClient):
 
         if not isinstance(pagination, Pagination):
             raise InvalidParameterError(
-                u"Invalid parameter: pagination must be a class of type 'Pagination'.")
+                "Invalid parameter: pagination must be a class of type 'Pagination'.")
 
         vlan_map = dict()
 
@@ -222,7 +222,7 @@ class Vlan(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
         if not is_valid_int_param(id_ambiente):
-            raise InvalidParameterError(u'Environment id is none or invalid.')
+            raise InvalidParameterError('Environment id is none or invalid.')
 
         url = 'vlan/ambiente/' + str(id_ambiente) + '/'
 
@@ -341,10 +341,10 @@ class Vlan(GenericClient):
         """
 
         if not is_valid_int_param(environment_id):
-            raise InvalidParameterError(u'Environment id is none or invalid.')
+            raise InvalidParameterError('Environment id is none or invalid.')
 
         if not is_valid_int_param(number):
-            raise InvalidParameterError(u'Vlan number is none or invalid')
+            raise InvalidParameterError('Vlan number is none or invalid')
 
         vlan_map = dict()
         vlan_map['environment_id'] = environment_id
@@ -392,13 +392,13 @@ class Vlan(GenericClient):
 
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'Vlan id is invalid or was not informed.')
+                'Vlan id is invalid or was not informed.')
 
         if not is_valid_int_param(environment_id):
-            raise InvalidParameterError(u'Environment id is none or invalid.')
+            raise InvalidParameterError('Environment id is none or invalid.')
 
         if not is_valid_int_param(number):
-            raise InvalidParameterError(u'Vlan number is none or invalid')
+            raise InvalidParameterError('Vlan number is none or invalid')
 
         vlan_map = dict()
         vlan_map['vlan_id'] = id_vlan
@@ -497,7 +497,7 @@ class Vlan(GenericClient):
         """
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'Vlan id is invalid or was not informed.')
+                'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/add/'
 
@@ -539,7 +539,7 @@ class Vlan(GenericClient):
         """
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'Vlan id is invalid or was not informed.')
+                'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/del/'
 
@@ -583,7 +583,7 @@ class Vlan(GenericClient):
         """
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'Vlan id is invalid or was not informed.')
+                'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/check/'
 
@@ -660,7 +660,7 @@ class Vlan(GenericClient):
         """
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'Vlan id is invalid or was not informed.')
+                'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/'
 
@@ -698,7 +698,7 @@ class Vlan(GenericClient):
         """
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'Parameter id_vlan is invalid. Value: ' +
+                'Parameter id_vlan is invalid. Value: ' +
                 id_vlan)
 
         url = 'vlan/' + str(id_vlan) + '/network/'
@@ -775,7 +775,7 @@ class Vlan(GenericClient):
 
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'Vlan id is invalid or was not informed.')
+                'Vlan id is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/criar/'
 
@@ -932,7 +932,7 @@ class Vlan(GenericClient):
 
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'The identifier of Vlan is invalid or was not informed.')
+                'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/validate/' + IP_VERSION.IPv4[0] + '/'
 
@@ -957,7 +957,7 @@ class Vlan(GenericClient):
 
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'The identifier of Vlan is invalid or was not informed.')
+                'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/validate/' + IP_VERSION.IPv6[0] + '/'
 
@@ -986,7 +986,7 @@ class Vlan(GenericClient):
 
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'Parameter id_vlan is invalid. Value: ' +
+                'Parameter id_vlan is invalid. Value: ' +
                 id_vlan)
 
         url = 'vlan/' + str(id_vlan) + '/remove/'
@@ -1011,7 +1011,7 @@ class Vlan(GenericClient):
 
         if not is_valid_int_param(id_vlan):
             raise InvalidParameterError(
-                u'The identifier of Vlan is invalid or was not informed.')
+                'The identifier of Vlan is invalid or was not informed.')
 
         url = 'vlan/' + str(id_vlan) + '/deallocate/'
 

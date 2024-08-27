@@ -7,7 +7,6 @@ Copyright: ( c )  2009 globo.com todos os direitos reservados.
 '''
 
 from networkapiclient.GenericClient import GenericClient
-from networkapiclient.EspecificacaoGrupoVirtual import EspecificacaoGrupoVirtual
 
 
 class GrupoVirtual(GenericClient):

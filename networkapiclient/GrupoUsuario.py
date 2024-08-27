@@ -59,7 +59,7 @@ class GrupoUsuario(GenericClient):
 
         if not is_valid_int_param(id_ugroup):
             raise InvalidParameterError(
-                u'The identifier of Group User is invalid or was not informed.')
+                'The identifier of Group User is invalid or was not informed.')
 
         url = 'ugroup/get/' + str(id_ugroup) + '/'
 
@@ -139,7 +139,7 @@ class GrupoUsuario(GenericClient):
         """
         if not is_valid_int_param(id_user_group):
             raise InvalidParameterError(
-                u'Invalid or inexistent user group id.')
+                'Invalid or inexistent user group id.')
 
         url = 'ugroup/' + str(id_user_group) + '/'
 
@@ -168,7 +168,7 @@ class GrupoUsuario(GenericClient):
         """
         if not is_valid_int_param(id_user_group):
             raise InvalidParameterError(
-                u'Invalid or inexistent user group id.')
+                'Invalid or inexistent user group id.')
 
         url = 'ugroup/' + str(id_user_group) + '/'
 

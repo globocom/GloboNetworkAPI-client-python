@@ -17,7 +17,7 @@
 from networkapiclient.GenericClient import GenericClient
 from networkapiclient.exception import InvalidParameterError
 from networkapiclient.utils import is_valid_int_param, get_list_map, is_valid_ip
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 
 class Ambiente(GenericClient):
@@ -144,14 +144,14 @@ class Ambiente(GenericClient):
 
         if nome_equipamento == '' or nome_equipamento is None:
             raise InvalidParameterError(
-                u'O nome do equipamento não foi informado.')
+                'O nome do equipamento não foi informado.')
 
         if not is_valid_ip(ip_equipamento):
             raise InvalidParameterError(
-                u'O IP do equipamento é inválido ou não foi informado.')
+                'O IP do equipamento é inválido ou não foi informado.')
 
         url = 'ambiente/equipamento/' + \
-            urllib.quote(nome_equipamento) + '/ip/' + str(ip_equipamento) + '/'
+            urllib.parse.quote(nome_equipamento) + '/ip/' + str(ip_equipamento) + '/'
 
         code, xml = self.submit(None, 'GET', url)
 
@@ -188,7 +188,7 @@ class Ambiente(GenericClient):
         """
         if not is_valid_int_param(id_ambiente):
             raise InvalidParameterError(
-                u'O identificador do ambiente é inválido ou não foi informado.')
+                'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'environment/id/' + str(id_ambiente) + '/'
 
@@ -217,7 +217,7 @@ class Ambiente(GenericClient):
         """
         if not is_valid_int_param(id_healthcheck):
             raise InvalidParameterError(
-                u'O identificador do healthcheck é inválido ou não foi informado.')
+                'O identificador do healthcheck é inválido ou não foi informado.')
 
         url = 'healthcheckexpect/get/' + str(id_healthcheck) + '/'
 
@@ -250,7 +250,7 @@ class Ambiente(GenericClient):
 
         if equip_id is None:
             raise InvalidParameterError(
-                u'O id do equipamento não foi informado.')
+                'O id do equipamento não foi informado.')
 
         url = 'ambiente/equip/' + str(equip_id) + '/'
 
@@ -280,7 +280,7 @@ class Ambiente(GenericClient):
 
         if not is_valid_int_param(id_ambiente):
             raise InvalidParameterError(
-                u'O identificador do ambiente é inválido ou não foi informado.')
+                'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'healthcheckexpect/ambiente/' + str(id_ambiente) + '/'
 
@@ -491,7 +491,7 @@ class Ambiente(GenericClient):
 
         if not is_valid_int_param(id_ambiente):
             raise InvalidParameterError(
-                u'O identificador do ambiente é inválido ou não foi informado.')
+                'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'ambiente/' + str(id_ambiente) + '/'
 
@@ -530,7 +530,7 @@ class Ambiente(GenericClient):
 
         if not is_valid_int_param(id_ambiente):
             raise InvalidParameterError(
-                u'O identificador do ambiente é inválido ou não foi informado.')
+                'O identificador do ambiente é inválido ou não foi informado.')
 
         url = 'ambiente/' + str(id_ambiente) + '/'
 
@@ -1031,11 +1031,11 @@ class Ambiente(GenericClient):
         """
         if not is_valid_int_param(environment_id):
             raise InvalidParameterError(
-                u'The identifier of Environment VIP is invalid or was not informed.')
+                'The identifier of Environment VIP is invalid or was not informed.')
 
         if not is_valid_int_param(environment_vip_id):
             raise InvalidParameterError(
-                u'The identifier of Environment is invalid or was not informed.')
+                'The identifier of Environment is invalid or was not informed.')
 
         environment_environment_vip_map = dict()
         environment_environment_vip_map['environment_id'] = environment_id
@@ -1066,11 +1066,11 @@ class Ambiente(GenericClient):
 
         if not is_valid_int_param(environment_id):
             raise InvalidParameterError(
-                u'The identifier of Environment VIP is invalid or was not informed.')
+                'The identifier of Environment VIP is invalid or was not informed.')
 
         if not is_valid_int_param(environment_vip_id):
             raise InvalidParameterError(
-                u'The identifier of Environment is invalid or was not informed.')
+                'The identifier of Environment is invalid or was not informed.')
 
         environment_environment_vip_map = dict()
         environment_environment_vip_map['environment_id'] = environment_id

@@ -66,7 +66,7 @@ class Vip(GenericClient):
 
         if not is_valid_int_param(id_vip):
             raise InvalidParameterError(
-                u'The identifier of vip is invalid or was not informed.')
+                'The identifier of vip is invalid or was not informed.')
 
         vip_map = dict()
         vip_map['vip_id'] = id_vip

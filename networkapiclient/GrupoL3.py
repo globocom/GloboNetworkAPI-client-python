@@ -96,7 +96,7 @@ class GrupoL3(GenericClient):
 
         if not is_valid_int_param(id_groupl3):
             raise InvalidParameterError(
-                u'The identifier of Group L3 is invalid or was not informed.')
+                'The identifier of Group L3 is invalid or was not informed.')
 
         url = 'groupl3/' + str(id_groupl3) + '/'
 
@@ -122,7 +122,7 @@ class GrupoL3(GenericClient):
 
         if not is_valid_int_param(id_groupl3):
             raise InvalidParameterError(
-                u'The identifier of Group L3 is invalid or was not informed.')
+                'The identifier of Group L3 is invalid or was not informed.')
 
         url = 'groupl3/' + str(id_groupl3) + '/'
 

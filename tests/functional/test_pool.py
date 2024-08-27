@@ -61,7 +61,7 @@ class TestApiPool(TestCase):
             in healthcheck
         """
 
-        qt_reals = range(1)
+        qt_reals = list(range(1))
 
         server_pool_members = [
             self.build_server_pool_member(
@@ -93,7 +93,7 @@ class TestApiPool(TestCase):
             in healthcheck
         """
 
-        qt_reals = range(1)
+        qt_reals = list(range(1))
 
         server_pool_members = [
             self.build_server_pool_member(
@@ -125,7 +125,7 @@ class TestApiPool(TestCase):
             in healthcheck
         """
 
-        qt_reals = range(1)
+        qt_reals = list(range(1))
 
         server_pool_members = [
             self.build_server_pool_member(
@@ -157,7 +157,7 @@ class TestApiPool(TestCase):
             in healthcheck
         """
 
-        qt_reals = range(1)
+        qt_reals = list(range(1))
 
         server_pool_members = [
             self.build_server_pool_member(
@@ -187,7 +187,7 @@ class TestApiPool(TestCase):
     def test_create_pool_with_three_reals_and_weight_balancing(self):
         """ Tries to create a pool with three reals and weight balancing """
 
-        qt_reals = range(3)
+        qt_reals = list(range(3))
 
         weights = [1, 2, 1]
 
@@ -215,7 +215,7 @@ class TestApiPool(TestCase):
             least-conn balancing
         """
 
-        qt_reals = range(3)
+        qt_reals = list(range(3))
 
         priorities = [1, 2, 1]
 
@@ -243,7 +243,7 @@ class TestApiPool(TestCase):
     def test_update_pool_without_reals(self):
         """ Tries to update pool without reals adding two reals to it """
 
-        qt_reals = range(2)
+        qt_reals = list(range(2))
 
         pool_data = self.build_pool(
             id_env_of_pool=self.id_env_of_pool)
@@ -283,7 +283,7 @@ class TestApiPool(TestCase):
     def test_update_pool_with_reals_removing_them(self):
         """ Tries to update pool with reals removing them """
 
-        qt_reals = range(2)
+        qt_reals = list(range(2))
 
         server_pool_members = [
             self.build_server_pool_member(
@@ -313,7 +313,7 @@ class TestApiPool(TestCase):
     def test_update_pool_removing_half_of_reals(self):
         """ Tries to remove half of the reals in a server pool """
 
-        qt_reals = range(4)
+        qt_reals = list(range(4))
 
         server_pool_members = [
             self.build_server_pool_member(
@@ -328,7 +328,7 @@ class TestApiPool(TestCase):
 
         pool_id = self.api_pool.create([pool_data])[0]['id']
 
-        half = range(2)
+        half = list(range(2))
         for i in half:
             server_pool_members.pop()
 
@@ -350,7 +350,7 @@ class TestApiPool(TestCase):
             at same time add a new real
         """
 
-        qt_reals = range(5)
+        qt_reals = list(range(5))
 
         server_pool_members = [
             self.build_server_pool_member(
@@ -365,7 +365,7 @@ class TestApiPool(TestCase):
 
         pool_id = self.api_pool.create([pool_data])[0]['id']
 
-        half = range(2)
+        half = list(range(2))
         for i in half:
             server_pool_members.pop()
 
@@ -405,7 +405,7 @@ class TestApiPool(TestCase):
     def test_delete_pool_with_reals(self):
         """ Tries to delete pool with five reals """
 
-        qt_reals = range(5)
+        qt_reals = list(range(5))
 
         server_pool_members = [
             self.build_server_pool_member(

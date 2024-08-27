@@ -147,11 +147,11 @@ class EquipamentoRoteiro(GenericClient):
         """
         if not is_valid_int_param(id_equipment):
             raise InvalidParameterError(
-                u'The identifier of Equipment is invalid or was not informed.')
+                'The identifier of Equipment is invalid or was not informed.')
 
         if not is_valid_int_param(id_script):
             raise InvalidParameterError(
-                u'The identifier of Script is invalid or was not informed.')
+                'The identifier of Script is invalid or was not informed.')
 
         url = 'equipmentscript/' + \
             str(id_equipment) + '/' + str(id_script) + '/'

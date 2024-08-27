@@ -15,9 +15,9 @@
 # limitations under the License.
 
 from xml.dom import InvalidCharacterErr
-from xml.dom.minidom import *
 from xml.dom.minicompat import StringTypes
 import re
+from xml.dom.minidom import Node, getDOMImplementation, parseString
 
 
 class XMLErrorUtils(Exception):
@@ -29,7 +29,7 @@ class XMLErrorUtils(Exception):
         self.message = message
 
     def __str__(self):
-        msg = u'Erro ao criar ou ler o XML: Causa: %s, Mensagem: %s' % (
+        msg = 'Erro ao criar ou ler o XML: Causa: %s, Mensagem: %s' % (
             self.cause, self.message)
         return msg.encode('utf-8')
 
@@ -55,7 +55,7 @@ def _add_text_node(value, node, doc):
         return
 
     if not isinstance(value, StringTypes):
-        text = r'%s' % unicode(value)
+        text = r'%s' % str(value)
     else:
         text = r'%s' % value.replace('%', '%%')
 
@@ -65,7 +65,7 @@ def _add_text_node(value, node, doc):
     except TypeError as t:
         raise InvalidNodeTypeXMLError(
             t,
-            u'Conteúdo de um Nó do XML com tipo de dado inválido: %s ' %
+            'Conteúdo de um Nó do XML com tipo de dado inválido: %s ' %
             value)
 
 
@@ -83,7 +83,7 @@ def _add_nodes_to_parent(map, parent, doc):
     if map is None:
         return
 
-    for key, value in map.iteritems():
+    for key, value in map.items():
         try:
             if isinstance(value, dict):
                 node = doc.createElement(key)
@@ -99,7 +99,7 @@ def _add_nodes_to_parent(map, parent, doc):
         except InvalidCharacterErr as i:
             raise InvalidNodeNameXMLError(
                 i,
-                u'Valor inválido para nome de uma TAG de XML: %s' %
+                'Valor inválido para nome de uma TAG de XML: %s' %
                 key)
 
 
@@ -164,7 +164,7 @@ def dumps(map, root_name, root_attributes=None):
     try:
         implementation = getDOMImplementation()
     except ImportError as i:
-        raise XMLErrorUtils(i, u'Erro ao obter o DOMImplementation')
+        raise XMLErrorUtils(i, 'Erro ao obter o DOMImplementation')
 
     doc = implementation.createDocument(None, root_name, None)
 
@@ -172,7 +172,7 @@ def dumps(map, root_name, root_attributes=None):
         root = doc.documentElement
 
         if (root_attributes is not None):
-            for key, value in root_attributes.iteritems():
+            for key, value in root_attributes.items():
                 attribute = doc.createAttribute(key)
                 attribute.nodeValue = value
                 root.setAttributeNode(attribute)
@@ -183,7 +183,7 @@ def dumps(map, root_name, root_attributes=None):
     except InvalidCharacterErr as i:
         raise InvalidNodeNameXMLError(
             i,
-            u'Valor inválido para nome de uma TAG de XML: %s' %
+            'Valor inválido para nome de uma TAG de XML: %s' %
             root_name)
     finally:
         doc.unlink()
@@ -312,7 +312,7 @@ def loads(xml, force_list=None):
         xml = remove_illegal_characters(xml)
         doc = parseString(xml)
     except Exception as e:
-        raise XMLErrorUtils(e, u'Falha ao realizar o parse do xml.')
+        raise XMLErrorUtils(e, 'Falha ao realizar o parse do xml.')
 
     root = doc.documentElement
 
@@ -331,12 +331,12 @@ def loads(xml, force_list=None):
 
 
 def remove_illegal_characters(xml):
-    RE_XML_ILLEGAL = u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' + \
-                     u'|' + \
-                     u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])' % \
-        (unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff),
-         unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff),
-         unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff))
+    RE_XML_ILLEGAL = '([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' + \
+                     '|' + \
+                     '([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])' % \
+        (chr(0xd800), chr(0xdbff), chr(0xdc00), chr(0xdfff),
+         chr(0xd800), chr(0xdbff), chr(0xdc00), chr(0xdfff),
+         chr(0xd800), chr(0xdbff), chr(0xdc00), chr(0xdfff))
 
     xml = re.sub(RE_XML_ILLEGAL, "?", xml)
     return xml

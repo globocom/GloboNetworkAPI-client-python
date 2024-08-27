@@ -102,7 +102,7 @@ class Roteiro(GenericClient):
         :raise XMLError: Networkapi failed to generate the XML response.
         """
         if not is_valid_int_param(id_script):
-            raise InvalidParameterError(u'The identifier of Script is invalid or was not informed.')
+            raise InvalidParameterError('The identifier of Script is invalid or was not informed.')
 
         script_map = dict()
         script_map['id_script_type'] = id_script_type
@@ -130,7 +130,7 @@ class Roteiro(GenericClient):
         """
         if not is_valid_int_param(id_script):
             raise InvalidParameterError(
-                u'The identifier of Script is invalid or was not informed.')
+                'The identifier of Script is invalid or was not informed.')
 
         url = 'script/' + str(id_script) + '/'
 
@@ -159,7 +159,7 @@ class Roteiro(GenericClient):
         """
         if not is_valid_int_param(id_script_type):
             raise InvalidParameterError(
-                u'The identifier of Script Type is invalid or was not informed.')
+                'The identifier of Script Type is invalid or was not informed.')
 
         url = 'script/scripttype/' + str(id_script_type) + '/'
 
@@ -191,7 +191,7 @@ class Roteiro(GenericClient):
         """
         if not is_valid_int_param(id_equipment):
             raise InvalidParameterError(
-                u'The identifier of Equipment is invalid or was not informed.')
+                'The identifier of Equipment is invalid or was not informed.')
 
         url = 'script/equipment/' + str(id_equipment) + '/'
 
@@ -204,7 +204,7 @@ class Roteiro(GenericClient):
 
         if not is_valid_int_param(id_script):
             raise InvalidParameterError(
-                u'Script id is invalid or was not informed.')
+                'Script id is invalid or was not informed.')
 
         url = 'script/get/' + str(id_script)
 

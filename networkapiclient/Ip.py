@@ -55,7 +55,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'The IPv4 identifier is invalid or was not informed.')
+                'The IPv4 identifier is invalid or was not informed.')
 
         url = 'ip/get-ipv4/' + str(id_ip) + '/'
 
@@ -94,7 +94,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'The IPv6 identifier is invalid or was not informed.')
+                'The IPv6 identifier is invalid or was not informed.')
 
         url = 'ip/get-ipv6/' + str(id_ip) + '/'
 
@@ -128,10 +128,10 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_environment):
             raise InvalidParameterError(
-                u'Environment identifier is invalid or was not informed.')
+                'Environment identifier is invalid or was not informed.')
 
         if not is_valid_ip(ip):
-            raise InvalidParameterError(u'IP is invalid or was not informed.')
+            raise InvalidParameterError('IP is invalid or was not informed.')
 
         url = 'ip/' + str(ip) + '/ambiente/' + str(id_environment) + '/'
 
@@ -161,7 +161,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_network):
             raise InvalidParameterError(
-                u'Network identifier is invalid or was not informed.')
+                'Network identifier is invalid or was not informed.')
 
         url = 'ip/availableip4/' + str(id_network) + "/"
 
@@ -193,7 +193,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_evip):
             raise InvalidParameterError(
-                u'Vip environment is invalid or was not informed.')
+                'Vip environment is invalid or was not informed.')
 
         ip_map = dict()
         ip_map['equip_name'] = equip_name
@@ -295,7 +295,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_network6):
             raise InvalidParameterError(
-                u'Network ipv6 identifier is invalid or was not informed.')
+                'Network ipv6 identifier is invalid or was not informed.')
 
         url = 'ip/availableip6/' + str(id_network6) + "/"
 
@@ -337,7 +337,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_evip):
             raise InvalidParameterError(
-                u'Vip environment identifier is invalid or was not informed.')
+                'Vip environment identifier is invalid or was not informed.')
 
         url = 'ip/availableip6/vip/' + str(id_evip) + "/"
 
@@ -379,7 +379,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_evip):
             raise InvalidParameterError(
-                u'Vip environment identifier is invalid or was not informed.')
+                'Vip environment identifier is invalid or was not informed.')
 
         url = 'ip/availableip4/vip/' + str(id_evip) + "/"
 
@@ -405,11 +405,11 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'Ip identifier is invalid or was not informed.')
+                'Ip identifier is invalid or was not informed.')
 
         if ip4 is None or ip4 == "":
             raise InvalidParameterError(
-                u'The IP4 is invalid or was not informed.')
+                'The IP4 is invalid or was not informed.')
 
         ip_map = dict()
         ip_map['descricao'] = descricao
@@ -445,14 +445,14 @@ class Ip(GenericClient):
         """
         if not is_valid_int_param(id_net):
             raise InvalidParameterError(
-                u'Network identifier is invalid or was not informed.')
+                'Network identifier is invalid or was not informed.')
 
         if not is_valid_int_param(id_equip):
             raise InvalidParameterError(
-                u'Equipment identifier is invalid or was not informed.')
+                'Equipment identifier is invalid or was not informed.')
 
         if ip4 is None or ip4 == "":
-            raise InvalidParameterError(u'IP4 is invalid or was not informed.')
+            raise InvalidParameterError('IP4 is invalid or was not informed.')
 
         ip_map = dict()
         ip_map['id_net'] = id_net
@@ -479,10 +479,10 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'Ipv6 identifier is invalid or was not informed.')
+                'Ipv6 identifier is invalid or was not informed.')
 
         if ip6 is None or ip6 == "":
-            raise InvalidParameterError(u'IP6 is invalid or was not informed.')
+            raise InvalidParameterError('IP6 is invalid or was not informed.')
 
         ip_map = dict()
         ip_map['descricao'] = descricao
@@ -524,7 +524,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'Ip identifier is invalid or was not informed.')
+                'Ip identifier is invalid or was not informed.')
 
         url = 'ip/get/' + str(id_ip) + "/"
 
@@ -605,7 +605,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'Ipv6 identifier is invalid or was not informed.')
+                'Ipv6 identifier is invalid or was not informed.')
 
         url = 'ipv6/get/' + str(id_ip) + "/"
 
@@ -640,15 +640,15 @@ class Ip(GenericClient):
         """
         if not is_valid_int_param(id_net):
             raise InvalidParameterError(
-                u'Network identifier is invalid or was not informed.')
+                'Network identifier is invalid or was not informed.')
 
         if not is_valid_int_param(id_equip):
             raise InvalidParameterError(
-                u'Equipment identifier is invalid or was not informed.')
+                'Equipment identifier is invalid or was not informed.')
 
         if ip6 is None or ip6 == "":
             raise InvalidParameterError(
-                u'IPv6 is invalid or was not informed.')
+                'IPv6 is invalid or was not informed.')
 
         ip_map = dict()
         ip_map['id_net'] = id_net
@@ -676,7 +676,7 @@ class Ip(GenericClient):
         """
 
         if not is_valid_int_param(id_ip):
-            raise InvalidParameterError(u'Ipv4 identifier is invalid or was not informed.')
+            raise InvalidParameterError('Ipv4 identifier is invalid or was not informed.')
 
         url = 'ip4/delete/' + str(id_ip) + "/"
         code, xml = self.submit(None, 'DELETE', url)
@@ -698,7 +698,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'Ipv6 identifier is invalid or was not informed.')
+                'Ipv6 identifier is invalid or was not informed.')
 
         url = 'ipv6/delete/' + str(id_ip) + "/"
 
@@ -731,7 +731,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_network):
             raise InvalidParameterError(
-                u'Network identifier is invalid or was not informed.')
+                'Network identifier is invalid or was not informed.')
 
         url = 'ip/id_network_ipv4/' + str(id_network) + "/"
 
@@ -769,7 +769,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_network):
             raise InvalidParameterError(
-                u'Network identifier is invalid or was not informed.')
+                'Network identifier is invalid or was not informed.')
 
         url = 'ip/id_network_ipv6/' + str(id_network) + "/"
 
@@ -810,7 +810,7 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_environment):
             raise InvalidParameterError(
-                u'Environment identifier is invalid or was not informed.')
+                'Environment identifier is invalid or was not informed.')
 
         ipv6_map = dict()
         ipv6_map['ipv6'] = ipv6
@@ -838,15 +838,15 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'Ip identifier is invalid or was not informed.')
+                'Ip identifier is invalid or was not informed.')
 
         if not is_valid_int_param(id_net):
             raise InvalidParameterError(
-                u'Network identifier is invalid or was not informed.')
+                'Network identifier is invalid or was not informed.')
 
         if not is_valid_int_param(id_equip):
             raise InvalidParameterError(
-                u'Equipment identifier is invalid or was not informed.')
+                'Equipment identifier is invalid or was not informed.')
 
         ip_map = dict()
         ip_map['id_ip'] = id_ip
@@ -876,15 +876,15 @@ class Ip(GenericClient):
 
         if not is_valid_int_param(id_ip):
             raise InvalidParameterError(
-                u'Ipv6 identifier is invalid or was not informed.')
+                'Ipv6 identifier is invalid or was not informed.')
 
         if not is_valid_int_param(id_net):
             raise InvalidParameterError(
-                u'Network identifier is invalid or was not informed.')
+                'Network identifier is invalid or was not informed.')
 
         if not is_valid_int_param(id_equip):
             raise InvalidParameterError(
-                u'Equipment identifier is invalid or was not informed.')
+                'Equipment identifier is invalid or was not informed.')
 
         ip_map = dict()
         ip_map['id_ip'] = id_ip

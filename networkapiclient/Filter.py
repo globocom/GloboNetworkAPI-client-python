@@ -99,7 +99,7 @@ class Filter(GenericClient):
 
         if not is_valid_int_param(id_filter):
             raise InvalidParameterError(
-                u'The identifier of Filter is invalid or was not informed.')
+                'The identifier of Filter is invalid or was not informed.')
 
         filter_map = dict()
         filter_map['name'] = name
@@ -126,7 +126,7 @@ class Filter(GenericClient):
 
         if not is_valid_int_param(id_filter):
             raise InvalidParameterError(
-                u'The identifier of Filter is invalid or was not informed.')
+                'The identifier of Filter is invalid or was not informed.')
 
         url = 'filter/' + str(id_filter) + '/'
 
@@ -180,11 +180,11 @@ class Filter(GenericClient):
 
         if not is_valid_int_param(et_id):
             raise InvalidParameterError(
-                u'The identifier of TipoEquipamento is invalid or was not informed.')
+                'The identifier of TipoEquipamento is invalid or was not informed.')
 
         if not is_valid_int_param(id_filter):
             raise InvalidParameterError(
-                u'The identifier of Filter is invalid or was not informed.')
+                'The identifier of Filter is invalid or was not informed.')
 
         url = 'filter/' + str(id_filter) + '/equiptype/' + str(et_id) + '/'
 
@@ -208,11 +208,11 @@ class Filter(GenericClient):
 
         if not is_valid_int_param(id_filter):
             raise InvalidParameterError(
-                u'The identifier of Filter is invalid or was not informed.')
+                'The identifier of Filter is invalid or was not informed.')
 
         if not is_valid_int_param(id_eq_type):
             raise InvalidParameterError(
-                u'The identifier of TipoEquipamento is invalid or was not informed.')
+                'The identifier of TipoEquipamento is invalid or was not informed.')
 
         url = 'filter/' + \
             str(id_filter) + '/dissociate/' + str(id_eq_type) + '/'

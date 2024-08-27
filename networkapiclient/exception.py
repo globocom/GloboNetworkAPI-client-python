@@ -20,7 +20,7 @@ class ValidationAPIException(Exception):
         self.error = error
 
     def __str__(self):
-        msg = u'%s' % (self.error)
+        msg = '%s' % (self.error)
         return msg.encode('utf-8', 'replace')
 
 
@@ -30,7 +30,7 @@ class NetworkAPIClientError(Exception):
         self.error = error
 
     def __str__(self):
-        msg = u'%s' % (self.error)
+        msg = '%s' % (self.error)
         return msg.encode('utf-8', 'replace')
 
 class DataBaseError(NetworkAPIClientError):
@@ -54,7 +54,7 @@ class ScriptError(NetworkAPIClientError):
 class InvalidRequestError(NetworkAPIClientError):
 
     def __init__(self, error):
-        NetworkAPIClientError.__init__(self, u'Chamada incorreta.')
+        NetworkAPIClientError.__init__(self, 'Chamada incorreta.')
 
 
 class UserNotAuthenticatedError(NetworkAPIClientError):
@@ -62,7 +62,7 @@ class UserNotAuthenticatedError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(
             self,
-            u'Usuário não autenticado. Usuário e/ou senha incorretos.')
+            'Usuário não autenticado. Usuário e/ou senha incorretos.')
 
 
 class UserNotAuthorizedError(NetworkAPIClientError):
@@ -70,7 +70,7 @@ class UserNotAuthorizedError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(
             self,
-            u'Usuário não autorizado para executar a operação.')
+            'Usuário não autorizado para executar a operação.')
 
 
 class UrlNotFoundError(NetworkAPIClientError):
@@ -78,13 +78,13 @@ class UrlNotFoundError(NetworkAPIClientError):
     def __init__(self, error):
         NetworkAPIClientError.__init__(
             self,
-            u'Não encontrado. Uso de uma URL inválida.')
+            'Não encontrado. Uso de uma URL inválida.')
 
 
 class NotImplementedError(NetworkAPIClientError):
 
     def __init__(self, error):
-        NetworkAPIClientError.__init__(self, u'Chamada não implementada')
+        NetworkAPIClientError.__init__(self, 'Chamada não implementada')
 
 
 class TipoEquipamentoNaoExisteError(NetworkAPIClientError):

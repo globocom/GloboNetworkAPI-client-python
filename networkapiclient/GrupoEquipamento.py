@@ -55,7 +55,7 @@ class GrupoEquipamento(GenericClient):
 
         if not is_valid_int_param(id_egroup):
             raise InvalidParameterError(
-                u'The identifier of Group Equipament is invalid or was not informed.')
+                'The identifier of Group Equipament is invalid or was not informed.')
 
         url = 'egroup/' + str(id_egroup) + '/'
 
@@ -100,7 +100,7 @@ class GrupoEquipamento(GenericClient):
 
         if equip_id is None:
             raise InvalidParameterError(
-                u'O id do equipamento não foi informado.')
+                'O id do equipamento não foi informado.')
 
         url = 'egrupo/equip/' + str(equip_id) + '/'
 
@@ -143,7 +143,7 @@ class GrupoEquipamento(GenericClient):
         """
         if not is_valid_int_param(id_egrupo):
             raise InvalidParameterError(
-                u'O identificador do grupo de equipamento é inválido ou não foi informado.')
+                'O identificador do grupo de equipamento é inválido ou não foi informado.')
 
         url = 'egrupo/' + str(id_egrupo) + '/'
 
@@ -169,7 +169,7 @@ class GrupoEquipamento(GenericClient):
         """
         if not is_valid_int_param(id_egrupo):
             raise InvalidParameterError(
-                u'O identificador do grupo de equipamento é inválido ou não foi informado.')
+                'O identificador do grupo de equipamento é inválido ou não foi informado.')
 
         url = 'egrupo/' + str(id_egrupo) + '/'
 
@@ -220,11 +220,11 @@ class GrupoEquipamento(GenericClient):
 
         if not is_valid_int_param(id_egrupo):
             raise InvalidParameterError(
-                u'O identificador do grupo de equipamento é inválido ou não foi informado.')
+                'O identificador do grupo de equipamento é inválido ou não foi informado.')
 
         if not is_valid_int_param(id_equipamento):
             raise InvalidParameterError(
-                u'O identificador do equipamento é inválido ou não foi informado.')
+                'O identificador do equipamento é inválido ou não foi informado.')
 
         url = 'egrupo/equipamento/' + \
             str(id_equipamento) + '/egrupo/' + str(id_egrupo) + '/'

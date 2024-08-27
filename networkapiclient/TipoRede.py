@@ -92,7 +92,7 @@ class TipoRede(GenericClient):
 
         if not is_valid_int_param(id_net_type):
             raise InvalidParameterError(
-                u'Network type is invalid or was not informed.')
+                'Network type is invalid or was not informed.')
 
         url = 'net_type/' + str(id_net_type) + '/'
 
@@ -118,7 +118,7 @@ class TipoRede(GenericClient):
         """
         if not is_valid_int_param(id_net_type):
             raise InvalidParameterError(
-                u'Network type is invalid or was not informed.')
+                'Network type is invalid or was not informed.')
 
         url = 'net_type/' + str(id_net_type) + '/'
 

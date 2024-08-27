@@ -80,7 +80,7 @@ class OptionPool(ApiGenericClient):
 
         if not is_valid_int_param(id_option_pool):
             raise InvalidParameterError(
-                u'The identifier of Option Pool is invalid or was not informed.')
+                'The identifier of Option Pool is invalid or was not informed.')
 
         #optionpool_map = dict()
         #optionpool_map['type'] = tipo_opcao
@@ -106,7 +106,7 @@ class OptionPool(ApiGenericClient):
 
         if not is_valid_int_param(id_option_pool):
             raise InvalidParameterError(
-                u'The identifier of Option Pool is invalid or was not informed.')
+                'The identifier of Option Pool is invalid or was not informed.')
 
         url = 'api/pools/options/' + str(id_option_pool) + '/'
 
@@ -133,7 +133,7 @@ class OptionPool(ApiGenericClient):
 
         if not is_valid_int_param(id_option_pool):
             raise InvalidParameterError(
-                u'The identifier of Option Pool is invalid or was not informed.')
+                'The identifier of Option Pool is invalid or was not informed.')
 
         url = 'api/pools/options/' + str(id_option_pool) + '/'
 
@@ -237,11 +237,11 @@ class OptionPool(ApiGenericClient):
 
         if not is_valid_int_param(id_option_pool):
             raise InvalidParameterError(
-                u'The identifier of Option Pool is invalid or was not informed.')
+                'The identifier of Option Pool is invalid or was not informed.')
 
         if not is_valid_int_param(id_environment):
             raise InvalidParameterError(
-                u'The identifier of Environment Pool is invalid or was not informed.')
+                'The identifier of Environment Pool is invalid or was not informed.')
 
 
 
@@ -295,11 +295,11 @@ class OptionPool(ApiGenericClient):
 
         if not is_valid_int_param(environment_option_id):
             raise InvalidParameterError(
-                u'The identifier of Option Pool is invalid or was not informed.')
+                'The identifier of Option Pool is invalid or was not informed.')
 
         if not is_valid_int_param(environment_option_id):
             raise InvalidParameterError(
-                u'The identifier of Environment Pool is invalid or was not informed.')
+                'The identifier of Environment Pool is invalid or was not informed.')
 
         url = 'api/pools/environment_options/' + str(environment_option_id) +  '/'
 
@@ -337,7 +337,7 @@ class OptionPool(ApiGenericClient):
 
         if not is_valid_int_param(environment_option_id):
             raise InvalidParameterError(
-                u'The identifier of Environment Option Pool is invalid or was not informed.')
+                'The identifier of Environment Option Pool is invalid or was not informed.')
 
         #optionpool_map = dict()
         #optionpool_map['option'] = option_id

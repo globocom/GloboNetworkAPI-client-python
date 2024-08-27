@@ -11,7 +11,7 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-from __future__ import unicode_literals
+
 import sys
 from os.path import abspath, dirname, join
 
@@ -46,8 +46,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Globo NetworkAPI Python Client'
-copyright = u'2000-2014 Globo Comunicação e Participações S.A.'
+project = 'Globo NetworkAPI Python Client'
+copyright = '2000-2024 Globo Comunicação e Participações S.A.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -205,8 +205,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'src.tex', u'src docs',
-   u'Author', 'manual'),
+  ('index', 'src.tex', 'src docs',
+   'Author', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -235,8 +235,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'src', u'src docs',
-     [u'Author'], 1)
+    ('index', 'src', 'src docs',
+     ['Author'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -249,8 +249,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'src', u'src docs',
-   u'Author', 'src', 'One line description of project.',
+  ('index', 'src', 'src docs',
+   'Author', 'src', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -270,10 +270,10 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'src'
-epub_author = u'Author'
-epub_publisher = u'Author'
-epub_copyright = u'2014, Author'
+epub_title = 'src'
+epub_author = 'Author'
+epub_publisher = 'Author'
+epub_copyright = '2014, Author'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'src'

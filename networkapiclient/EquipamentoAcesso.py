@@ -52,7 +52,7 @@ class EquipamentoAcesso(GenericClient):
         """
 
         if not is_valid_int_param(id_access):
-            raise InvalidParameterError(u'Equipment Access ID is invalid.')
+            raise InvalidParameterError('Equipment Access ID is invalid.')
 
         url = 'equipamentoacesso/id/' + str(id_access) + '/'
 
@@ -188,7 +188,7 @@ class EquipamentoAcesso(GenericClient):
 
         if not is_valid_int_param(id_tipo_acesso):
             raise InvalidParameterError(
-                u'Access type id is invalid or not informed.')
+                'Access type id is invalid or not informed.')
 
         equipamento_acesso_map = dict()
         equipamento_acesso_map['fqdn'] = fqdn
@@ -221,10 +221,10 @@ class EquipamentoAcesso(GenericClient):
         """
 
         if not is_valid_int_param(id_tipo_acesso):
-            raise InvalidParameterError(u'Access type id is invalid.')
+            raise InvalidParameterError('Access type id is invalid.')
 
         if not is_valid_int_param(id_equipamento):
-            raise InvalidParameterError(u'Equipment id is invalid.')
+            raise InvalidParameterError('Equipment id is invalid.')
 
         url = 'equipamentoacesso/' + \
             str(id_equipamento) + '/' + str(id_tipo_acesso) + '/'

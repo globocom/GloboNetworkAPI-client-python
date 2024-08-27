@@ -16,10 +16,7 @@
 import json
 import logging
 
-try:
-    from urllib.parse import urlencode
-except:
-    from urllib import urlencode
+from urllib.parse import urlencode
 from io import BytesIO
 
 import requests

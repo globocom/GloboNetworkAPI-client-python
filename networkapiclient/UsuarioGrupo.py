@@ -55,11 +55,11 @@ class UsuarioGrupo(GenericClient):
         """
         if not is_valid_int_param(id_user):
             raise InvalidParameterError(
-                u'The identifier of User is invalid or was not informed.')
+                'The identifier of User is invalid or was not informed.')
 
         if not is_valid_int_param(id_group):
             raise InvalidParameterError(
-                u'The identifier of Group is invalid or was not informed.')
+                'The identifier of Group is invalid or was not informed.')
 
         url = 'usergroup/user/' + \
             str(id_user) + '/ugroup/' + str(id_group) + '/associate/'
@@ -83,11 +83,11 @@ class UsuarioGrupo(GenericClient):
         """
         if not is_valid_int_param(id_user):
             raise InvalidParameterError(
-                u'The identifier of User is invalid or was not informed.')
+                'The identifier of User is invalid or was not informed.')
 
         if not is_valid_int_param(id_group):
             raise InvalidParameterError(
-                u'The identifier of Group is invalid or was not informed.')
+                'The identifier of Group is invalid or was not informed.')
 
         url = 'usergroup/user/' + \
             str(id_user) + '/ugroup/' + str(id_group) + '/dissociate/'

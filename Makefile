@@ -76,7 +76,7 @@ test_setup: requirements_test.txt
 	fi
 	@echo "Running GloboNetworkAPI.."
 	cd $(GNETAPI_PATH) && git pull origin master
-	cd $(GNETAPI_PATH) && vagrant up --provider virtualbox
+	# cd $(GNETAPI_PATH) && vagrant up --provider virtualbox
 
 install:
 	@python setup.py install

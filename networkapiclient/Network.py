@@ -269,7 +269,7 @@ class Network(GenericClient):
 
         if not is_valid_int_param(id_network):
             raise InvalidParameterError(
-                u'O id do rede ip4 foi informado incorretamente.')
+                'O id do rede ip4 foi informado incorretamente.')
 
         url = 'network/ipv4/id/' + str(id_network) + '/'
 
@@ -317,7 +317,7 @@ class Network(GenericClient):
 
         if not is_valid_int_param(id_network):
             raise InvalidParameterError(
-                u'O id do rede ip6 foi informado incorretamente.')
+                'O id do rede ip6 foi informado incorretamente.')
 
         url = 'network/ipv6/id/' + str(id_network) + '/'
 
@@ -341,7 +341,7 @@ class Network(GenericClient):
 
         if not is_valid_int_param(id_network_ipv4):
             raise InvalidParameterError(
-                u'The identifier of NetworkIPv4 is invalid or was not informed.')
+                'The identifier of NetworkIPv4 is invalid or was not informed.')
 
         url = 'network/ipv4/' + str(id_network_ipv4) + '/deallocate/'
 
@@ -494,7 +494,7 @@ class Network(GenericClient):
 
         if not is_valid_int_param(id_network_ipv6):
             raise InvalidParameterError(
-                u'The identifier of NetworkIPv6 is invalid or was not informed.')
+                'The identifier of NetworkIPv6 is invalid or was not informed.')
 
         url = 'network/ipv6/' + str(id_network_ipv6) + '/deallocate/'
 

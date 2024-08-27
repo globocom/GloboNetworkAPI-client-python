@@ -57,7 +57,7 @@ class Usuario(GenericClient):
 
         if id_ugroup is None:
             raise InvalidParameterError(
-                u'The identifier of Group User is invalid or was not informed.')
+                'The identifier of Group User is invalid or was not informed.')
 
         url = 'user/group/' + str(id_ugroup) + '/'
 
@@ -87,7 +87,7 @@ class Usuario(GenericClient):
 
         if id_ugroup is None:
             raise InvalidParameterError(
-                u'The identifier of Group User is invalid or was not informed.')
+                'The identifier of Group User is invalid or was not informed.')
 
         url = 'user/out/group/' + str(id_ugroup) + '/'
 
@@ -168,7 +168,7 @@ class Usuario(GenericClient):
         """
         if not is_valid_int_param(id_user):
             raise InvalidParameterError(
-                u'The identifier of User is invalid or was not informed.')
+                'The identifier of User is invalid or was not informed.')
 
         url = 'user/get/' + str(id_user) + '/'
 
@@ -258,7 +258,7 @@ class Usuario(GenericClient):
         """
         if not is_valid_int_param(id_user):
             raise InvalidParameterError(
-                u'The identifier of User is invalid or was not informed.')
+                'The identifier of User is invalid or was not informed.')
 
         url = 'user/' + str(id_user) + '/'
 
@@ -291,11 +291,11 @@ class Usuario(GenericClient):
         """
         if not is_valid_int_param(id_user):
             raise InvalidParameterError(
-                u'The identifier of User is invalid or was not informed.')
+                'The identifier of User is invalid or was not informed.')
 
         if password is None or password == "":
             raise InvalidParameterError(
-                u'A nova senha do usuário é inválida ou não foi informada')
+                'A nova senha do usuário é inválida ou não foi informada')
 
         user_map = dict()
         user_map['user_id'] = id_user
@@ -320,7 +320,7 @@ class Usuario(GenericClient):
         """
         if not is_valid_int_param(id_user):
             raise InvalidParameterError(
-                u'The identifier of User is invalid or was not informed.')
+                'The identifier of User is invalid or was not informed.')
 
         url = 'user/' + str(id_user) + '/'
 

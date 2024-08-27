@@ -16,9 +16,8 @@
 
 from networkapiclient.GenericClient import GenericClient
 from networkapiclient.exception import InvalidParameterError
-from networkapiclient.utils import is_valid_int_param, get_list_map
+from networkapiclient.utils import get_list_map
 from networkapiclient.Pagination import Pagination
-import urllib
 
 
 class EventLog(GenericClient):
@@ -79,7 +78,7 @@ class EventLog(GenericClient):
 
         if not isinstance(pagination, Pagination):
             raise InvalidParameterError(
-                u"Invalid parameter: pagination must be a class of type 'Pagination'.")
+                "Invalid parameter: pagination must be a class of type 'Pagination'.")
 
         eventlog_map = dict()
 

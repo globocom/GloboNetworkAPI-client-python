@@ -22,3 +22,5 @@ build
 networkapi_test_project
 Pipfile
 Pipfile.lock
+
+*venv

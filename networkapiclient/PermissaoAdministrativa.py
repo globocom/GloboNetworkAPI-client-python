@@ -56,7 +56,7 @@ class PermissaoAdministrativa(GenericClient):
 
         if id_ugroup is None:
             raise InvalidParameterError(
-                u'The identifier of Group User is invalid or was not informed.')
+                'The identifier of Group User is invalid or was not informed.')
 
         url = 'aperms/group/' + str(id_ugroup) + '/'
 
@@ -85,7 +85,7 @@ class PermissaoAdministrativa(GenericClient):
 
         if not is_valid_int_param(id_perm):
             raise InvalidParameterError(
-                u'The identifier of Administrative Permission is invalid or was not informed.')
+                'The identifier of Administrative Permission is invalid or was not informed.')
 
         url = 'aperms/get/' + str(id_perm) + '/'
 
@@ -166,7 +166,7 @@ class PermissaoAdministrativa(GenericClient):
         """
         if not is_valid_int_param(id_perm):
             raise InvalidParameterError(
-                u'The identifier of Administrative Permission is invalid or was not informed.')
+                'The identifier of Administrative Permission is invalid or was not informed.')
 
         url = 'aperms/' + str(id_perm) + '/'
 
@@ -196,7 +196,7 @@ class PermissaoAdministrativa(GenericClient):
         """
         if not is_valid_int_param(id_perms):
             raise InvalidParameterError(
-                u'The identifier of Administrative Permission is invalid or was not informed.')
+                'The identifier of Administrative Permission is invalid or was not informed.')
 
         url = 'aperms/' + str(id_perms) + '/'
 
