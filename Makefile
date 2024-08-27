@@ -60,8 +60,7 @@ integration:
 functional:
 	@make clean
 	@echo "Starting tests..."
-	@nosetests --rednose --nocapture --verbose --with-coverage --cover-erase \
-		--cover-package=networkapiclient --where tests/functional
+	@pytest -v -s tests/functional
 
 setup: requirements.txt
 	$(PIP) install -r $^
