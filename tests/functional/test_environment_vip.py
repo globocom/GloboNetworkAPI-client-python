@@ -2,11 +2,6 @@
 import os
 from unittest import TestCase
 
-# from nose.tools import assert_equal
-# from nose.tools import assert_in
-# from nose.tools import assert_is_instance
-# from nose.tools import assert_raises
-
 from networkapiclient.ClientFactory import ClientFactory
 from networkapiclient.exception import NetworkAPIClientError
 
