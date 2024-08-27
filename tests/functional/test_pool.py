@@ -2,15 +2,10 @@
 import os
 from unittest import TestCase
 
-from nose.tools import assert_equal
-from nose.tools import assert_in
-from nose.tools import assert_is_instance
-from nose.tools import assert_raises
-
 from networkapiclient.ClientFactory import ClientFactory
 from networkapiclient.exception import NetworkAPIClientError
 
-NETWORKAPI_URL = os.getenv('NETWORKAPI_URL', 'http://10.0.0.2:8000/')
+NETWORKAPI_URL = os.getenv('NETWORKAPI_URL', 'http://localhost:8000/')
 NETWORKAPI_USER = os.getenv('NETWORKAPI_USER', 'networkapi')
 NETWORKAPI_PWD = os.getenv('NETWORKAPI_PWD', 'networkapi')
 
@@ -53,7 +48,7 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])
 
-        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        self.assertEqual(pool['server_pools'][0]['id'], pool_id)
         self.api_pool.delete([pool_id])
 
     def test_create_pool_with_one_real_and_https_protocol(self):
@@ -81,8 +76,8 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])
 
-        assert_equal(pool['server_pools'][0]['id'], pool_id)
-        assert_equal(
+        self.assertEqual(pool['server_pools'][0]['id'], pool_id)
+        self.assertEqual(
             pool['server_pools'][0]['healthcheck']['healthcheck_type'],
             healthcheck_healthcheck_type)
 
@@ -113,8 +108,8 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])
 
-        assert_equal(pool['server_pools'][0]['id'], pool_id)
-        assert_equal(
+        self.assertEqual(pool['server_pools'][0]['id'], pool_id)
+        self.assertEqual(
             pool['server_pools'][0]['healthcheck']['healthcheck_type'],
             healthcheck_healthcheck_type)
 
@@ -145,8 +140,8 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])
 
-        assert_equal(pool['server_pools'][0]['id'], pool_id)
-        assert_equal(
+        self.assertEqual(pool['server_pools'][0]['id'], pool_id)
+        self.assertEqual(
             pool['server_pools'][0]['healthcheck']['healthcheck_type'],
             healthcheck_healthcheck_type)
 
@@ -177,8 +172,8 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])
 
-        assert_equal(pool['server_pools'][0]['id'], pool_id)
-        assert_equal(
+        self.assertEqual(pool['server_pools'][0]['id'], pool_id)
+        self.assertEqual(
             pool['server_pools'][0]['healthcheck']['healthcheck_type'],
             healthcheck_healthcheck_type)
 
@@ -206,7 +201,7 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])
 
-        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        self.assertEqual(pool['server_pools'][0]['id'], pool_id)
 
         self.api_pool.delete([pool_id])
 
@@ -234,7 +229,7 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])
 
-        assert_equal(pool['server_pools'][0]['id'], pool_id)
+        self.assertEqual(pool['server_pools'][0]['id'], pool_id)
 
         self.api_pool.delete([pool_id])
 
@@ -268,15 +263,15 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])['server_pools'][0]
 
-        assert_equal(pool['identifier'], new_pool_data['identifier'])
-        assert_equal(
+        self.assertEqual(pool['identifier'], new_pool_data['identifier'])
+        self.assertEqual(
             pool['servicedownaction']['name'],
             new_pool_data['servicedownaction']['name'])
-        assert_equal(
+        self.assertEqual(
             pool['healthcheck']['healthcheck_type'],
             new_pool_data['healthcheck']['healthcheck_type'])
 
-        assert_equal(len(pool['server_pool_members']), 2)
+        self.assertEqual(len(pool['server_pool_members']), 2)
 
         self.api_pool.delete([pool_id])
 
@@ -306,7 +301,7 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])['server_pools'][0]
 
-        assert_equal(len(pool['server_pool_members']), 0)
+        self.assertEqual(len(pool['server_pool_members']), 0)
 
         self.api_pool.delete([pool_id])
 
@@ -341,7 +336,7 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])['server_pools'][0]
 
-        assert_equal(len(pool['server_pool_members']), 2)
+        self.assertEqual(len(pool['server_pool_members']), 2)
 
         self.api_pool.delete([pool_id])
 
@@ -384,7 +379,7 @@ class TestApiPool(TestCase):
 
         pool = self.api_pool.get([pool_id])['server_pools'][0]
 
-        assert_equal(len(pool['server_pool_members']), 3)
+        self.assertEqual(len(pool['server_pool_members']), 3)
 
         self.api_pool.delete([pool_id])
 
@@ -399,7 +394,7 @@ class TestApiPool(TestCase):
         pool_id = self.api_pool.create([pool_data])[0]['id']
 
         self.api_pool.delete([pool_id])
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_pool.get([pool_id])
 
     def test_delete_pool_with_reals(self):
@@ -421,7 +416,7 @@ class TestApiPool(TestCase):
         pool_id = self.api_pool.create([pool_data])[0]['id']
 
         self.api_pool.delete([pool_id])
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_pool.get([pool_id])
 
     def create_environment_vip(self, id_env):
