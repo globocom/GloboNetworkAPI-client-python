@@ -17,7 +17,7 @@ docutils
 Jinja2
 MarkupSafe
 mock
-nose
+pytest
 pep8
 Pygments
 rednose

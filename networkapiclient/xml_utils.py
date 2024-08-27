@@ -338,5 +338,5 @@ def remove_illegal_characters(xml):
          chr(0xd800), chr(0xdbff), chr(0xdc00), chr(0xdfff),
          chr(0xd800), chr(0xdbff), chr(0xdc00), chr(0xdfff))
 
-    xml = re.sub(RE_XML_ILLEGAL, "?", xml)
+    xml = re.sub(RE_XML_ILLEGAL, "?", xml.decode('utf-8'))
     return xml

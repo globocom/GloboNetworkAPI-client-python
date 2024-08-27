@@ -133,9 +133,8 @@ class Rest:
         """
         try:
             LOG.debug('POST %s\n%s', url, request_data)
-            request = Request(url)
-            request.add_data(request_data)
-            # print request_data
+            request: Request = Request(url)
+            request.data = request_data
             if auth_map is not None:
 
                 for key in auth_map.keys():

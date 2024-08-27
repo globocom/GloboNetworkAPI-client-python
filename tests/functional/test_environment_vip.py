@@ -2,15 +2,15 @@
 import os
 from unittest import TestCase
 
-from nose.tools import assert_equal
-from nose.tools import assert_in
-from nose.tools import assert_is_instance
-from nose.tools import assert_raises
+# from nose.tools import assert_equal
+# from nose.tools import assert_in
+# from nose.tools import assert_is_instance
+# from nose.tools import assert_raises
 
 from networkapiclient.ClientFactory import ClientFactory
 from networkapiclient.exception import NetworkAPIClientError
 
-NETWORKAPI_URL = os.getenv('NETWORKAPI_URL', 'http://10.0.0.2:8000/')
+NETWORKAPI_URL = os.getenv('NETWORKAPI_URL', 'http://localhost:8000/')
 NETWORKAPI_USER = os.getenv('NETWORKAPI_USER', 'networkapi')
 NETWORKAPI_PWD = os.getenv('NETWORKAPI_PWD', 'networkapi')
 
@@ -36,12 +36,12 @@ class TestApiEnvironmentVip(TestCase):
         """ Get an environment vip by id """
 
         env = self.api_environment_vip.get([1])
-        assert_equal(env['environments_vip'][0]['id'], 1)
+        self.assertEqual(env['environments_vip'][0]['id'], 1)
 
     def test_try_to_get_a_non_existent_environment_vip_by_id(self):
         """ Try to get a non existent environment vip by id """
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_environment_vip.get([self.non_existent_env_vip_id])
 
     # search tests
@@ -61,11 +61,11 @@ class TestApiEnvironmentVip(TestCase):
 
         envs_vip = self.api_environment_vip.search(search=search_data)
 
-        assert_equal(envs_vip['total'], 1)
-        assert_equal(
+        self.assertEqual(envs_vip['total'], 1)
+        self.assertEqual(
             envs_vip['environments_vip'][0]['finalidade_txt'],
             finalidade_txt)
-        assert_equal(
+        self.assertEqual(
             envs_vip['environments_vip'][0]['cliente_txt'],
             cliente_txt)
 
@@ -84,10 +84,10 @@ class TestApiEnvironmentVip(TestCase):
 
         envs_vip = self.api_environment_vip.search(search=search_data)
 
-        assert_equal(envs_vip['total'], 2)
+        self.assertEqual(envs_vip['total'], 2)
         for env in envs_vip['environments_vip']:
-            assert_in(env['finalidade_txt'], ('Blue', 'Green'))
-            assert_in(env['cliente_txt'], ('Red', 'Green'))
+            self.assertIn(env['finalidade_txt'], ('Blue', 'Green'))
+            self.assertIn(env['cliente_txt'], ('Red', 'Green'))
 
     def test_search_a_non_existent_environment_vip(self):
         """ Search expecting list with zero environment vips """
@@ -100,7 +100,7 @@ class TestApiEnvironmentVip(TestCase):
         }
         envs = self.api_environment_vip.search(search=search_data)
 
-        assert_equal(envs['total'], 0)
+        self.assertEqual(envs['total'], 0)
 
     # post tests
 
@@ -116,7 +116,7 @@ class TestApiEnvironmentVip(TestCase):
         env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
         env_vip = self.api_environment_vip.get([env_vip_id])
 
-        assert_equal(env_vip['environments_vip'][0]['id'], env_vip_id)
+        self.assertEqual(env_vip['environments_vip'][0]['id'], env_vip_id)
         self.api_environment_vip.delete([env_vip_id])
 
     def test_create_many_environment_vips(self):
@@ -138,9 +138,9 @@ class TestApiEnvironmentVip(TestCase):
         envs_vip_ids = [e['id'] for e in envs_vip_ids]
         envs_vip = self.api_environment_vip.get(envs_vip_ids)
 
-        assert_equal(len(envs_vip['environments_vip']), 2)
+        self.assertEqual(len(envs_vip['environments_vip']), 2)
         for envs_vip in envs_vip['environments_vip']:
-            assert_in(envs_vip['id'], envs_vip_ids)
+            self.assertIn(envs_vip['id'], envs_vip_ids)
         self.api_environment_vip.delete(envs_vip_ids)
 
     # put tests
@@ -159,7 +159,7 @@ class TestApiEnvironmentVip(TestCase):
         env_vip = self.api_environment_vip.get(
             [env_vip_id])['environments_vip'][0]
 
-        assert_equal(env_vip['id'], env_vip_id)
+        self.assertEqual(env_vip['id'], env_vip_id)
 
         new_finality_txt = env_vip['finalidade_txt'] = 'Fin-Updated'
 
@@ -167,7 +167,7 @@ class TestApiEnvironmentVip(TestCase):
         env_vip = self.api_environment_vip.get(
             [env_vip_id])['environments_vip'][0]
 
-        assert_equal(env_vip['finalidade_txt'], new_finality_txt)
+        self.assertEqual(env_vip['finalidade_txt'], new_finality_txt)
         self.api_environment_vip.delete([env_vip_id])
 
     def test_update_a_non_existent_environment_vip(self):
@@ -181,7 +181,7 @@ class TestApiEnvironmentVip(TestCase):
             'ambiente_p44_txt': 'Red',
         }
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_environment_vip.update([env_vip_data])
 
     # delete tests
@@ -197,10 +197,10 @@ class TestApiEnvironmentVip(TestCase):
         }
 
         env_vip_id = self.api_environment_vip.create([env_vip_data])[0]['id']
-        assert_is_instance(self.api_environment_vip.get([env_vip_id]), dict)
+        self.assertIsInstance(self.api_environment_vip.get([env_vip_id]), dict)
 
         self.api_environment_vip.delete([env_vip_id])
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_environment_vip.get([env_vip_id])
 
     def test_delete_two_environments_vip(self):
@@ -223,18 +223,18 @@ class TestApiEnvironmentVip(TestCase):
 
         envs_vip_id = [e['id']
                        for e in self.api_environment_vip.create(envs_vip_data)]
-        assert_is_instance(self.api_environment_vip.get(envs_vip_id), dict)
+        self.assertIsInstance(self.api_environment_vip.get(envs_vip_id), dict)
 
         self.api_environment_vip.delete(envs_vip_id)
 
         for env_vip_id in envs_vip_id:
-            with assert_raises(NetworkAPIClientError):
+            with self.assertRaises(NetworkAPIClientError):
                 self.api_environment_vip.get([env_vip_id])
 
     def test_delete_a_non_existent_environment_vip(self):
         """ Try to delete a non existent environment vip """
 
-        with assert_raises(Exception):
+        with self.assertRaises(Exception):
             self.api_environment_vip.delete([self.non_existent_env_vip_id])
 
     def test_try_delete_environment_vip_assoc_with_netipv4(self):
@@ -242,7 +242,7 @@ class TestApiEnvironmentVip(TestCase):
             env vip is associated with some network ipv4
         """
 
-        with assert_raises(Exception):
+        with self.assertRaises(Exception):
             self.api_environment_vip.delete([13])
 
     def test_try_delete_environment_vip_assoc_with_netipv6(self):
@@ -250,7 +250,7 @@ class TestApiEnvironmentVip(TestCase):
             env vip is associated with some network ipv6
         """
 
-        with assert_raises(Exception):
+        with self.assertRaises(Exception):
             self.api_environment_vip.delete([13])
 
     def test_try_delete_environment_vip_assoc_to_option_vip(self):
@@ -272,7 +272,7 @@ class TestApiEnvironmentVip(TestCase):
 
         self.api_environment_vip.delete([env_vip_id])
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_environment_vip.get([env_vip_id])
 
     def test_try_delete_environment_vip_assoc_to_env(self):
@@ -293,7 +293,7 @@ class TestApiEnvironmentVip(TestCase):
 
         self.api_environment_vip.delete([env_vip_id])
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_environment_vip.get([env_vip_id])
 
     def test_try_delete_environment_vip_assoc_to_options_vip_and_envs(self):
@@ -321,5 +321,5 @@ class TestApiEnvironmentVip(TestCase):
 
         self.api_environment_vip.delete([env_vip_id])
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_environment_vip.get([env_vip_id])
