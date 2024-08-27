@@ -2,16 +2,11 @@
 import os
 from unittest import TestCase
 
-from nose.tools import assert_equal
-from nose.tools import assert_in
-from nose.tools import assert_is_instance
-from nose.tools import assert_raises
-
 from networkapiclient.ClientFactory import ClientFactory
 from networkapiclient.exception import NetworkAPIClientError
 
 
-NETWORKAPI_URL = os.getenv('NETWORKAPI_URL', 'http://10.0.0.2:8000/')
+NETWORKAPI_URL = os.getenv('NETWORKAPI_URL', 'http://localhost:8000/')
 NETWORKAPI_USER = os.getenv('NETWORKAPI_USER', 'networkapi')
 NETWORKAPI_PWD = os.getenv('NETWORKAPI_PWD', 'networkapi')
 
@@ -39,7 +34,7 @@ class TestApiVrf(TestCase):
         vrf_id = self.api_vrf.create(vrf_data)[0]['id']
         vrf = self.api_vrf.get([vrf_id])
 
-        assert_equal(vrf['vrfs'][0]['id'], vrf_id)
+        self.assertEqual(vrf['vrfs'][0]['id'], vrf_id)
         self.api_vrf.delete([vrf_id])
 
     def test_create_many_vrfs(self):
@@ -56,9 +51,9 @@ class TestApiVrf(TestCase):
         vrfs_ids = [e['id'] for e in self.api_vrf.create(vrfs_data)]
         vrfs = self.api_vrf.get(vrfs_ids)
 
-        assert_equal(len(vrfs['vrfs']), 2)
+        self.assertEqual(len(vrfs['vrfs']), 2)
         for vrf in vrfs['vrfs']:
-            assert_in(vrf['id'], vrfs_ids)
+            self.assertIn(vrf['id'], vrfs_ids)
         self.api_vrf.delete(vrfs_ids)
 
     # delete tests
@@ -72,16 +67,16 @@ class TestApiVrf(TestCase):
         }
 
         vrf_id = self.api_vrf.create([vrf_data])[0]['id']
-        assert_is_instance(self.api_vrf.get([vrf_id]), dict)
+        self.assertIsInstance(self.api_vrf.get([vrf_id]), dict)
 
         self.api_vrf.delete([vrf_id])
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_vrf.get([vrf_id])
 
     def test_delete_a_non_existent_vrf(self):
         """ Tries to delete a non existent vrf """
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_vrf.delete([1111])
 
     def test_search_an_vrf(self):
@@ -99,9 +94,9 @@ class TestApiVrf(TestCase):
 
         vrfs = self.api_vrf.search(search=search_data)
 
-        assert_equal(vrfs['total'], 1)
-        assert_equal(vrfs['vrfs'][0]['internal_name'], internal_name)
-        assert_equal(vrfs['vrfs'][0]['vrf'], vrf)
+        self.assertEqual(vrfs['total'], 1)
+        self.assertEqual(vrfs['vrfs'][0]['internal_name'], internal_name)
+        self.assertEqual(vrfs['vrfs'][0]['vrf'], vrf)
 
     def test_search_a_list_of_vrfs(self):
         """ Searches a list of vrf """
@@ -119,10 +114,10 @@ class TestApiVrf(TestCase):
         }
         vrfs = self.api_vrf.search(search=search_data)
 
-        assert_equal(vrfs['total'], 2)
+        self.assertEqual(vrfs['total'], 2)
         for vrf in vrfs['vrfs']:
-            assert_in(vrf['internal_name'], internal_names)
-            assert_in(vrf['vrf'], vrf_names)
+            self.assertIn(vrf['internal_name'], internal_names)
+            self.assertIn(vrf['vrf'], vrf_names)
 
     def test_search_a_non_existent_vrf(self):
         """ Searches a non existent vrf """
@@ -134,18 +129,18 @@ class TestApiVrf(TestCase):
         }
         vrfs = self.api_vrf.search(search=search_data)
 
-        assert_equal(vrfs['total'], 0)
+        self.assertEqual(vrfs['total'], 0)
 
     def test_get_an_vrf_by_id(self):
         """ Get an vrf by id """
 
         vrf = self.api_vrf.get([1])
-        assert_equal(vrf['vrfs'][0]['id'], 1)
+        self.assertEqual(vrf['vrfs'][0]['id'], 1)
 
     def test_try_to_get_a_non_existent_vrf_by_id(self):
         """ Tries to get a non existent vrf by id """
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_vrf.get([1000])
 
     def test_update_an_vrf(self):
@@ -161,13 +156,13 @@ class TestApiVrf(TestCase):
         vrf_id = self.api_vrf.create([vrf_data])[0]['id']
         vrf = self.api_vrf.get([vrf_id])['vrfs'][0]
 
-        assert_equal(vrf['id'], vrf_id)
+        self.assertEqual(vrf['id'], vrf_id)
 
         new_internal_name = vrf['internal_name'] = 'Vrf-3-1'
         self.api_vrf.update([vrf])
         vrf = self.api_vrf.get([vrf_id])['vrfs'][0]
 
-        assert_equal(vrf['internal_name'], new_internal_name)
+        self.assertEqual(vrf['internal_name'], new_internal_name)
         self.api_vrf.delete([vrf_id])
 
     def test_update_a_non_existent_vrf(self):
@@ -179,7 +174,7 @@ class TestApiVrf(TestCase):
             'vrf': 'Vrf-3-1'
         }
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_vrf.update([vrf_data])
 
     def test_delete_vrf_used_by_environment(self):
@@ -201,7 +196,7 @@ class TestApiVrf(TestCase):
 
         env_id = self.api_environment.create(env_data)[0]['id']
 
-        with assert_raises(NetworkAPIClientError):
+        with self.assertRaises(NetworkAPIClientError):
             self.api_vrf.delete([vrf_id])
 
         self.api_environment.delete([env_id])
